@@ -1,0 +1,22 @@
+{
+  "name": "find-anything",
+  "version": "1.0.0",
+  "description": "A web app for sellers to sell and for customers to find products and services online",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "*",
+    "mongoose": "*",
+    "bcryptjs": "*",
+    "cors": "*",
+    "jsonwebtoken": "*",
+    "body-parser": "*",
+    "passport": "*",
+    "passport-jwt": "*"
+  },
+  "author": "Yumantha De Silva",
+  "license": "ISC"
+}
