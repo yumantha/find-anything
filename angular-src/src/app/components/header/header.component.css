@@ -4,6 +4,12 @@
 
 #search-form {
   height: 15px;
-  margin-right: 250px;
-  margin-left: 25px;
+  margin-left: 2%;
+  margin-right: 10%;
+  width: 50%;
+}
+
+.menu-buttons {
+  margin-left: auto;
+  margin-right: 0;
 }
