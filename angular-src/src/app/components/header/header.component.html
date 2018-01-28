@@ -1,0 +1,38 @@
+<mat-toolbar color="primary">
+
+  <button mat-button routerLink="/">
+    <mat-icon>home</mat-icon>
+  </button>
+
+  <!-- This fills the remaining space of the current row -->
+  <span class="fill-remaining-space">
+    <form>
+      <div id="search-form">
+        <button type="submit" mat-button style="float: right"><mat-icon>search</mat-icon> Search</button>
+        <div class="form-group" style="overflow: hidden; padding-right: .5em;">
+          <input class="form-control" type="text" placeholder="Search..." style="width: 100%;" />
+        </div>​
+      </div>
+    </form>
+  </span>
+
+  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+    <button mat-button><mat-icon>person_add</mat-icon> Register</button>
+    <button mat-button><mat-icon>person</mat-icon> SignIn</button>
+    <button mat-button><mat-icon>account_circle</mat-icon> Profile</button>
+    <button mat-button><mat-icon>person_outline</mat-icon> SignOut</button>
+  </div>
+
+  <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
+    <mat-icon>menu</mat-icon>
+  </button>
+
+</mat-toolbar>
+
+<mat-menu x-position="before" #menu="matMenu">
+  <button mat-button><mat-icon>person_add</mat-icon> Register</button>
+  <button mat-button><mat-icon>person</mat-icon> SignIn</button>
+  <button mat-button><mat-icon>account_circle</mat-icon> Profile</button>
+  <button mat-button><mat-icon>person_outline</mat-icon> SignOut</button>
+  <!--<button mat-menu-item>Help</button>-->
+</mat-menu>

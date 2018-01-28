@@ -1,0 +1,9 @@
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+#search-form {
+  height: 15px;
+  margin-right: 250px;
+  margin-left: 25px;
+}
