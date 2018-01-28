@@ -9,15 +9,15 @@ import {HttpModule} from "@angular/http";
 import {RouterModule} from "@angular/router";
 
 import {AppComponent} from './app.component';
-import {HeaderComponent} from './components/header/header.component';
-import {HomeComponent} from './components/home/home.component';
-import {WelcomeComponent} from './components/welcome/welcome.component';
-import {SearchResultsComponent} from './components/search-results/search-results.component';
-import {RegisterComponent} from './components/register/register.component';
-import {LoginComponent} from './components/login/login.component';
-import {ProfileComponent} from './components/profile/profile.component';
-import {AddItemComponent} from './components/add-item/add-item.component';
-import {ViewItemComponent} from './components/view-item/view-item.component';
+import {HeaderComponent} from './components/common/header/header.component';
+import {HomeComponent} from './components/common/home/home.component';
+import {WelcomeComponent} from './components/common/welcome/welcome.component';
+import {SearchResultsComponent} from './components/search/search-results/search-results.component';
+import {RegisterComponent} from './components/users/register/register.component';
+import {LoginComponent} from './components/users/login/login.component';
+import {ProfileComponent} from './components/users/profile/profile.component';
+import {AddItemComponent} from './components/items/add-item/add-item.component';
+import {ViewItemComponent} from './components/items/view-item/view-item.component';
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
