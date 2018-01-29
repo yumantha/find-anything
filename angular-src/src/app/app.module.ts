@@ -7,6 +7,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {RouterModule} from "@angular/router";
+import {FlashMessagesModule} from "angular2-flash-messages";
 
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './components/common/header/header.component';
@@ -18,6 +19,8 @@ import {LoginComponent} from './components/users/login/login.component';
 import {ProfileComponent} from './components/users/profile/profile.component';
 import {AddItemComponent} from './components/items/add-item/add-item.component';
 import {ViewItemComponent} from './components/items/view-item/view-item.component';
+
+import {ValidateService} from "./services/validate.service";
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
@@ -50,9 +53,14 @@ const appRoutes = [
     FlexLayoutModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    FlashMessagesModule.forRoot()
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    ValidateService
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

@@ -28,9 +28,9 @@
     </form>
 
     <div class="menu-buttons">
-      <button mat-button><mat-icon>person_add</mat-icon> Register</button>
-      <button mat-button><mat-icon>person</mat-icon> LogIn</button>
-      <button mat-button><mat-icon>account_circle</mat-icon> Profile</button>
+      <button mat-button [routerLink]="['/register']"><mat-icon>person_add</mat-icon> Register</button>
+      <button mat-button [routerLink]="['/login']"><mat-icon>person</mat-icon> LogIn</button>
+      <button mat-button [routerLink]="['/profile']"><mat-icon>account_circle</mat-icon> Profile</button>
       <button mat-button><mat-icon>person_outline</mat-icon> LogOut</button>
     </div>
 
@@ -52,9 +52,9 @@
       </div>​
     </div>
   </form>
-  <button mat-menu-item><mat-icon>person_add</mat-icon> Register</button>
-  <button mat-menu-item><mat-icon>person</mat-icon> LogIn</button>
-  <button mat-menu-item><mat-icon>account_circle</mat-icon> Profile</button>
+  <button mat-menu-item [routerLink]="['/register']"><mat-icon>person_add</mat-icon> Register</button>
+  <button mat-menu-item [routerLink]="['/login']"><mat-icon>person</mat-icon> LogIn</button>
+  <button mat-menu-item [routerLink]="['/profile']"><mat-icon>account_circle</mat-icon> Profile</button>
   <button mat-menu-item><mat-icon>person_outline</mat-icon> LogOut</button>
   <!--<button mat-menu-item>Help</button>-->
 </mat-menu>
