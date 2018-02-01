@@ -20,7 +20,8 @@ import {ProfileComponent} from './components/users/profile/profile.component';
 import {AddItemComponent} from './components/items/add-item/add-item.component';
 import {ViewItemComponent} from './components/items/view-item/view-item.component';
 
-import {ValidateService} from "./services/validate.service";
+import {ValidateService} from "./services/validate/validate.service";
+import {AuthService} from "./services/authenticate/auth.service";
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
@@ -57,7 +58,8 @@ const appRoutes = [
     FlashMessagesModule.forRoot()
   ],
   providers: [
-    ValidateService
+    ValidateService,
+    AuthService
   ],
   bootstrap: [
     AppComponent

@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ValidateService} from "../../../services/validate.service";
+import {ValidateService} from "../../../services/validate/validate.service";
 import {FlashMessagesService} from "angular2-flash-messages";
+import {AuthService} from "../../../services/authenticate/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -16,7 +18,12 @@ export class RegisterComponent implements OnInit {
   password: String;
   confPass: String;
 
-  constructor(private validateService: ValidateService, private flashMessagesService: FlashMessagesService) { }
+  constructor(
+    private validateService: ValidateService,
+    private flashMessagesService: FlashMessagesService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
@@ -31,19 +38,34 @@ export class RegisterComponent implements OnInit {
     };
 
     if(!this.validateService.validateRegister(user)) {
-      this.flashMessagesService.show("Please fill in all necessary fields", {cssClass: 'alert-danger', timeout: 3000});
+      this.flashMessagesService.show("Please fill in all necessary fields", {cssClass: 'alert-danger', timeout: 5000});
       return false;
-    } else if(!this.validateService.validateUsername(user.username)) {
-      this.flashMessagesService.show("Please enter a valid username", {cssClass: 'alert-danger', timeout: 3000});
-      return false;
-    } else if(!this.validateService.validateEmail(user.email)) {
-      this.flashMessagesService.show("Please enter a valid email address", {cssClass: 'alert-danger', timeout: 3000});
-      return false;
-    } else if(!this.validateService.validatePassword(user.password, user.confPass)) {
-      this.flashMessagesService.show("Password and confirm password do not match", {cssClass: 'alert-danger', timeout: 3000});
-      return false;
-    } else {
-      this.flashMessagesService.show("Success", {cssClass: 'alert-success', timeout: 3000});
     }
-  }
+
+    if(!this.validateService.validateUsername(user.username)) {
+      this.flashMessagesService.show("Please enter a valid username", {cssClass: 'alert-danger', timeout: 5000});
+      return false;
+    }
+
+    if(!this.validateService.validateEmail(user.email)) {
+      this.flashMessagesService.show("Please enter a valid email address", {cssClass: 'alert-danger', timeout: 5000});
+      return false;
+    }
+
+    if(!this.validateService.validatePassword(user.password, user.confPass)) {
+      this.flashMessagesService.show("Password and confirm password do not match", {cssClass: 'alert-danger', timeout: 5000});
+      return false;
+    }
+
+    this.authService.registerUser(user)
+      .subscribe(data => {
+        if(data.success) {
+          this.flashMessagesService.show("You are registered and can now login.", {cssClass: 'alert-success', timeout: 5000});
+          this.router.navigate(['/login']);
+        } else {
+          this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          this.router.navigate(['/register']);
+        }
+      })
+    }
 }
