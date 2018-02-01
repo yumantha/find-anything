@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/authenticate/auth.service";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {Router} from "@angular/router";
@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.authService.loggedIn());
   }
 
   onLogoutClick() {

@@ -23,13 +23,15 @@ import {ViewItemComponent} from './components/items/view-item/view-item.componen
 import {ValidateService} from "./services/validate/validate.service";
 import {AuthService} from "./services/authenticate/auth.service";
 
+import {AuthGuard} from "./guards/auth.guard";
+
 const appRoutes = [
   {path: '', component: WelcomeComponent},
   {path: 'home', component: HomeComponent},
   {path: 'search/results', component: SearchResultsComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'profile', component: ProfileComponent},
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'items/new', component: AddItemComponent},
   {path: 'items/:id', component: ViewItemComponent},
 ];
@@ -59,7 +61,8 @@ const appRoutes = [
   ],
   providers: [
     ValidateService,
-    AuthService
+    AuthService,
+    AuthGuard
   ],
   bootstrap: [
     AppComponent
