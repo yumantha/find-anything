@@ -15,6 +15,26 @@ export class AuthService {
     headers.append("Content-Type", "application/json");
     return this.http.post(this.server + 'users/register', user, {headers: headers})
       .map(res => res.json());
-  }
+  };
 
+  authenticateUser(user) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.post(this.server + 'users/authenticate', user, {headers: headers})
+      .map(res => res.json());
+  };
+
+  storeUserData(token, user) {
+    localStorage.setItem('id_token', token);
+    localStorage.setItem('user_id', user.id);
+
+    this.authToken = token;
+    this.user = user;
+  };
+
+  logout() {
+    this.authToken = null;
+    this.user = null;
+    localStorage.clear();
+  };
 }

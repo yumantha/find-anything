@@ -1,3 +1,30 @@
-<p>
-  login works!
-</p>
+<mat-card>
+
+  <mat-card-title>LogIn</mat-card-title>
+
+  <mat-card-content>
+
+    <form (submit)="onLoginSubmit()">
+
+      <div>
+        <mat-form-field class="reg-form-field">
+          <input placeholder="Username" matInput type="text" [(ngModel)]="username" name="username" required>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field class="reg-form-field">
+          <input type="password" matInput placeholder="Password" [type]="hide ? 'password' : 'text'" [(ngModel)]="password" name="password" required>
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button mat-raised-button color="primary" type="submit">LogIn</button>
+      </div>
+
+    </form>
+
+  </mat-card-content>
+
+</mat-card>

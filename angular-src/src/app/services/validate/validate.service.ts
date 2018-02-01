@@ -30,4 +30,12 @@ export class ValidateService {
       return true;
     }
   }
+
+  validateLogin(user) {
+    if(user.username == undefined || user.password == undefined) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

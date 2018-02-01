@@ -34,7 +34,7 @@ router.post('/authenticate', (req, res, next)=>{
         if(error) throw error;
 
         if(!user) {
-            return res.json({success: 'false', msg: 'User not found'});
+            return res.json({success: false, msg: 'User not found'});
         }
 
         User.comparePassword(password, user.password, (error, isMatch)=>{
@@ -44,7 +44,7 @@ router.post('/authenticate', (req, res, next)=>{
                 const token = jwt.sign(user.toJSON(), config.secret, {
                     expiresIn: 604800, //week
                 });
-                res.json({success: 'true',
+                res.json({success: true,
                     token: 'JWT ' + token,
                     user: {
                         id: user._id,
@@ -54,7 +54,7 @@ router.post('/authenticate', (req, res, next)=>{
                     }
                 })
             } else {
-                return res.json({success: 'false', msg: 'Invalid password'});
+                return res.json({success: false, msg: 'Invalid password'});
             }
         })
     });
