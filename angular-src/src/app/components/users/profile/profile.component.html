@@ -1,5 +1,33 @@
 <div *ngIf="user">
-  <h1>{{user.name}}</h1>
-  <p>{{user.username}}</p>
-  <p>{{user.email}}</p>
+
+  <mat-grid-list cols="4">
+    <mat-grid-tile colspan="1">
+      <img src="https://www.bighandi.com/img/profile-demo.png" id="profPic">
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="3">
+      <div id="profInfo">
+        <h1>{{user.name}}</h1>
+        <p>{{user.username}}</p>
+        <p>{{user.email}}</p>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-tab-group>
+    <mat-tab label="User Info">
+
+    </mat-tab>
+
+    <mat-tab label="Favourite Items">
+
+    </mat-tab>
+
+    <mat-tab label="Selling Items">
+
+    </mat-tab>
+  </mat-tab-group>
+
 </div>
+
+

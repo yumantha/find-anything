@@ -19,9 +19,9 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     }
-    // type: {
-    //     type: String,
-    //     required: true
+    // profPic: {
+    //     data: Buffer,
+    //     contentType: String
     // }
 });
 

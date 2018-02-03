@@ -12,6 +12,7 @@
     "body-parser": "*",
     "cors": "*",
     "express": "*",
+    "fs": "0.0.1-security",
     "jsonwebtoken": "*",
     "mongoose": "*",
     "nodemon": "^1.14.11",

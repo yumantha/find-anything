@@ -3,18 +3,29 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
+// const fs = require('fs');
 
 const User = require('../models/user');
 
+// const imgPath = "./uploads/image.jpg";
+
 //register
 router.post('/register', (req, res, next)=>{
+    // console.log(req.body);
+
     let newUser = new User({
         name: req.body.name,
         email: req.body.email,
         username: req.body.username,
-        password: req.body.password
-        // type: req.body.type
+        password: req.body.password,
     });
+
+    // console.log(newUser);
+
+    // newUser.profPic.data = fs.readFileSync(imgPath);
+    // newUser.profPic.contentType = 'image/jpg';
+
+    console.log(newUser);
 
     User.addUser(newUser, (error, user)=>{
         if(error) {

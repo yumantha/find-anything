@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {ValidateService} from "../../../services/validate/validate.service";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {AuthService} from "../../../services/authenticate/auth.service";
@@ -17,25 +17,33 @@ export class RegisterComponent implements OnInit {
   email: String;
   password: String;
   confPass: String;
+  // profPic: any;
 
   constructor(
     private validateService: ValidateService,
     private flashMessagesService: FlashMessagesService,
     private authService: AuthService,
     private router: Router
+    // private elementRef: ElementRef
   ) { }
 
   ngOnInit() {
   }
 
   onRegisterSubmit() {
+    // let files = this.elementRef.nativeElement.querySelector("#profPic").files;
+    // this.profPic = files[0];
+
     const user = {
       name: this.name,
       username: this.username,
       email: this.email,
       password: this.password,
       confPass: this.confPass
+      // profPic: this.profPic
     };
+
+    console.log(user);
 
     if(!this.validateService.validateRegister(user)) {
       this.flashMessagesService.show("Please fill in all necessary fields", {cssClass: 'alert-danger', timeout: 5000});
