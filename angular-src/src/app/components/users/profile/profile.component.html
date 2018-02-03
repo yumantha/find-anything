@@ -1,21 +1,91 @@
 <div *ngIf="user">
 
-  <mat-grid-list cols="4">
+  <mat-grid-list cols="8">
+
     <mat-grid-tile colspan="1">
       <img src="https://www.bighandi.com/img/profile-demo.png" id="profPic">
     </mat-grid-tile>
 
-    <mat-grid-tile colspan="3">
+    <mat-grid-tile colspan="7">
       <div id="profInfo">
         <h1>{{user.name}}</h1>
+        <mat-divider></mat-divider>
         <p>{{user.username}}</p>
         <p>{{user.email}}</p>
       </div>
     </mat-grid-tile>
+
   </mat-grid-list>
 
   <mat-tab-group>
     <mat-tab label="User Info">
+      <div class="row">
+
+        <div class="col-3 type">
+          Name
+        </div>
+
+        <div class="col-9 property">
+          {{user.name}}
+        </div>
+
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="row">
+
+        <div class="col-3 type">
+          Username
+        </div>
+
+        <div class="col-9 property">
+          {{user.username}}
+        </div>
+
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="row">
+
+        <div class="col-3 type">
+          Email
+        </div>
+
+        <div class="col-9 property">
+          {{user.email}}
+        </div>
+
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="row">
+
+        <div class="col-3 type">
+          Info0
+        </div>
+
+        <div class="col-9 property">
+          info0
+        </div>
+
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="row">
+
+        <div class="col-3 type">
+          Info1
+        </div>
+
+        <div class="col-9 property">
+          info1
+        </div>
+
+      </div>
 
     </mat-tab>
 
@@ -27,6 +97,11 @@
 
     </mat-tab>
   </mat-tab-group>
+
+  <div>
+    <button mat-mini-fab color="primary" id="editProfile" [routerLink]="['/profile/edit']">Edit</button>
+  </div>
+
 
 </div>
 

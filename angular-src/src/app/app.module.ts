@@ -17,6 +17,7 @@ import {SearchResultsComponent} from './components/search/search-results/search-
 import {RegisterComponent} from './components/users/register/register.component';
 import {LoginComponent} from './components/users/login/login.component';
 import {ProfileComponent} from './components/users/profile/profile.component';
+import {EditProfileComponent} from './components/users/edit-profile/edit-profile.component';
 import {AddItemComponent} from './components/items/add-item/add-item.component';
 import {ViewItemComponent} from './components/items/view-item/view-item.component';
 
@@ -32,6 +33,7 @@ const appRoutes = [
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'profile/edit', component: EditProfileComponent, canActivate: [AuthGuard]},
   {path: 'items/new', component: AddItemComponent},
   {path: 'items/:id', component: ViewItemComponent},
 ];
@@ -47,7 +49,8 @@ const appRoutes = [
     LoginComponent,
     ProfileComponent,
     AddItemComponent,
-    ViewItemComponent
+    ViewItemComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,

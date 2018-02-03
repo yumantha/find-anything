@@ -14,10 +14,16 @@ export class AuthService {
   registerUser(user) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    // console.log(user);
     return this.http.post(this.server + 'users/register', user, {headers: headers})
       .map(res => res.json());
   };
+
+  editUser(user) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.post(this.server + 'users/edit', user, {headers: headers})
+      .map(res => res.json());
+  }
 
   authenticateUser(user) {
     let headers = new Headers();

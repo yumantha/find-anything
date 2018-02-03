@@ -9,7 +9,7 @@ const User = require('../models/user');
 
 // const imgPath = "./uploads/image.jpg";
 
-//register
+//register user
 router.post('/register', (req, res, next)=>{
     // console.log(req.body);
 
@@ -24,6 +24,28 @@ router.post('/register', (req, res, next)=>{
 
     // newUser.profPic.data = fs.readFileSync(imgPath);
     // newUser.profPic.contentType = 'image/jpg';
+
+    console.log(newUser);
+
+    User.addUser(newUser, (error, user)=>{
+        if(error) {
+            res.json({success: false, msg: 'Failed to register user. Error: ' + error})
+        } else {
+            res.json({success: true, msg: 'User registered'});
+        }
+    });
+});
+
+//edit user
+router.post('/edit', (req, res, next)=>{
+    // console.log(req.body);
+
+    let newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password,
+    });
 
     console.log(newUser);
 

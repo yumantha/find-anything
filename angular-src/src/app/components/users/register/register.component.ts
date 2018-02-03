@@ -10,7 +10,8 @@ import {Router} from "@angular/router";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  hide: Boolean = true;
+  hidePass: Boolean = true;
+  hideConfPass: Boolean = true;
 
   name: String;
   username: String;
@@ -43,7 +44,7 @@ export class RegisterComponent implements OnInit {
       // profPic: this.profPic
     };
 
-    console.log(user);
+    // console.log(user);
 
     if(!this.validateService.validateRegister(user)) {
       this.flashMessagesService.show("Please fill in all necessary fields", {cssClass: 'alert-danger', timeout: 5000});
