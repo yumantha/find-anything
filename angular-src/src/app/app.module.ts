@@ -26,6 +26,7 @@ import {AuthService} from "./services/authenticate/auth.service";
 
 import {AuthGuard} from "./guards/auth.guard";
 import { EditAccountComponent } from './components/users/edit-account/edit-account.component';
+import { EnterPassDialog } from './components/users/edit-profile/enter-pass/enter-pass.component';
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
@@ -53,7 +54,8 @@ const appRoutes = [
     AddItemComponent,
     ViewItemComponent,
     EditProfileComponent,
-    EditAccountComponent
+    EditAccountComponent,
+    EnterPassDialog
   ],
   imports: [
     BrowserModule,
@@ -64,6 +66,9 @@ const appRoutes = [
     HttpModule,
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule.forRoot()
+  ],
+  entryComponents: [
+    EnterPassDialog
   ],
   providers: [
     ValidateService,

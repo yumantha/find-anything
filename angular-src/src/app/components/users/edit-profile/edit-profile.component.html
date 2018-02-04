@@ -1,10 +1,10 @@
 <div *ngIf="dataAvailable">
   <mat-card>
-
-    <mat-card-title>Edit User</mat-card-title>
+    <mat-card-title>
+      Edit User
+    </mat-card-title>
 
     <mat-card-content>
-
       <form (submit)="onEditSubmit()">
 
         <div>
@@ -45,12 +45,11 @@
         </div>
 
       </form>
-
     </mat-card-content>
 
-    <!--<a [routerLink]="['/profile/editAcc']" id="editAccLink">Edit Email/Password</a>-->
-
+    <mat-card-actions>
+      <button mat-button (click)="openDialog()">Edit Email/Password</button>
+    </mat-card-actions>
   </mat-card>
 </div>
-
 

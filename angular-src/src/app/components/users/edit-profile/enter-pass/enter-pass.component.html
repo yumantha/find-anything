@@ -1,0 +1,20 @@
+<div id="dialog">
+  <h1 mat-dialog-title>Please enter your current password</h1>
+
+  <mat-dialog-content>
+    <form>
+      <div id="currentPass">
+        <mat-form-field>
+          <input placeholder="Password" matInput type="text">
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div id="buttons">
+      <button mat-raised-button (click)="onDialogOk()">OK</button>
+      <button mat-raised-button (click)="onDialogCancel()">Cancel</button>
+    </div>
+  </mat-dialog-actions>
+</div>

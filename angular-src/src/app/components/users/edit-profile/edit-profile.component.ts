@@ -3,6 +3,8 @@ import {ValidateService} from "../../../services/validate/validate.service";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {AuthService} from "../../../services/authenticate/auth.service";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material";
+import {EnterPassDialog} from "./enter-pass/enter-pass.component";
 
 @Component({
   selector: 'app-edit-profile',
@@ -22,7 +24,8 @@ export class EditProfileComponent implements OnInit {
     private validateService: ValidateService,
     private flashMessagesService: FlashMessagesService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -84,6 +87,17 @@ export class EditProfileComponent implements OnInit {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
           this.router.navigate(['/profile']);
         }
+      });
+  }
+
+  openDialog() {
+    let dialogRef = this.dialog.open(EnterPassDialog, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        console.log('dialog closed: ' + result);
       })
   }
 }

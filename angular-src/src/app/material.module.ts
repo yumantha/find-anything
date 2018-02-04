@@ -10,7 +10,8 @@ import {
   MatCardModule,
   MatTabsModule,
   MatGridListModule,
-  MatDividerModule
+  MatDividerModule,
+  MatDialogModule
 } from "@angular/material";
 
 
@@ -25,7 +26,8 @@ import {
     MatCardModule,
     MatTabsModule,
     MatGridListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule
   ],
   exports: [
     MatButtonModule,
@@ -37,7 +39,8 @@ import {
     MatCardModule,
     MatTabsModule,
     MatGridListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule
   ]
 })
 
