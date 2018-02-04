@@ -18,6 +18,10 @@ export class RegisterComponent implements OnInit {
   email: String;
   password: String;
   confPass: String;
+  telephone: String;
+  mobile: String;
+  address: String;
+
   // profPic: any;
 
   constructor(
@@ -40,7 +44,10 @@ export class RegisterComponent implements OnInit {
       username: this.username,
       email: this.email,
       password: this.password,
-      confPass: this.confPass
+      confPass: this.confPass,
+      telephone: this.telephone,
+      mobile: this.mobile,
+      address: this.address
       // profPic: this.profPic
     };
 
@@ -64,6 +71,20 @@ export class RegisterComponent implements OnInit {
     if(!this.validateService.validatePassword(user.password, user.confPass)) {
       this.flashMessagesService.show("Password and confirm password do not match", {cssClass: 'alert-danger', timeout: 5000});
       return false;
+    }
+
+    if(user.telephone) {
+      if (!this.validateService.validatePhone(user.telephone)) {
+        this.flashMessagesService.show("Please enter a valid telephone number", {cssClass: 'alert-danger', timeout: 5000});
+        return false;
+      }
+    }
+
+    if(user.mobile) {
+      if (!this.validateService.validatePhone(user.mobile)) {
+        this.flashMessagesService.show("Please enter a valid mobile number", {cssClass: 'alert-danger', timeout: 5000});
+        return false;
+      }
     }
 
     this.authService.registerUser(user)

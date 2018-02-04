@@ -64,11 +64,11 @@
       <div class="row">
 
         <div class="col-3 type">
-          Info0
+          Telephone Number
         </div>
 
         <div class="col-9 property">
-          info0
+          {{user.telephone}}
         </div>
 
       </div>
@@ -78,11 +78,25 @@
       <div class="row">
 
         <div class="col-3 type">
-          Info1
+          Mobile Number
         </div>
 
         <div class="col-9 property">
-          info1
+          {{user.mobile}}
+        </div>
+
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="row">
+
+        <div class="col-3 type">
+          Address
+        </div>
+
+        <div class="col-9 property">
+          {{user.address}}
         </div>
 
       </div>
@@ -99,7 +113,7 @@
   </mat-tab-group>
 
   <div>
-    <button mat-mini-fab color="primary" id="editProfile" [routerLink]="['/profile/edit']">Edit</button>
+    <button mat-mini-fab color="primary" id="editProfile" [routerLink]="['/profile/editProf']">Edit</button>
   </div>
 
 

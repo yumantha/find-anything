@@ -18,6 +18,9 @@ router.post('/register', (req, res, next)=>{
         email: req.body.email,
         username: req.body.username,
         password: req.body.password,
+        telephone: req.body.telephone,
+        mobile: req.body.mobile,
+        address: req.body.address
     });
 
     // console.log(newUser);
@@ -44,10 +47,10 @@ router.post('/edit', (req, res, next)=>{
         name: req.body.name,
         email: req.body.email,
         username: req.body.username,
-        password: req.body.password,
+        password: req.body.password
     });
 
-    console.log(newUser);
+    // console.log(newUser);
 
     User.addUser(newUser, (error, user)=>{
         if(error) {

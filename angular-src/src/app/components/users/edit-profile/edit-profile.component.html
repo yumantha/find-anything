@@ -19,25 +19,23 @@
           </mat-form-field>
         </div>
 
-        <!--<div>-->
-          <!--<mat-form-field class="reg-form-field">-->
-            <!--<input placeholder="Email" matInput type="email" [(ngModel)]="user.email" name="email">-->
-          <!--</mat-form-field>-->
-        <!--</div>-->
+        <div>
+          <mat-form-field class="reg-form-field">
+            <input placeholder="Telephone Number" matInput type="text" [(ngModel)]="user.telephone" name="username">
+          </mat-form-field>
+        </div>
 
-        <!--<div>-->
-          <!--<mat-form-field class="reg-form-field">-->
-            <!--<input type="password" matInput placeholder="Password" [type]="hidePass ? 'password' : 'text'" [(ngModel)]="password" name="password">-->
-            <!--<mat-icon matSuffix (click)="hidePass = !hidePass">{{hidePass ? 'visibility' : 'visibility_off'}}</mat-icon>-->
-          <!--</mat-form-field>-->
-        <!--</div>-->
+        <div>
+          <mat-form-field class="reg-form-field">
+            <input placeholder="Mobile Number" matInput type="text" [(ngModel)]="user.mobile" name="username">
+          </mat-form-field>
+        </div>
 
-        <!--<div>-->
-          <!--<mat-form-field class="reg-form-field">-->
-            <!--<input type="password" matInput placeholder="Confirm password" [type]="hideConfPass ? 'password' : 'text'" [(ngModel)]="confPass" name="confPass">-->
-            <!--<mat-icon matSuffix (click)="hideConfPass = !hideConfPass">{{hideConfPass ? 'visibility' : 'visibility_off'}}</mat-icon>-->
-          <!--</mat-form-field>-->
-        <!--</div>-->
+        <div>
+          <mat-form-field class="reg-form-field">
+            <input placeholder="Address" matInput type="text" [(ngModel)]="user.address" name="username">
+          </mat-form-field>
+        </div>
 
         <div>
           <button mat-raised-button color="primary" type="submit">Submit</button>
@@ -46,6 +44,8 @@
       </form>
 
     </mat-card-content>
+
+    <!--<a [routerLink]="['/profile/editAcc']" id="editAccLink">Edit Email/Password</a>-->
 
   </mat-card>
 </div>

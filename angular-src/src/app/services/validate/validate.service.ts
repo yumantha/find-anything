@@ -31,6 +31,11 @@ export class ValidateService {
     }
   }
 
+  validatePhone(number) {
+    const re = /^([0-9]){9}$/;
+    return re.test(String(number));
+  }
+
   validateLogin(user) {
     if(user.username == undefined || user.password == undefined) {
       return false;

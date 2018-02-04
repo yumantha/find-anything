@@ -25,6 +25,7 @@ import {ValidateService} from "./services/validate/validate.service";
 import {AuthService} from "./services/authenticate/auth.service";
 
 import {AuthGuard} from "./guards/auth.guard";
+import { EditAccountComponent } from './components/users/edit-account/edit-account.component';
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
@@ -33,7 +34,8 @@ const appRoutes = [
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'profile/edit', component: EditProfileComponent, canActivate: [AuthGuard]},
+  {path: 'profile/editProf', component: EditProfileComponent, canActivate: [AuthGuard]},
+  {path: 'profile/editAcc', component: EditAccountComponent, canActivate: [AuthGuard]},
   {path: 'items/new', component: AddItemComponent},
   {path: 'items/:id', component: ViewItemComponent},
 ];
@@ -50,7 +52,8 @@ const appRoutes = [
     ProfileComponent,
     AddItemComponent,
     ViewItemComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    EditAccountComponent
   ],
   imports: [
     BrowserModule,
