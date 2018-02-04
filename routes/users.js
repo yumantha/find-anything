@@ -41,8 +41,6 @@ router.post('/register', (req, res, next)=>{
 
 //edit user profile
 router.post('/editProf', (req, res, next)=>{
-    // console.log(req.body);
-
     const userId = req.body._id;
 
     let editedUser = new User({
@@ -56,6 +54,26 @@ router.post('/editProf', (req, res, next)=>{
     // console.log(editedUser);
 
     User.updateUserProf(userId, editedUser, (error, user)=>{
+        if(error) {
+            res.json({success: false, msg: 'Failed to update user. Error: ' + error})
+        } else {
+            res.json({success: true, msg: 'User updated'});
+        }
+    });
+});
+
+//edit user account data
+router.post('/editAcc', (req, res, next) => {
+    const userId = req.body.user_id;
+
+    let editedUser = new User({
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    // console.log(editedUser);
+
+    User.updateUserAcc(userId, editedUser, (error, user)=>{
         if(error) {
             res.json({success: false, msg: 'Failed to update user. Error: ' + error})
         } else {

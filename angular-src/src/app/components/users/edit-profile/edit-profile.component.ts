@@ -13,12 +13,7 @@ import {EnterPassDialog} from "./enter-pass/enter-pass.component";
 })
 export class EditProfileComponent implements OnInit {
   user: any;
-
   dataAvailable: Boolean = false;
-
-  // password: String;
-  // confPass: String;
-  // newPass: Boolean = false;
 
   constructor(
     private validateService: ValidateService,

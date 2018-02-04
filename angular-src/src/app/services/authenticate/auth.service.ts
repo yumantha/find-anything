@@ -11,6 +11,7 @@ export class AuthService {
 
   constructor(private http: Http) { }
 
+  //register user
   registerUser(user) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
@@ -19,6 +20,7 @@ export class AuthService {
       .map(res => res.json());
   };
 
+  //edit user profile data
   editUser(user) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
@@ -27,6 +29,16 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  //edit user account data
+  editUserAcc(user) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    // console.log(user);
+    return this.http.post(this.server + 'users/editAcc', user, {headers: headers})
+      .map(res => res.json());
+  }
+
+  //compare passwords
   comparePasswords(user) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
@@ -35,6 +47,7 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  //authenticate a given user
   authenticateUser(user) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
@@ -42,6 +55,7 @@ export class AuthService {
       .map(res => res.json());
   };
 
+  //get the profile of a user
   getProfile() {
     let headers = new Headers();
     this.loadToken();
@@ -51,6 +65,7 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  //store user data in local storage
   storeUserData(token, user) {
     localStorage.setItem('id_token', token);
     localStorage.setItem('user_id', user.id);
@@ -59,14 +74,17 @@ export class AuthService {
     this.user = user;
   };
 
+  //load the stored token
   loadToken() {
     this.authToken = localStorage.getItem('id_token');
   };
 
+  //check whether a user is logged in
   loggedIn() {
     return tokenNotExpired('id_token');
   }
 
+  //clear the local storage and logout a user
   logout() {
     this.authToken = null;
     this.user = null;

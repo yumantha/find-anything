@@ -81,3 +81,33 @@ module.exports.updateUserProf = function(userId, updatedUser, callback) {
         },
         callback);
 };
+
+module.exports.updateUserAcc = function(userId, updatedUser, callback) {
+    if(updatedUser.password) {
+        bcrypt.genSalt(10, (error, salt)=>{
+            bcrypt.hash(updatedUser.password, salt, (error, hash)=>{
+                if(error) {
+                    throw error;
+                } else {
+                    updatedUser.password = hash;
+                    User.findByIdAndUpdate(userId,
+                        {
+                            $set: {
+                                email: updatedUser.email,
+                                password: updatedUser.password
+                            }
+                        },
+                        callback);
+                }
+            });
+        });
+    } else {
+        User.findByIdAndUpdate(userId,
+            {
+                $set: {
+                    email: updatedUser.email
+                }
+            },
+            callback);
+    }
+};

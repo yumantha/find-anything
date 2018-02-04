@@ -1,0 +1,20 @@
+.reg-form-field {
+  width: 90%;
+}
+
+#reg-user {
+  width: 50%;
+}
+
+mat-card {
+  text-align: center;
+  margin: 20px;
+}
+
+form {
+  text-align: center
+}
+
+mat-card-actions {
+  text-align: right;
+}
