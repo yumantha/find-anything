@@ -97,7 +97,13 @@ export class EditProfileComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(result => {
-        console.log('dialog closed: ' + result);
+        if(result.success) {
+          this.router.navigate(['/profile/editAcc'])
+        } else {
+          if(result.msg) {
+            this.flashMessagesService.show(result.msg, {cssClass: 'alert-danger', timeout: 5000});
+          }
+        }
       })
   }
 }

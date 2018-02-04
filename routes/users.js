@@ -99,6 +99,35 @@ router.post('/authenticate', (req, res, next)=>{
     });
 });
 
+//compare password
+router.post('/comparePass', (req, res, next) => {
+    const userId = req.body.user_id;
+    const password = req.body.password;
+
+    User.getUserById(userId, (error, user) => {
+        if(error) {
+            return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+        }
+
+        if(!user) {
+            return res.json({success: false, msg: 'User not found'});
+        }
+
+        User.comparePassword(password, user.password, (error, isMatch) => {
+            if(error) {
+                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+            }
+
+            if(!isMatch) {
+                return res.json({success: false, msg: 'Invalid password'});
+            } else {
+                return res.json({success: true, msg: 'Password accepted'});
+            }
+        });
+    });
+
+});
+
 //user profile
 router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res, next)=>{
     res.json({user: req.user});
