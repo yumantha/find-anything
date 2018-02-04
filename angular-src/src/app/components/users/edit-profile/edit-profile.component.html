@@ -21,24 +21,27 @@
 
         <div>
           <mat-form-field class="reg-form-field">
-            <input placeholder="Telephone Number" matInput type="text" [(ngModel)]="user.telephone" name="username">
+            <span matPrefix>+94 &nbsp;</span>
+            <input placeholder="Telephone Number" matInput type="text" [(ngModel)]="user.telephone" name="telephone" maxlength="9">
           </mat-form-field>
         </div>
 
         <div>
           <mat-form-field class="reg-form-field">
-            <input placeholder="Mobile Number" matInput type="text" [(ngModel)]="user.mobile" name="username">
+            <span matPrefix>+94 &nbsp;</span>
+            <input placeholder="Mobile Number" matInput type="text" [(ngModel)]="user.mobile" name="mobile" maxlength="9">
           </mat-form-field>
         </div>
 
         <div>
           <mat-form-field class="reg-form-field">
-            <input placeholder="Address" matInput type="text" [(ngModel)]="user.address" name="username">
+            <input placeholder="Address" matInput type="text" [(ngModel)]="user.address" name="address">
           </mat-form-field>
         </div>
 
         <div>
           <button mat-raised-button color="primary" type="submit">Submit</button>
+          <button mat-raised-button color="basic" (click)="onCancel()" type="button">Cancel</button>
         </div>
 
       </form>

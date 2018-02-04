@@ -27,4 +27,5 @@ mat-grid-list {
 
 #editProfile {
   float: right;
+  margin: 10px;
 }

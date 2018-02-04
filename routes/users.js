@@ -39,24 +39,27 @@ router.post('/register', (req, res, next)=>{
     });
 });
 
-//edit user
-router.post('/edit', (req, res, next)=>{
+//edit user profile
+router.post('/editProf', (req, res, next)=>{
     // console.log(req.body);
 
-    let newUser = new User({
+    const userId = req.body._id;
+
+    let editedUser = new User({
         name: req.body.name,
-        email: req.body.email,
         username: req.body.username,
-        password: req.body.password
+        telephone: req.body.telephone,
+        mobile: req.body.mobile,
+        address: req.body.address
     });
 
-    // console.log(newUser);
+    // console.log(editedUser);
 
-    User.addUser(newUser, (error, user)=>{
+    User.updateUserProf(userId, editedUser, (error, user)=>{
         if(error) {
-            res.json({success: false, msg: 'Failed to register user. Error: ' + error})
+            res.json({success: false, msg: 'Failed to update user. Error: ' + error})
         } else {
-            res.json({success: true, msg: 'User registered'});
+            res.json({success: true, msg: 'User updated'});
         }
     });
 });

@@ -13,12 +13,10 @@ export class EditProfileComponent implements OnInit {
   user: any;
 
   dataAvailable: Boolean = false;
-  hidePass: Boolean = true;
-  hideConfPass: Boolean = true;
 
-  password: String;
-  confPass: String;
-  newPass: Boolean = false;
+  // password: String;
+  // confPass: String;
+  // newPass: Boolean = false;
 
   constructor(
     private validateService: ValidateService,
@@ -32,13 +30,17 @@ export class EditProfileComponent implements OnInit {
       .subscribe(profile => {
           this.user = profile.user;
           this.dataAvailable = true;
-          console.log(this.user)
+          // console.log(this.user);
         },
         error => {
           console.log(error);
           return false;
         }
       )
+  }
+
+  onCancel() {
+    this.router.navigate(['/profile']);
   }
 
   onEditSubmit() {
@@ -49,35 +51,39 @@ export class EditProfileComponent implements OnInit {
       }
     }
 
-    if(this.user.email) {
-      if(!this.validateService.validateEmail(this.user.email)) {
-        this.flashMessagesService.show("Please enter a valid email address", {cssClass: 'alert-danger', timeout: 5000});
+    if(this.user.telephone) {
+      if(!this.validateService.validatePhone(this.user.telephone)) {
+        this.flashMessagesService.show("Please enter a valid telephone number", {cssClass: 'alert-danger', timeout: 5000});
         return false;
       }
-    }
-
-    if(this.password && this.validateService.validatePassword(this.password, this.confPass)) {
-      this.newPass = true;
-      this.user.password = this.password;
     } else {
-      this.flashMessagesService.show("Password and confirm password do not match", {cssClass: 'alert-danger', timeout: 5000});
-      return false;
+      this.user.telephone = null;
     }
 
-    this.user.newPass = this.newPass;
+    if(this.user.mobile) {
+      if(!this.validateService.validatePhone(this.user.mobile)) {
+        this.flashMessagesService.show("Please enter a valid mobile number", {cssClass: 'alert-danger', timeout: 5000});
+        return false;
+      }
+    } else {
+      delete this.user.mobile;
+    }
 
-    console.log(this.user);
+    if(!this.user.address) {
+      delete this.user.address;
+    }
 
-    // this.authService.editUser(this.user)
-    //   .subscribe(data => {
-    //     if(data.success) {
-    //       this.authService.logout();
-    //       this.flashMessagesService.show("User edited. Please login again.", {cssClass: 'alert-success', timeout: 5000});
-    //       this.router.navigate(['/login']);
-    //     } else {
-    //       this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
-    //       this.router.navigate(['/profile']);
-    //     }
-    //   })
+    // console.log(this.user);
+
+    this.authService.editUser(this.user)
+      .subscribe(data => {
+        if(data.success) {
+          this.flashMessagesService.show("User edited.", {cssClass: 'alert-success', timeout: 5000});
+          this.router.navigate(['/profile']);
+        } else {
+          this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          this.router.navigate(['/profile']);
+        }
+      })
   }
 }

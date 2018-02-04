@@ -67,3 +67,17 @@ module.exports.addUser = function(newUser, callback) {
         });
     });
 };
+
+module.exports.updateUserProf = function(userId, updatedUser, callback) {
+    User.findByIdAndUpdate(userId,
+        {
+            $set: {
+                name: updatedUser.name,
+                username: updatedUser.username,
+                telephone: updatedUser.telephone,
+                mobile: updatedUser.mobile,
+                address: updatedUser.address
+            }
+        },
+        callback);
+};
