@@ -6,12 +6,18 @@
       <img src="https://www.bighandi.com/img/profile-demo.png" id="profPic">
     </mat-grid-tile>
 
-    <mat-grid-tile colspan="7">
+    <mat-grid-tile colspan="6">
       <div id="profInfo">
         <h1>{{user.name}}</h1>
         <mat-divider></mat-divider>
         <p>{{user.username}}</p>
         <p>{{user.email}}</p>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="1">
+      <div id="addItem">
+        <button mat-raised-button color="primary" [routerLink]="['/items/new']"><mat-icon>add</mat-icon>Add Item for Sale</button>
       </div>
     </mat-grid-tile>
 
@@ -101,6 +107,10 @@
 
       </div>
 
+      <div>
+        <button mat-mini-fab color="primary" id="editProfile" [routerLink]="['/profile/editProf']">Edit</button>
+      </div>
+
     </mat-tab>
 
     <mat-tab label="Favourite Items">
@@ -111,11 +121,6 @@
 
     </mat-tab>
   </mat-tab-group>
-
-  <div>
-    <button mat-mini-fab color="primary" id="editProfile" [routerLink]="['/profile/editProf']">Edit</button>
-  </div>
-
 
 </div>
 

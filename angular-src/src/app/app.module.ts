@@ -20,13 +20,16 @@ import {ProfileComponent} from './components/users/profile/profile.component';
 import {EditProfileComponent} from './components/users/edit-profile/edit-profile.component';
 import {AddItemComponent} from './components/items/add-item/add-item.component';
 import {ViewItemComponent} from './components/items/view-item/view-item.component';
+import {EditAccountComponent} from './components/users/edit-account/edit-account.component';
+import {EnterPassDialog} from './components/users/edit-profile/enter-pass/enter-pass.component';
+import {EditItemComponent} from './components/items/edit-item/edit-item.component';
+import {ViewProfileComponent} from './components/users/view-profile/view-profile.component';
 
 import {ValidateService} from "./services/validate/validate.service";
 import {AuthService} from "./services/authenticate/auth.service";
+import {ItemService} from "./services/items/item.service";
 
 import {AuthGuard} from "./guards/auth.guard";
-import { EditAccountComponent } from './components/users/edit-account/edit-account.component';
-import { EnterPassDialog } from './components/users/edit-profile/enter-pass/enter-pass.component';
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
@@ -37,8 +40,10 @@ const appRoutes = [
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'profile/editProf', component: EditProfileComponent, canActivate: [AuthGuard]},
   {path: 'profile/editAcc', component: EditAccountComponent, canActivate: [AuthGuard]},
-  {path: 'items/new', component: AddItemComponent},
+  {path: 'users/:id', component: ViewProfileComponent},
+  {path: 'items/new', component: AddItemComponent, canActivate: [AuthGuard]},
   {path: 'items/:id', component: ViewItemComponent},
+  {path: 'items/:id/edit', component: EditItemComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
@@ -55,7 +60,9 @@ const appRoutes = [
     ViewItemComponent,
     EditProfileComponent,
     EditAccountComponent,
-    EnterPassDialog
+    EnterPassDialog,
+    EditItemComponent,
+    ViewProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +80,8 @@ const appRoutes = [
   providers: [
     ValidateService,
     AuthService,
-    AuthGuard
+    AuthGuard,
+    ItemService
   ],
   bootstrap: [
     AppComponent

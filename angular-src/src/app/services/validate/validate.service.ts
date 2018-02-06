@@ -43,4 +43,25 @@ export class ValidateService {
       return true;
     }
   }
+
+  validateItem(item) {
+    if(item.name == undefined || item.price == undefined || item.isAvailable == undefined) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  validateItemSeller(seller) {
+    if(seller.id == undefined || seller.username == undefined) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  validatePrice(price) {
+    const re = /^\d+$/;
+    return re.test(String(price));
+  }
 }

@@ -8,8 +8,7 @@ const ItemSchema = mongoose.Schema({
         required: true
     },
     type: {
-        type: String,
-        required: true
+        type: String
     },
     isAvailable: {
         type: Boolean,
@@ -20,27 +19,18 @@ const ItemSchema = mongoose.Schema({
         required: true
     },
     location: {
-        type: String,
-        required: true
+        type: String
+    },
+    description: {
+        type: String
     },
     seller: {
-        id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        },
-        username: {
-            type: String
-        }
+        type: Object,
+        required: true
     },
     watchedBy: [
         {
-            id: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
-            },
-            username: {
-                type: String
-            }
+            type: Object
         }
     ]
 });

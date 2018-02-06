@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.authService.logout();
   }
 
   onRegisterSubmit() {

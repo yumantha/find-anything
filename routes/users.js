@@ -105,9 +105,7 @@ router.post('/authenticate', (req, res, next)=>{
                     token: 'JWT ' + token,
                     user: {
                         id: user._id,
-                        name: user.name,
-                        username: user.username,
-                        email: user.email
+                        username: user.username
                     }
                 })
             } else {

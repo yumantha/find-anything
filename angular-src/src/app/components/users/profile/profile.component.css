@@ -17,10 +17,6 @@ mat-grid-list {
   padding: 25px;
 }
 
-.property {
-
-}
-
 .type {
   font-weight: bold;
 }
@@ -28,4 +24,13 @@ mat-grid-list {
 #editProfile {
   float: right;
   margin: 10px;
+}
+
+#addItem {
+  height: 100%;
+  width: 100%;
+}
+
+mat-grid-tile {
+  overflow: visible;
 }
