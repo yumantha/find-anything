@@ -8,12 +8,15 @@ const Item = require('../models/item');
 
 //new item
 router.post('/new', (req, res, next)=>{
+    // console.log(req.body);
     let newItem = new Item({
         name: req.body.name,
         type: req.body.type,
         isAvailable: req.body.isAvailable,
         price: req.body.price,
-        location: req.body.location
+        location: req.body.location,
+        description: req.body.description,
+        seller: req.body.seller
     });
 
     Item.addItem(newItem, (error, user)=>{

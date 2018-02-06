@@ -28,7 +28,7 @@ router.post('/register', (req, res, next)=>{
     // newUser.profPic.data = fs.readFileSync(imgPath);
     // newUser.profPic.contentType = 'image/jpg';
 
-    console.log(newUser);
+    // console.log(newUser);
 
     User.addUser(newUser, (error, user)=>{
         if(error) {
