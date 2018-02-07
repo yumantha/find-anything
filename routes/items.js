@@ -28,4 +28,20 @@ router.post('/new', (req, res, next)=>{
     });
 });
 
+router.get('/:id', (req, res, next)=> {
+    const id = req.params.id;
+
+    Item.getItemById(id, (error, item)=>{
+        if(error) {
+            return res.json({success: false, msg: "An error occurred: " + error})
+        }
+
+        if(!item) {
+            return res.json({success: false, msg: "Item not found"})
+        } else {
+            return res.json({success: true, item: item});
+        }
+    });
+});
+
 module.exports = router;

@@ -18,4 +18,12 @@ export class ItemService {
     return this.http.post(this.server + 'items/new', item, {headers: headers})
       .map(res => res.json());
   }
+
+  //get an item from the database
+  getItem(itemId) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.get(this.server + 'items/' + itemId,{headers: headers})
+      .map(res => res.json());
+  }
 }

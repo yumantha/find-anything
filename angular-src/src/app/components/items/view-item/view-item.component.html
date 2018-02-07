@@ -1,3 +1,56 @@
-<p>
-  view-item works!
-</p>
+<div *ngIf="dataAvailable">
+  <mat-grid-list cols="2" rowHeight="350px">
+    <mat-grid-tile colspan="1">
+      <div class="grid-item">
+        <img src="https://cdn.takas.lk/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/a/samsung_50_4.jpeg">
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1">
+      <div class="grid-item">
+        <div>
+          <h1>{{item.name}}</h1>
+        </div>
+
+        <div *ngIf="item.type">
+          <p>Type: {{item.type}}</p>
+        </div>
+
+        <div>
+          <p>Price: Rs. {{item.price}}.00</p>
+        </div>
+
+        <div *ngIf="item.location">
+          <p>Situated at: {{item.location}}</p>
+        </div>
+
+        <div>
+          <p>Sold by: <a [href]="sellerProfile">{{item.seller.username}}</a></p>
+        </div>
+
+        <div>
+          <div *ngIf="item.isAvailable; else unavailable">
+            <p style="color: blue"><strong>Item is available</strong></p>
+          </div>
+          <ng-template #unavailable>
+            <p style="color: red"><strong>Item is not available</strong></p>
+          </ng-template>
+          <div>
+
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <div class="grid-item">
+        <br/>
+        <p><strong>Description</strong></p>
+        {{item.description}}
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<!--https://images.pexels.com/photos/844297/pexels-photo-844297.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb-->
+<!--https://images.pexels.com/photos/33109/fall-autumn-red-season.jpg?w=1260&h=750&auto=compress&cs=tinysrgb-->
+<!--https://images.pexels.com/photos/68147/waterfall-thac-dray-nur-buon-me-thuot-daklak-68147.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb-->
