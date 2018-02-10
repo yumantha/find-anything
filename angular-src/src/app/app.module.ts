@@ -21,9 +21,11 @@ import {EditProfileComponent} from './components/users/edit-profile/edit-profile
 import {AddItemComponent} from './components/items/add-item/add-item.component';
 import {ViewItemComponent} from './components/items/view-item/view-item.component';
 import {EditAccountComponent} from './components/users/edit-account/edit-account.component';
-import {EnterPassDialog} from './components/users/edit-profile/enter-pass/enter-pass.component';
 import {EditItemComponent} from './components/items/edit-item/edit-item.component';
 import {ViewProfileComponent} from './components/users/view-profile/view-profile.component';
+
+import {EnterPassDialog} from './components/users/edit-profile/enter-pass/enter-pass.component';
+import {ConfirmDeleteDialog} from "./components/items/view-item/confirm-delete/confirm-delete.component";
 
 import {ValidateService} from "./services/validate/validate.service";
 import {AuthService} from "./services/authenticate/auth.service";
@@ -62,7 +64,8 @@ const appRoutes = [
     EditAccountComponent,
     EnterPassDialog,
     EditItemComponent,
-    ViewProfileComponent
+    ViewProfileComponent,
+    ConfirmDeleteDialog
   ],
   imports: [
     BrowserModule,
@@ -75,7 +78,8 @@ const appRoutes = [
     FlashMessagesModule.forRoot()
   ],
   entryComponents: [
-    EnterPassDialog
+    EnterPassDialog,
+    ConfirmDeleteDialog
   ],
   providers: [
     ValidateService,

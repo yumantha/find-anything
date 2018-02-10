@@ -44,3 +44,7 @@ module.exports.getItemById = function(id, callback) {
 module.exports.addItem = function(newItem, callback) {
     newItem.save(callback);
 };
+
+module.exports.deleteItemById = function(id, callback) {
+    Item.findByIdAndRemove(id, callback);
+}

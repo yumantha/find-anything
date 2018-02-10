@@ -1,5 +1,5 @@
 <div *ngIf="dataAvailable">
-  <mat-grid-list cols="2" rowHeight="350px">
+  <mat-grid-list cols="2" rowHeight="400px">
     <mat-grid-tile colspan="1">
       <div class="grid-item">
         <img src="https://cdn.takas.lk/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/a/samsung_50_4.jpeg">
@@ -20,7 +20,7 @@
         </div>
 
         <div *ngIf="item.location">
-          <p>Situated at: {{item.location}}</p>
+          <p>Location: {{item.location}}</p>
         </div>
 
         <div>
@@ -34,9 +34,11 @@
           <ng-template #unavailable>
             <p style="color: red"><strong>Item is not available</strong></p>
           </ng-template>
-          <div>
+        </div>
 
-          </div>
+        <div id="buttons" *ngIf="isOwner">
+          <button mat-fab color="primary" (click)="editItem()">Edit</button>
+          <button mat-fab color="warn" (click)="deleteItem()">Delete</button>
         </div>
       </div>
     </mat-grid-tile>

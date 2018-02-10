@@ -15,7 +15,7 @@ export class ItemService {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
     // console.log(item);
-    return this.http.post(this.server + 'items/new', item, {headers: headers})
+    return this.http.post(this.server + 'items/', item, {headers: headers})
       .map(res => res.json());
   }
 
@@ -24,6 +24,14 @@ export class ItemService {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
     return this.http.get(this.server + 'items/' + itemId,{headers: headers})
+      .map(res => res.json());
+  }
+
+  //delete an item from the database
+  deleteItem(itemId) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.delete(this.server + 'items/' + itemId, {headers: headers})
       .map(res => res.json());
   }
 }
