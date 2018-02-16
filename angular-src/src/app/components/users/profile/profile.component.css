@@ -2,6 +2,10 @@ mat-grid-list {
   margin: 10px;
 }
 
+button {
+  margin: 5px;
+}
+
 #profInfo {
   position: absolute;
   left: 50px;

@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 
   username: String;
   password: String;
+  userType: String;
 
   constructor(
     private validateService: ValidateService,
@@ -29,11 +30,12 @@ export class LoginComponent implements OnInit {
   onLoginSubmit() {
     const user = {
       username: this.username,
-      password: this.password
+      password: this.password,
+      userType: this.userType
     };
 
     if(!this.validateService.validateLogin(user)) {
-      this.flashMessagesService.show("Please enter a username and a password", {cssClass: 'alert-danger', timeout: 5000});
+      this.flashMessagesService.show("Please enter a username, password and an account type", {cssClass: 'alert-danger', timeout: 5000});
       return false;
     }
 

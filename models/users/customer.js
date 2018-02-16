@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const config = require('../config/database');
+const config = require('../../config/database');
 
 //user schema
-const UserSchema = mongoose.Schema({
+const CustomerSchema = mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -13,6 +13,10 @@ const UserSchema = mongoose.Schema({
         required: true
     },
     username: {
+        type: String,
+        required: true
+    },
+    userType: {
         type: String,
         required: true
     },
@@ -29,7 +33,10 @@ const UserSchema = mongoose.Schema({
     address: {
         type: String
     },
-    sellingItems: [{
+    favItems: [{
+        type: Object
+    }],
+    boughtItems: [{
         type: Object
     }]
     // profPic: {
@@ -38,17 +45,17 @@ const UserSchema = mongoose.Schema({
     // }
 });
 
-const User = module.exports = mongoose.model('User', UserSchema);
+const Customer = module.exports = mongoose.model('Customer', CustomerSchema);
 
 module.exports.getUserById = function(id, callback) {
-    User.findById(id, callback);
+    Customer.findById(id, callback);
 };
 
 module.exports.getUserByUsername = function(username, callback) {
     const query = {
         username: username
     };
-    User.findOne(query, callback);
+    Customer.findOne(query, callback);
 };
 
 module.exports.comparePassword = function(candidatePassword, hash, callback) {
@@ -72,7 +79,7 @@ module.exports.addUser = function(newUser, callback) {
 };
 
 module.exports.updateUserProf = function(userId, updatedUser, callback) {
-    User.findByIdAndUpdate(userId,
+    Customer.findByIdAndUpdate(userId,
         {
             $set: {
                 name: updatedUser.name,
@@ -93,7 +100,7 @@ module.exports.updateUserAcc = function(userId, updatedUser, callback) {
                     throw error;
                 } else {
                     updatedUser.password = hash;
-                    User.findByIdAndUpdate(userId,
+                    Customer.findByIdAndUpdate(userId,
                         {
                             $set: {
                                 email: updatedUser.email,
@@ -105,7 +112,7 @@ module.exports.updateUserAcc = function(userId, updatedUser, callback) {
             });
         });
     } else {
-        User.findByIdAndUpdate(userId,
+        Customer.findByIdAndUpdate(userId,
             {
                 $set: {
                     email: updatedUser.email

@@ -72,6 +72,7 @@ export class AuthService {
     localStorage.setItem('id_token', token);
     localStorage.setItem('user_id', user.id);
     localStorage.setItem('user_username', user.username);
+    localStorage.setItem('user_type', user.userType);
 
     this.authToken = token;
     this.user = user;

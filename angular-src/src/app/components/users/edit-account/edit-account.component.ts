@@ -19,6 +19,8 @@ export class EditAccountComponent implements OnInit {
   password: String;
   confPass: String;
 
+  userType: String = localStorage.getItem('user_type');
+
   constructor(
     private validateService: ValidateService,
     private flashMessagesService: FlashMessagesService,
@@ -58,6 +60,7 @@ export class EditAccountComponent implements OnInit {
     const editedUser = {
       user_id: this.user._id,
       email: this.user.email,
+      userType: this.userType,
       password: null
     };
 

@@ -6,7 +6,7 @@ export class ValidateService {
   constructor() { }
 
   validateRegister(user) {
-    if(user.name == undefined || user.username == undefined || user.email == undefined || user.password == undefined || user.confPass == undefined) {
+    if(user.name == undefined || user.username == undefined || user.email == undefined || user.password == undefined || user.confPass == undefined || user.userType == undefined) {
       return false;
     } else {
       return true;
@@ -37,7 +37,7 @@ export class ValidateService {
   }
 
   validateLogin(user) {
-    if(user.username == undefined || user.password == undefined) {
+    if(user.username == undefined || user.password == undefined || user.userType == undefined) {
       return false;
     } else {
       return true;

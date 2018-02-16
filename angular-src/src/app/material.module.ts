@@ -13,7 +13,9 @@ import {
   MatDividerModule,
   MatDialogModule,
   MatCheckboxModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatRadioModule,
+  MatSelectModule
 } from "@angular/material";
 
 @NgModule({
@@ -30,7 +32,9 @@ import {
     MatDividerModule,
     MatDialogModule,
     MatCheckboxModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatRadioModule,
+    MatSelectModule
   ],
   exports: [
     MatButtonModule,
@@ -45,7 +49,9 @@ import {
     MatDividerModule,
     MatDialogModule,
     MatCheckboxModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatRadioModule,
+    MatSelectModule
   ]
 })
 

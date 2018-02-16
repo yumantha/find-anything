@@ -23,7 +23,8 @@ export class EnterPassDialog implements OnInit {
   onDialogOk() {
     const user = {
       user_id: localStorage.getItem('user_id'),
-      password: this.password
+      password: this.password,
+      userType: localStorage.getItem('user_type')
     };
     // console.log(user);
 

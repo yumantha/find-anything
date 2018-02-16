@@ -20,6 +20,19 @@
 
       <div>
         <mat-form-field class="reg-form-field">
+          <mat-select placeholder="User Type" [(value)]="userType" required>
+            <mat-option value="customer">
+              Customer
+            </mat-option>
+            <mat-option value="seller">
+              Seller
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field class="reg-form-field">
           <input placeholder="Email" matInput type="email" [(ngModel)]="email" name="email" required>
         </mat-form-field>
       </div>

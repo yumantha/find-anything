@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
   telephone: String;
   mobile: String;
   address: String;
+  userType: String;
 
   // profPic: any;
 
@@ -48,11 +49,12 @@ export class RegisterComponent implements OnInit {
       confPass: this.confPass,
       telephone: this.telephone,
       mobile: this.mobile,
-      address: this.address
+      address: this.address,
+      userType: this.userType
       // profPic: this.profPic
     };
 
-    // console.log(user);
+    console.log(user);
 
     if(!this.validateService.validateRegister(user)) {
       this.flashMessagesService.show("Please fill in all necessary fields", {cssClass: 'alert-danger', timeout: 5000});

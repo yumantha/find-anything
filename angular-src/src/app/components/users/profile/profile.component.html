@@ -16,8 +16,9 @@
     </mat-grid-tile>
 
     <mat-grid-tile colspan="1">
-      <div id="addItem">
+      <div id="addItem" *ngIf="this.user.userType === 'seller'">
         <button mat-raised-button color="primary" [routerLink]="['/items/new']"><mat-icon>add_circle_outline</mat-icon> Add Item for Sale</button>
+        <button mat-raised-button color="primary" [routerLink]="['/services/new']"><mat-icon>add_circle_outline</mat-icon> Add Service for Sale</button>
       </div>
     </mat-grid-tile>
 
@@ -113,11 +114,11 @@
 
     </mat-tab>
 
-    <mat-tab label="Favourite Items">
+    <mat-tab label="Favourite Items" *ngIf="this.user.userType === 'customer'">
 
     </mat-tab>
 
-    <mat-tab label="Selling Items">
+    <mat-tab label="Selling Items" *ngIf="this.user.userType === 'seller'">
 
     </mat-tab>
   </mat-tab-group>
