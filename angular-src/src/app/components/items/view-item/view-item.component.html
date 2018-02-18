@@ -11,8 +11,8 @@
           <h1>{{item.name}}</h1>
         </div>
 
-        <div *ngIf="item.type">
-          <p>Type: {{item.type}}</p>
+        <div *ngIf="item.category">
+          <p>Category: {{item.category}}</p>
         </div>
 
         <div>
@@ -24,7 +24,7 @@
         </div>
 
         <div>
-          <p>Sold by: <a [href]="sellerProfile">{{item.seller.username}}</a></p>
+          <p>Sold by: <a [href]="sellerProfile">{{seller}}</a></p>
         </div>
 
         <div>

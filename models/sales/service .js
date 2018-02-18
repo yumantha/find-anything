@@ -60,7 +60,7 @@ const ServiceSchema = mongoose.Schema({
 const Service = module.exports = mongoose.model('Service', ServiceSchema);
 
 module.exports.getItemById = function(id, callback) {
-    Item.findById(id, callback);
+    Service.findById(id, callback);
 };
 
 module.exports.addItem = function(newItem, callback) {
@@ -68,5 +68,5 @@ module.exports.addItem = function(newItem, callback) {
 };
 
 module.exports.deleteItemById = function(id, callback) {
-    Item.findByIdAndRemove(id, callback);
+    Service.findByIdAndRemove(id, callback);
 }

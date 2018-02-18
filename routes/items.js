@@ -53,7 +53,17 @@ router.get('/:id', (req, res, next) => {
         if(!item) {
             return res.json({success: false, msg: "Item not found"});
         } else {
-            return res.json({success: true, item: item});
+            Seller.getUserById(item.seller, (error, seller) => {
+                if(error) {
+                    return res.json({success: false, msg: "An error occurred: " + error});
+                }
+
+                if(!seller) {
+                    return res.json({success: false, msg: "Seller not found"});
+                } else {
+                    return res.json({success: true, item: item, seller: seller.username});
+                }
+            });
         }
     });
 });

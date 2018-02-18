@@ -35,6 +35,7 @@ import {AuthGuard} from "./guards/auth.guard";
 import { AddServiceComponent } from './components/items/add-service/add-service.component';
 import { EditServiceComponent } from './components/items/edit-service/edit-service.component';
 import { ViewServiceComponent } from './components/items/view-service/view-service.component';
+import { ConfirmServicedeleteDialog } from './components/items/view-service/confirm-servicedelete/confirm-servicedelete.component';
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
@@ -74,7 +75,8 @@ const appRoutes = [
     ConfirmDeleteDialog,
     AddServiceComponent,
     EditServiceComponent,
-    ViewServiceComponent
+    ViewServiceComponent,
+    ConfirmServicedeleteDialog
   ],
   imports: [
     BrowserModule,
@@ -88,7 +90,8 @@ const appRoutes = [
   ],
   entryComponents: [
     EnterPassDialog,
-    ConfirmDeleteDialog
+    ConfirmDeleteDialog,
+    ConfirmServicedeleteDialog
   ],
   providers: [
     ValidateService,

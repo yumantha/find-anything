@@ -36,11 +36,27 @@ export class ItemService {
       .map(res => res.json());
   }
 
+  //get an service from the database
+  getService(serviceId) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.get(this.server + 'services/' + serviceId,{headers: headers})
+      .map(res => res.json());
+  }
+
   //delete an item from the database
   deleteItem(itemId) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
     return this.http.delete(this.server + 'items/' + itemId, {headers: headers})
+      .map(res => res.json());
+  }
+
+  //delete a service from the database
+  deleteService(serviceId) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.delete(this.server + 'services/' + serviceId, {headers: headers})
       .map(res => res.json());
   }
 }

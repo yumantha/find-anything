@@ -12,6 +12,7 @@ import {ConfirmDeleteDialog} from "./confirm-delete/confirm-delete.component";
 })
 export class ViewItemComponent implements OnInit {
   item: any;
+  seller: String;
   sellerProfile: String;
   routeArray: String[] = this.router.url.split("/");
   itemId: String = this.routeArray[this.routeArray.length - 1];
@@ -30,12 +31,14 @@ export class ViewItemComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.item = data.item;
+          this.seller = data.seller;
           this.dataAvailable = true;
-          this.sellerProfile = '/users/' + data.item.seller.id;
+          this.sellerProfile = '/users/' + data.item.seller;
 
-          if(data.item.seller.id == localStorage.getItem('user_id')) {
+          if(data.item.seller == localStorage.getItem('user_id')) {
             this.isOwner = true;
           }
+
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
           return false;
