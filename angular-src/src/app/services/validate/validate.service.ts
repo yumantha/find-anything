@@ -52,8 +52,16 @@ export class ValidateService {
     }
   }
 
-  validateItemSeller(seller) {
-    if(seller.id == undefined || seller.username == undefined) {
+  validateService(service) {
+    if(service.name == undefined || service.price == undefined) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  validateItemSeller(sellerID) {
+    if(!sellerID) {
       return false;
     } else {
       return true;
@@ -63,5 +71,21 @@ export class ValidateService {
   validatePrice(price) {
     const re = /^\d+$/;
     return re.test(String(price));
+  }
+
+  validateTime(time) {
+    const re = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/
+    return re.test(String(time));
+  }
+
+  validateTimeGap(start, end) {
+    const startNum = Number(start.split(":").join(""));
+    const endNum = Number(end.split(":").join(""));
+
+    if(endNum < startNum) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

@@ -4,26 +4,39 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
-const Item = require('../models/item');
+const Item = require('../models/sales/item');
+const Seller = require('../models/users/seller');
 
 //new item
 router.post('/', (req, res, next) => {
+    const sellerID = req.body.sellerID;
     // console.log(req.body);
-    let newItem = new Item({
-        name: req.body.name,
-        type: req.body.type,
-        isAvailable: req.body.isAvailable,
-        price: req.body.price,
-        location: req.body.location,
-        description: req.body.description,
-        seller: req.body.seller
-    });
 
-    Item.addItem(newItem, (error, user) => {
+    Seller.getUserById(sellerID, (error, seller) => {
         if(error) {
-            res.json({success: false, msg: 'Failed to add item. Error: ' + error})
+            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+        }
+
+        if(!seller) {
+            return res.json({success: false, msg: 'User not found'});
         } else {
-            res.json({success: true, msg: 'Item added'});
+            let newItem = new Item({
+                name: req.body.name,
+                category: req.body.category,
+                isAvailable: req.body.isAvailable,
+                price: req.body.price,
+                location: req.body.location,
+                description: req.body.description,
+                seller: seller
+            });
+
+            Item.addItem(newItem, (error, user) => {
+                if(error) {
+                    return res.json({success: false, msg: 'Failed to add item. Error: ' + error});
+                } else {
+                    return res.json({success: true, msg: 'Item added'});
+                }
+            });
         }
     });
 });

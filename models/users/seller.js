@@ -33,9 +33,18 @@ const SellerSchema = mongoose.Schema({
     address: {
         type: String
     },
-    sellingItems: [{
-        type: Object
-    }]
+    sellingItems: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Item"
+        }
+    ],
+    sellingServices: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Service"
+        }
+    ]
     // profPic: {
     //     data: Buffer,
     //     contentType: String

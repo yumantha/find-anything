@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
-const config = require('../config/database');
+const config = require('../../config/database');
 
-//user schema
+//item schema
 const ItemSchema = mongoose.Schema({
     name: {
         type: String,
         required: true
     },
-    type: {
+    category: {
         type: String
     },
     isAvailable: {
@@ -25,12 +25,26 @@ const ItemSchema = mongoose.Schema({
         type: String
     },
     seller: {
-        type: Object,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Seller",
         required: true
     },
     watchedBy: [
         {
-            type: Object
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Customer"
+        }
+    ],
+    requestedBy: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Customer"
+        }
+    ],
+    boughtBy: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Customer"
         }
     ]
 });
@@ -47,4 +61,4 @@ module.exports.addItem = function(newItem, callback) {
 
 module.exports.deleteItemById = function(id, callback) {
     Item.findByIdAndRemove(id, callback);
-}
+};

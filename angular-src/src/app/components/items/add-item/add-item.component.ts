@@ -15,15 +15,15 @@ import {Router} from "@angular/router";
 })
 export class AddItemComponent implements OnInit {
   name: String;
-  type: String;
+  category: String;
   price: String;
   location: String;
   description: String;
-  seller: {
-    id: String,
-    username: String
-  };
   isAvailable: Boolean = true;
+
+  sellerID: String;
+
+  itemType: String = 'item';
 
   // typeCtrl: FormControl;
   // filteredTypes: Observable<any[]>;
@@ -40,13 +40,13 @@ export class AddItemComponent implements OnInit {
     // this.filteredTypes = this.typeCtrl.valueChanges
     //   .pipe(
     //     startWith(''),
-    //     map(type => type ? this.filterTypes(type) : this.types.slice())
+    //     map(category => category ? this.filterTypes(category) : this.types.slice())
     //   );
   }
 
-  // filterTypes(type: string) {
-  //   return this.types.filter(type =>
-  //     type.toLowerCase().indexOf(type.toLowerCase()) === 0);
+  // filterTypes(category: string) {
+  //   return this.types.filter(category =>
+  //     category.toLowerCase().indexOf(category.toLowerCase()) === 0);
   // }
 
   ngOnInit() {
@@ -55,15 +55,13 @@ export class AddItemComponent implements OnInit {
   onAddItem() {
     const item = {
       name: this.name,
-      type: this.type,
+      itemType: this.itemType,
+      category: this.category,
       price: this.price,
       location: this.location,
       description: this.description,
       isAvailable: this.isAvailable,
-      seller: {
-        id: localStorage.getItem('user_id'),
-        username: localStorage.getItem('user_username')
-      }
+      sellerID: localStorage.getItem('user_id')
     };
 
     if(!this.validateService.validateItem(item)) {
@@ -71,7 +69,7 @@ export class AddItemComponent implements OnInit {
       return false;
     }
 
-    if(!this.validateService.validateItemSeller(item.seller)) {
+    if(!this.validateService.validateItemSeller(item.sellerID)) {
       this.flashMessagesService.show("User not found", {cssClass: 'alert-danger', timeout: 5000});
       return false;
     }

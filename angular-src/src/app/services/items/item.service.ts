@@ -19,6 +19,15 @@ export class ItemService {
       .map(res => res.json());
   }
 
+  //add a new service for sale
+  addService(service) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    // console.log(item);
+    return this.http.post(this.server + 'services/', service, {headers: headers})
+      .map(res => res.json());
+  }
+
   //get an item from the database
   getItem(itemId) {
     let headers = new Headers();

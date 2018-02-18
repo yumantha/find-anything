@@ -1,0 +1,104 @@
+<mat-card>
+
+  <mat-card-title>Add New Service</mat-card-title>
+
+  <mat-card-content>
+
+    <form (submit)="onAddService()">
+
+      <div>
+        <mat-form-field class="add-service-field">
+          <input placeholder="Name" matInput type="text" [(ngModel)]="name" name="name" required>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field class="add-service-field">
+          <input placeholder="Category" matInput type="text" [(ngModel)]="category" name="category">
+        </mat-form-field>
+      </div>
+
+      <!--<div>-->
+      <!--<mat-form-field class="add-item-field">-->
+      <!--<input placeholder="Type" matInput category="text" [(ngModel)]="category" name="category" required [matAutocomplete]="auto" [formControl]="typeCtrl">-->
+      <!--<mat-autocomplete #auto="matAutocomplete">-->
+      <!--<mat-option *ngFor="let category of filteredTypes | async" value="category">-->
+      <!--{{category}}-->
+      <!--</mat-option>-->
+      <!--</mat-autocomplete>-->
+      <!--</mat-form-field>-->
+      <!--</div>-->
+
+      <div>
+        <mat-form-field class="add-service-field">
+          <input matInput placeholder="Price" type="number" [(ngModel)]="price" name="price" required id="price">
+          <span matPrefix>Rs.&nbsp;</span>
+          <span matSuffix>.00</span>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field class="add-service-field">
+          <input placeholder="District" matInput type="text" [(ngModel)]="district" name="district">
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field class="add-service-field">
+          <textarea matInput placeholder="Description" [(ngModel)]="description" name="description"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-grid-list cols="4" rowHeight="50px">
+          <mat-grid-tile colspan="2">
+            <mat-form-field class="grid-option">
+              <mat-select placeholder="Available Days" [(value)]="availableDays">
+                <mat-option value="Everyday">
+                  Everyday
+                </mat-option>
+
+                <mat-option value="Weekdays">
+                  Weekdays
+                </mat-option>
+
+                <mat-option value="Weekdays and Saturday">
+                  Weekdays + Saturday
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile colspan="1">
+            <mat-form-field class="grid-option">
+              <div matTooltip="Enter in 24hr format (HH:MM)" matTooltipPosition="below">
+                <input placeholder="From" matInput type="text" [(ngModel)]="startTime" name="startTime">
+              </div>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile colspan="1">
+            <mat-form-field  class="grid-option">
+              <div matTooltip="Enter in 24hr format (HH:MM)" matTooltipPosition="below">
+                <input placeholder="To" matInput type="text" [(ngModel)]="endTime" name="endTime">
+              </div>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
+      <div>
+        <mat-form-field class="add-service-field">
+          <textarea matInput placeholder="Extra notes on avalability" [(ngModel)]="extraNotes" name="extraNotes"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+      </div>
+
+    </form>
+
+  </mat-card-content>
+
+</mat-card>

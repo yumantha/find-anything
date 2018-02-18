@@ -1,0 +1,24 @@
+.add-service-field {
+  width: 90%;
+}
+
+mat-card {
+  text-align: center;
+  margin: 20px;
+}
+
+form {
+  text-align: center
+}
+
+#price {
+  text-align: right;
+}
+ mat-grid-list {
+   width: 90%;
+   margin: auto;
+ }
+
+ .grid-option {
+   width: 95%;
+ }

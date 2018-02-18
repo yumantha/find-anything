@@ -32,6 +32,9 @@ import {AuthService} from "./services/authenticate/auth.service";
 import {ItemService} from "./services/items/item.service";
 
 import {AuthGuard} from "./guards/auth.guard";
+import { AddServiceComponent } from './components/items/add-service/add-service.component';
+import { EditServiceComponent } from './components/items/edit-service/edit-service.component';
+import { ViewServiceComponent } from './components/items/view-service/view-service.component';
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
@@ -45,7 +48,10 @@ const appRoutes = [
   {path: 'users/:id', component: ViewProfileComponent},
   {path: 'items/new', component: AddItemComponent, canActivate: [AuthGuard]},
   {path: 'items/:id', component: ViewItemComponent},
-  {path: 'items/:id/edit', component: EditItemComponent, canActivate: [AuthGuard]}
+  {path: 'items/:id/edit', component: EditItemComponent, canActivate: [AuthGuard]},
+  {path: 'services/new', component: AddServiceComponent, canActivate: [AuthGuard]},
+  {path: 'services/:id', component: ViewServiceComponent},
+  {path: 'services/:id/edit', component: EditServiceComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
@@ -65,7 +71,10 @@ const appRoutes = [
     EnterPassDialog,
     EditItemComponent,
     ViewProfileComponent,
-    ConfirmDeleteDialog
+    ConfirmDeleteDialog,
+    AddServiceComponent,
+    EditServiceComponent,
+    ViewServiceComponent
   ],
   imports: [
     BrowserModule,
