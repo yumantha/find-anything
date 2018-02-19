@@ -1,0 +1,16 @@
+.add-item-field {
+  width: 90%;
+}
+
+mat-card {
+  text-align: center;
+  margin: 20px;
+}
+
+form {
+  text-align: center
+}
+
+#price {
+  text-align: right;
+}

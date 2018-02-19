@@ -59,4 +59,20 @@ export class ItemService {
     return this.http.delete(this.server + 'services/' + serviceId, {headers: headers})
       .map(res => res.json());
   }
+
+  //edit an item in the database
+  editItem(itemId, item) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.put(this.server + 'items/' + itemId, item, {headers: headers})
+      .map(res => res.json());
+  }
+
+  //edit a service in the database
+  editService(serviceId, service) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.put(this.server + 'services/' + serviceId, service, {headers: headers})
+      .map(res => res.json());
+  }
 }

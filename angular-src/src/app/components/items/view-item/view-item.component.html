@@ -5,6 +5,7 @@
         <img src="https://cdn.takas.lk/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/a/samsung_50_4.jpeg">
       </div>
     </mat-grid-tile>
+
     <mat-grid-tile colspan="1">
       <div class="grid-item">
         <div>
@@ -36,9 +37,14 @@
           </ng-template>
         </div>
 
-        <div id="buttons" *ngIf="isOwner">
+        <div class="buttons" *ngIf="isOwner">
           <button mat-fab color="primary" (click)="editItem()">Edit</button>
           <button mat-fab color="warn" (click)="deleteItem()">Delete</button>
+        </div>
+
+        <div class="buttons" *ngIf="isCustomer">
+          <button mat-fab color="primary" (click)="favItem()"><mat-icon>favorite</mat-icon></button>
+          <button mat-raised-button color="primary" (click)="requestItem()">Request Item</button>
         </div>
       </div>
     </mat-grid-tile>

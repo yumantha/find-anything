@@ -14,6 +14,7 @@ export class ViewItemComponent implements OnInit {
   item: any;
   seller: String;
   sellerProfile: String;
+  isCustomer: Boolean;
   routeArray: String[] = this.router.url.split("/");
   itemId: String = this.routeArray[this.routeArray.length - 1];
   dataAvailable: Boolean = false;
@@ -39,6 +40,9 @@ export class ViewItemComponent implements OnInit {
             this.isOwner = true;
           }
 
+          if(localStorage.getItem('user_type') === 'customer') {
+            this.isCustomer = true;
+          }
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
           return false;
@@ -69,6 +73,14 @@ export class ViewItemComponent implements OnInit {
 
   editItem() {
       this.router.navigate(['/items/' + this.itemId + '/edit'])
+  }
+
+  requestItem() {
+      console.log('Request Item');
+  }
+
+  favItem() {
+      console.log('Favorite Item');
   }
 
 }

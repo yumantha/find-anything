@@ -14,6 +14,7 @@ export class ViewServiceComponent implements OnInit {
   service: any;
   seller: String;
   sellerProfile: String;
+  isCustomer: Boolean;
   routeArray: String[] = this.router.url.split("/");
   serviceId: String = this.routeArray[this.routeArray.length - 1];
   dataAvailable: Boolean = false;
@@ -39,6 +40,9 @@ export class ViewServiceComponent implements OnInit {
             this.isOwner = true;
           }
 
+          if(localStorage.getItem('user_type') === 'customer') {
+            this.isCustomer = true;
+          }
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
           return false;
@@ -71,4 +75,11 @@ export class ViewServiceComponent implements OnInit {
     this.router.navigate(['/services/' + this.serviceId + '/edit'])
   }
 
+  requestService() {
+    console.log('Request Item');
+  }
+
+  favService() {
+    console.log('Favorite Item');
+  }
 }

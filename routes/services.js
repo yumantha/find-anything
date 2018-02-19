@@ -88,4 +88,29 @@ router.delete('/:id', (req, res, next) => {
     });
 });
 
+//edit a service
+router.put('/:id', (req, res, next) => {
+    const serviceId = req.params.id;
+
+    const editedService = {
+        name: req.body.name,
+        category: req.body.category,
+        price: req.body.price,
+        district: req.body.district,
+        description: req.body.description,
+        availableDays: req.body.availableDays,
+        startTime: req.body.startTime,
+        endTimed: req.body.endTimed,
+        extraNotes: req.body.extraNotes
+    };
+
+    Service.updateItem(serviceId, editedService, (error, user) => {
+        if(error) {
+            return res.json({success: false, msg: 'Failed to update item. Error: ' + error});
+        } else {
+            return res.json({success: true, msg: 'Item updated'});
+        }
+    });
+});
+
 module.exports = router;

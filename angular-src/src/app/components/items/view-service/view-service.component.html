@@ -40,9 +40,14 @@
           <p><strong>Extra Notes: </strong>{{service.extraNotes}}</p>
         </div>
 
-        <div id="buttons" *ngIf="isOwner">
+        <div class="buttons" *ngIf="isOwner">
           <button mat-fab color="primary" (click)="editService()">Edit</button>
           <button mat-fab color="warn" (click)="deleteService()">Delete</button>
+        </div>
+
+        <div class="buttons" *ngIf="isCustomer">
+          <button mat-fab color="primary" (click)="favService()"><mat-icon>favorite</mat-icon></button>
+          <button mat-raised-button color="primary" (click)="requestService()">Request Item</button>
         </div>
       </div>
     </mat-grid-tile>

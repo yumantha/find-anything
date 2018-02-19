@@ -62,3 +62,18 @@ module.exports.addItem = function(newItem, callback) {
 module.exports.deleteItemById = function(id, callback) {
     Item.findByIdAndRemove(id, callback);
 };
+
+module.exports.updateItem = function(itemId, editedItem, callback) {
+    Item.findByIdAndUpdate(itemId,
+        {
+            $set: {
+                name: editedItem.name,
+                category: editedItem.category,
+                price: editedItem.price,
+                location: editedItem.location,
+                description: editedItem.description,
+                isAvailable: editedItem.isAvailable
+            }
+        },
+        callback);
+};
