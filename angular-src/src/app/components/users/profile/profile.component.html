@@ -1,128 +1,125 @@
-<div *ngIf="user">
+<div class="container">
+  <div *ngIf="user">
+    <mat-grid-list cols="8">
+      <mat-grid-tile colspan="1">
+        <img src="https://www.bighandi.com/img/profile-demo.png" id="profPic">
+      </mat-grid-tile>
 
-  <mat-grid-list cols="8">
+      <mat-grid-tile colspan="6">
+        <div id="profInfo">
+          <h1>{{user.name}}</h1>
+          <mat-divider></mat-divider>
+          <p>{{user.username}}</p>
+          <p>{{user.email}}</p>
+        </div>
+      </mat-grid-tile>
 
-    <mat-grid-tile colspan="1">
-      <img src="https://www.bighandi.com/img/profile-demo.png" id="profPic">
-    </mat-grid-tile>
+      <mat-grid-tile colspan="1">
+        <div id="addItem" *ngIf="this.user.userType === 'seller'">
+          <button mat-raised-button color="primary" [routerLink]="['/items/new']"><mat-icon>add_circle_outline</mat-icon> Add Item for Sale</button>
+          <button mat-raised-button color="primary" [routerLink]="['/services/new']"><mat-icon>add_circle_outline</mat-icon> Add Service for Sale</button>
+        </div>
+      </mat-grid-tile>
 
-    <mat-grid-tile colspan="6">
-      <div id="profInfo">
-        <h1>{{user.name}}</h1>
+    </mat-grid-list>
+
+    <mat-tab-group>
+      <mat-tab label="User Info">
+        <div class="row">
+
+          <div class="col-3 type">
+            Name
+          </div>
+
+          <div class="col-9 property">
+            {{user.name}}
+          </div>
+
+        </div>
+
         <mat-divider></mat-divider>
-        <p>{{user.username}}</p>
-        <p>{{user.email}}</p>
-      </div>
-    </mat-grid-tile>
 
-    <mat-grid-tile colspan="1">
-      <div id="addItem" *ngIf="this.user.userType === 'seller'">
-        <button mat-raised-button color="primary" [routerLink]="['/items/new']"><mat-icon>add_circle_outline</mat-icon> Add Item for Sale</button>
-        <button mat-raised-button color="primary" [routerLink]="['/services/new']"><mat-icon>add_circle_outline</mat-icon> Add Service for Sale</button>
-      </div>
-    </mat-grid-tile>
+        <div class="row">
 
-  </mat-grid-list>
+          <div class="col-3 type">
+            Username
+          </div>
 
-  <mat-tab-group>
-    <mat-tab label="User Info">
-      <div class="row">
+          <div class="col-9 property">
+            {{user.username}}
+          </div>
 
-        <div class="col-3 type">
-          Name
         </div>
 
-        <div class="col-9 property">
-          {{user.name}}
+        <mat-divider></mat-divider>
+
+        <div class="row">
+
+          <div class="col-3 type">
+            Email
+          </div>
+
+          <div class="col-9 property">
+            {{user.email}}
+          </div>
+
         </div>
 
-      </div>
+        <mat-divider></mat-divider>
 
-      <mat-divider></mat-divider>
+        <div class="row">
 
-      <div class="row">
+          <div class="col-3 type">
+            Telephone Number
+          </div>
 
-        <div class="col-3 type">
-          Username
+          <div class="col-9 property">
+            +94 {{user.telephone}}
+          </div>
+
         </div>
 
-        <div class="col-9 property">
-          {{user.username}}
+        <mat-divider></mat-divider>
+
+        <div class="row">
+
+          <div class="col-3 type">
+            Mobile Number
+          </div>
+
+          <div class="col-9 property">
+            +94 {{user.mobile}}
+          </div>
+
         </div>
 
-      </div>
+        <mat-divider></mat-divider>
 
-      <mat-divider></mat-divider>
+        <div class="row">
 
-      <div class="row">
+          <div class="col-3 type">
+            Address
+          </div>
 
-        <div class="col-3 type">
-          Email
+          <div class="col-9 property">
+            {{user.address}}
+          </div>
+
         </div>
 
-        <div class="col-9 property">
-          {{user.email}}
+        <div>
+          <button mat-mini-fab color="primary" id="editProfile" [routerLink]="['/profile/editProf']">Edit</button>
         </div>
 
-      </div>
+      </mat-tab>
 
-      <mat-divider></mat-divider>
+      <mat-tab label="Favourite Items" *ngIf="this.user.userType === 'customer'">
 
-      <div class="row">
+      </mat-tab>
 
-        <div class="col-3 type">
-          Telephone Number
-        </div>
+      <mat-tab label="Selling Items" *ngIf="this.user.userType === 'seller'">
 
-        <div class="col-9 property">
-          +94 {{user.telephone}}
-        </div>
-
-      </div>
-
-      <mat-divider></mat-divider>
-
-      <div class="row">
-
-        <div class="col-3 type">
-          Mobile Number
-        </div>
-
-        <div class="col-9 property">
-          +94 {{user.mobile}}
-        </div>
-
-      </div>
-
-      <mat-divider></mat-divider>
-
-      <div class="row">
-
-        <div class="col-3 type">
-          Address
-        </div>
-
-        <div class="col-9 property">
-          {{user.address}}
-        </div>
-
-      </div>
-
-      <div>
-        <button mat-mini-fab color="primary" id="editProfile" [routerLink]="['/profile/editProf']">Edit</button>
-      </div>
-
-    </mat-tab>
-
-    <mat-tab label="Favourite Items" *ngIf="this.user.userType === 'customer'">
-
-    </mat-tab>
-
-    <mat-tab label="Selling Items" *ngIf="this.user.userType === 'seller'">
-
-    </mat-tab>
-  </mat-tab-group>
-
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>
-
-

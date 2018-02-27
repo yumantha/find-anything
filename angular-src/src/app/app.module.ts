@@ -36,6 +36,7 @@ import { AddServiceComponent } from './components/items/add-service/add-service.
 import { EditServiceComponent } from './components/items/edit-service/edit-service.component';
 import { ViewServiceComponent } from './components/items/view-service/view-service.component';
 import { ConfirmServicedeleteDialog } from './components/items/view-service/confirm-servicedelete/confirm-servicedelete.component';
+import { SearchComponent } from './components/search/search/search.component';
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
@@ -76,7 +77,8 @@ const appRoutes = [
     AddServiceComponent,
     EditServiceComponent,
     ViewServiceComponent,
-    ConfirmServicedeleteDialog
+    ConfirmServicedeleteDialog,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

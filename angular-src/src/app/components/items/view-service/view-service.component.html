@@ -1,67 +1,65 @@
-<div *ngIf="dataAvailable">
-  <mat-grid-list cols="2" rowHeight="400px">
-    <mat-grid-tile colspan="1">
-      <div class="grid-item">
-        <img src="http://www.cambridgescientific.com/images/inside/service/toolset.png">
-      </div>
-    </mat-grid-tile>
-    <mat-grid-tile colspan="1">
-      <div class="grid-item">
-        <div>
-          <h1>{{service.name}}</h1>
+<div class="container">
+  <div *ngIf="dataAvailable">
+    <mat-grid-list cols="2" rowHeight="400px">
+      <mat-grid-tile colspan="1">
+        <div class="grid-item">
+          <img src="http://www.cambridgescientific.com/images/inside/service/toolset.png">
         </div>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="1">
+        <div class="grid-item">
+          <div>
+            <h1>{{service.name}}</h1>
+          </div>
 
-        <div *ngIf="service.category">
-          <p><strong>Category: </strong>{{service.category}}</p>
+          <div *ngIf="service.category">
+            <p><strong>Category: </strong>{{service.category}}</p>
+          </div>
+
+          <div>
+            <p><strong>Price: </strong>Rs. {{service.price}}.00</p>
+          </div>
+
+          <div *ngIf="service.district">
+            <p><strong>Location: </strong>{{service.district}}</p>
+          </div>
+
+          <div>
+            <p><strong>Sold by: </strong><a [href]="sellerProfile">{{seller}}</a></p>
+          </div>
+
+          <div *ngIf="service.availableDays || service.startTime || service.endTime">
+            <p>
+              <strong>Available</strong>
+              <span *ngIf="service.availableDays"><strong>on </strong>{{service.availableDays}}</span>
+              <span *ngIf="service.startTime"><strong>from </strong>{{service.startTime}}</span>
+              <span *ngIf="service.endTime"><strong>to </strong>{{service.endTime}}</span>
+            </p>
+          </div>
+
+          <div *ngIf="service.extraNotes">
+            <p><strong>Extra Notes: </strong>{{service.extraNotes}}</p>
+          </div>
+
+          <div class="buttons" *ngIf="isOwner">
+            <button mat-fab color="primary" (click)="editService()">Edit</button>
+            <button mat-fab color="warn" (click)="deleteService()">Delete</button>
+          </div>
+
+          <div class="buttons" *ngIf="isCustomer">
+            <button mat-fab color="primary" (click)="favService()"><mat-icon>favorite</mat-icon></button>
+            <button mat-raised-button color="primary" (click)="requestService()">Request Item</button>
+          </div>
         </div>
+      </mat-grid-tile>
 
-        <div>
-          <p><strong>Price: </strong>Rs. {{service.price}}.00</p>
+      <mat-grid-tile colspan="2">
+        <div class="grid-item">
+          <br/>
+          <p><strong>Description</strong></p>
+          {{service.description}}
         </div>
-
-        <div *ngIf="service.district">
-          <p><strong>Location: </strong>{{service.district}}</p>
-        </div>
-
-        <div>
-          <p><strong>Sold by: </strong><a [href]="sellerProfile">{{seller}}</a></p>
-        </div>
-
-        <div *ngIf="service.availableDays || service.startTime || service.endTime">
-          <p>
-            <strong>Available</strong>
-            <span *ngIf="service.availableDays"><strong>on </strong>{{service.availableDays}}</span>
-            <span *ngIf="service.startTime"><strong>from </strong>{{service.startTime}}</span>
-            <span *ngIf="service.endTime"><strong>to </strong>{{service.endTime}}</span>
-          </p>
-        </div>
-
-        <div *ngIf="service.extraNotes">
-          <p><strong>Extra Notes: </strong>{{service.extraNotes}}</p>
-        </div>
-
-        <div class="buttons" *ngIf="isOwner">
-          <button mat-fab color="primary" (click)="editService()">Edit</button>
-          <button mat-fab color="warn" (click)="deleteService()">Delete</button>
-        </div>
-
-        <div class="buttons" *ngIf="isCustomer">
-          <button mat-fab color="primary" (click)="favService()"><mat-icon>favorite</mat-icon></button>
-          <button mat-raised-button color="primary" (click)="requestService()">Request Item</button>
-        </div>
-      </div>
-    </mat-grid-tile>
-
-    <mat-grid-tile colspan="2">
-      <div class="grid-item">
-        <br/>
-        <p><strong>Description</strong></p>
-        {{service.description}}
-      </div>
-    </mat-grid-tile>
-  </mat-grid-list>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
 </div>
-
-<!--https://images.pexels.com/photos/844297/pexels-photo-844297.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb-->
-<!--https://images.pexels.com/photos/33109/fall-autumn-red-season.jpg?w=1260&h=750&auto=compress&cs=tinysrgb-->
-<!--https://images.pexels.com/photos/68147/waterfall-thac-dray-nur-buon-me-thuot-daklak-68147.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb-->
