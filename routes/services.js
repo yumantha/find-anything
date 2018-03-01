@@ -33,10 +33,12 @@ router.post('/', (req, res, next) => {
                 seller: seller
             });
 
-            Service.addItem(newItem, (error, user) => {
+            Service.addItem(newItem, (error, service) => {
                 if(error) {
                     return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
                 } else {
+                    seller.sellingServices.push(service._id);
+                    seller.save();
                     return res.json({success: true, msg: 'Service added'});
                 }
             });
@@ -75,15 +77,41 @@ router.get('/:id', (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
     const id = req.params.id;
 
-    Service.deleteItemById(id, (error, item) => {
+    Service.getItemById(id, (error, service) => {
         if(error) {
             return res.json({success: false, msg: 'An error occurred: ' + error});
         }
 
-        if(!item) {
+        if(!service) {
             return res.json({success: false, msg: "Service not found"});
-        } else {
-            return res.json({success: true, item: item});
+        }
+        else {
+            Seller.getUserById(service.seller, (error, seller) => {
+                if(error) {
+                    return res.json({success: false, msg: 'An error occurred: ' + error});
+                }
+
+                if(!seller) {
+                    return res.json({success: false, msg: "Seller not found"});
+                }
+                else {
+                    seller.sellingServices.remove(service);
+                    seller.save();
+
+                    Service.deleteItemById(id, (error, service) => {
+                        if(error) {
+                            return res.json({success: false, msg: 'An error occurred: ' + error});
+                        }
+
+                        if(!service) {
+                            return res.json({success: false, msg: "Service not found"});
+                        } else {
+                            return res.json({success: true, item: service});
+                        }
+
+                    });
+                }
+            })
         }
     });
 });
