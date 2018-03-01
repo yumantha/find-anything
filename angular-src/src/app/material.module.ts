@@ -16,7 +16,8 @@ import {
   MatAutocompleteModule,
   MatRadioModule,
   MatSelectModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatExpansionModule
 } from "@angular/material";
 
 @NgModule({
@@ -36,7 +37,8 @@ import {
     MatAutocompleteModule,
     MatRadioModule,
     MatSelectModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatExpansionModule
   ],
   exports: [
     MatButtonModule,
@@ -54,7 +56,8 @@ import {
     MatAutocompleteModule,
     MatRadioModule,
     MatSelectModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatExpansionModule
   ]
 })
 

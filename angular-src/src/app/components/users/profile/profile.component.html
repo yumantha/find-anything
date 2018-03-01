@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="margin-top: 100px">
   <div *ngIf="user">
     <mat-grid-list cols="8">
       <mat-grid-tile colspan="1">
@@ -65,9 +65,9 @@
 
         </div>
 
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="user.telephone"></mat-divider>
 
-        <div class="row">
+        <div class="row" *ngIf="user.telephone">
 
           <div class="col-3 type">
             Telephone Number
@@ -79,9 +79,9 @@
 
         </div>
 
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="user.mobile"></mat-divider>
 
-        <div class="row">
+        <div class="row" *ngIf="user.mobile">
 
           <div class="col-3 type">
             Mobile Number
@@ -93,9 +93,9 @@
 
         </div>
 
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="user.address"></mat-divider>
 
-        <div class="row">
+        <div class="row" *ngIf="user.address">
 
           <div class="col-3 type">
             Address
@@ -113,13 +113,87 @@
 
       </mat-tab>
 
-      <mat-tab label="Favourite Items" *ngIf="this.user.userType === 'customer'">
+      <div *ngIf="this.user.userType === 'customer'">
+        <mat-tab label="Favourite">
+          <mat-tab-group>
+            <mat-tab label="Items">
 
-      </mat-tab>
+            </mat-tab>
+            <mat-tab label="Services">
 
-      <mat-tab label="Selling Items" *ngIf="this.user.userType === 'seller'">
+            </mat-tab>
+          </mat-tab-group>
+        </mat-tab>
+        <mat-tab label="Requested">
+          <mat-tab-group>
+            <mat-tab label="Items">
 
-      </mat-tab>
+            </mat-tab>
+            <mat-tab label="Services">
+
+            </mat-tab>
+          </mat-tab-group>
+        </mat-tab>
+        <mat-tab label="Bought">
+          <mat-tab-group>
+            <mat-tab label="Items">
+
+            </mat-tab>
+            <mat-tab label="Services">
+
+            </mat-tab>
+          </mat-tab-group>
+        </mat-tab>
+      </div>
+
+
+      <div *ngIf="this.user.userType === 'seller'">
+        <mat-tab label="Selling Items">
+          <mat-grid-list cols="4" rowHeight="450px">
+            <mat-grid-tile *ngFor="let item of this.sellingItemsList">
+              <mat-card style="margin: 10px; text-align: center">
+                <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" alt="Photo of a Shiba Inu" style="padding: 5px">
+                <mat-card-header>
+                  <div style="width: 100%; margin-left: -15px">
+                    <mat-card-title><strong>{{item.name}}</strong></mat-card-title>
+                    <mat-card-subtitle>{{item.category}}</mat-card-subtitle>
+                  </div>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content style="margin-top: 10px">
+                  <p>Rs. {{item.price}}.00</p>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button mat-button color="primary" style="width: 100%;" (click)="goToItem(item._id)">Details</button>
+                </mat-card-actions>
+              </mat-card>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-tab>
+
+        <mat-tab label="Selling Services">
+          <mat-grid-list cols="4" rowHeight="350px">
+            <mat-grid-tile *ngFor="let service of this.sellingServicesList">
+              <mat-card style="margin: 10px; text-align: center">
+                <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px">
+                <mat-card-header>
+                  <div style="width: 100%; margin-left: -15px">
+                    <mat-card-title><strong>{{service.name}}</strong></mat-card-title>
+                    <mat-card-subtitle>{{service.category}}</mat-card-subtitle>
+                  </div>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content style="margin-top: 10px">
+                  <p>Rs. {{service.price}}.00</p>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button mat-button color="primary" style="width: 100%;" (click)="goToService(service._id)">Details</button>
+                </mat-card-actions>
+              </mat-card>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-tab>
+      </div>
     </mat-tab-group>
   </div>
 </div>
