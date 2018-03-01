@@ -20,8 +20,12 @@
             <p><strong>Price: </strong>Rs. {{service.price}}.00</p>
           </div>
 
+          <div *ngIf="service.location">
+            <p><strong>Location: </strong>{{service.location}}</p>
+          </div>
+
           <div *ngIf="service.district">
-            <p><strong>Location: </strong>{{service.district}}</p>
+            <p><strong>District: </strong>{{service.district}}</p>
           </div>
 
           <div>
@@ -37,10 +41,6 @@
             </p>
           </div>
 
-          <div *ngIf="service.extraNotes">
-            <p><strong>Extra Notes: </strong>{{service.extraNotes}}</p>
-          </div>
-
           <div class="buttons" *ngIf="isOwner">
             <button mat-fab color="primary" (click)="editService()">Edit</button>
             <button mat-fab color="warn" (click)="deleteService()">Delete</button>
@@ -52,12 +52,22 @@
           </div>
         </div>
       </mat-grid-tile>
+    </mat-grid-list>
 
+    <mat-grid-list cols="2" rowHeight="200px">
       <mat-grid-tile colspan="2">
-        <div class="grid-item">
+        <div class="grid-item" *ngIf="service.description">
           <br/>
           <p><strong>Description</strong></p>
           {{service.description}}
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2">
+        <div class="grid-item" *ngIf="service.extraNotes">
+          <br/>
+          <p><strong>Extra Notes</strong></p>
+          {{service.extraNotes}}
         </div>
       </mat-grid-tile>
     </mat-grid-list>

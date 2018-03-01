@@ -14,6 +14,9 @@ const ServiceSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    location: {
+        type: String
+    },
     district: {
         type: String
     },
@@ -78,6 +81,7 @@ module.exports.updateItem = function(itemId, editedItem, callback) {
                 name: editedItem.name,
                 category: editedItem.category,
                 price: editedItem.price,
+                location: editedItem.location,
                 district: editedItem.district,
                 description: editedItem.description,
                 availableDays: editedItem.availableDays,

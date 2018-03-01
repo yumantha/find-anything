@@ -49,6 +49,22 @@ const CustomerSchema = mongoose.Schema({
 
         }
     ],
+    reqItems: [
+        {
+
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Item"
+
+        }
+    ],
+    reqServices: [
+        {
+
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Service"
+
+        }
+    ],
     boughtItems: [
         {
 

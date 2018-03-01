@@ -13,6 +13,7 @@ export class AddServiceComponent implements OnInit {
   name: String;
   category: String;
   price: String;
+  location: String;
   district: String;
   description: String;
   availableDays: String;
@@ -40,6 +41,7 @@ export class AddServiceComponent implements OnInit {
       itemType: this.itemType,
       category: this.category,
       price: this.price,
+      location: this.location,
       district: this.district,
       description: this.description,
       availableDays: this.availableDays,

@@ -25,6 +25,12 @@
 
         <div>
           <mat-form-field class="add-service-field">
+            <input placeholder="Location" matInput type="text" [(ngModel)]="location" name="location">
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="add-service-field">
             <input placeholder="District" matInput type="text" [(ngModel)]="district" name="district">
           </mat-form-field>
         </div>
@@ -75,7 +81,7 @@
 
         <div>
           <mat-form-field class="add-service-field">
-            <textarea matInput placeholder="Extra notes on avalability" [(ngModel)]="extraNotes" name="extraNotes"></textarea>
+            <textarea matInput placeholder="Extra notes" [(ngModel)]="extraNotes" name="extraNotes"></textarea>
           </mat-form-field>
         </div>
 
