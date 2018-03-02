@@ -34,7 +34,7 @@ export class ViewItemComponent implements OnInit {
           this.item = data.item;
           this.seller = data.seller;
           this.dataAvailable = true;
-          this.sellerProfile = '/users/' + data.item.seller;
+          this.sellerProfile = '/users/seller/' + data.item.seller;
 
           if(data.item.seller == localStorage.getItem('user_id')) {
             this.isOwner = true;

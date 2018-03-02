@@ -34,7 +34,7 @@ export class ViewServiceComponent implements OnInit {
           this.service = data.service;
           this.seller = data.seller;
           this.dataAvailable = true;
-          this.sellerProfile = '/users/' + data.service.seller;
+          this.sellerProfile = '/users/seller/' + data.service.seller;
 
           if(data.service.seller == localStorage.getItem('user_id')) {
             this.isOwner = true;

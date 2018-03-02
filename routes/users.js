@@ -271,4 +271,38 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res
     return res.json({user: req.user});
 });
 
+//view profile of a user
+router.get('/:type/:id', (req, res, next) => {
+    const userId = req.params.id;
+    const userType = req.params.type;
+
+    if(userType === 'seller') {
+        Seller.getUserById(userId, (error, user) => {
+            if(error) {
+                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+            }
+
+            if(!user) {
+                return res.json({success: false, msg: 'User not found'});
+            } else {
+                return res.json({success: true, msg: 'User found', user: user});
+            }
+        })
+    } else if(userType === 'customer') {
+        Customer.getUserById(userId, (error, user) => {
+            if(error) {
+                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+            }
+
+            if(!user) {
+                return res.json({success: false, msg: 'User not found'});
+            } else {
+                return res.json({success: true, msg: 'User found', user: user});
+            }
+        })
+    } else {
+        return res.json({success: false, msg: 'User not found'});
+    }
+});
+
 module.exports = router;
