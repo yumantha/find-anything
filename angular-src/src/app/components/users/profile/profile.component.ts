@@ -92,7 +92,10 @@ export class ProfileComponent implements OnInit {
         console.log(error);
         return false;
         }
-      )
+      );
+
+    console.log(this.favItemsList);
+    console.log(this.favServicesList);
   }
 
   goToItem(itemId) {

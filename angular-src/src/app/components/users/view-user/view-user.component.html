@@ -13,14 +13,6 @@
           <p>{{user.email}}</p>
         </div>
       </mat-grid-tile>
-
-      <mat-grid-tile colspan="1">
-        <div id="addItem" *ngIf="this.user.userType === 'seller'">
-          <button mat-raised-button color="primary" [routerLink]="['/items/new']"><mat-icon>add_circle_outline</mat-icon> Add Item for Sale</button>
-          <button mat-raised-button color="primary" [routerLink]="['/services/new']"><mat-icon>add_circle_outline</mat-icon> Add Service for Sale</button>
-        </div>
-      </mat-grid-tile>
-
     </mat-grid-list>
 
     <mat-tab-group>
@@ -106,86 +98,7 @@
           </div>
 
         </div>
-
-        <div>
-          <button mat-mini-fab color="primary" id="editProfile" [routerLink]="['/profile/editProf']">Edit</button>
-        </div>
-
       </mat-tab>
-
-      <div *ngIf="this.user.userType === 'customer'">
-        <mat-tab label="Favourite">
-          <mat-tab-group>
-            <mat-tab label="Items">
-              <mat-grid-list cols="4" rowHeight="450px">
-                <mat-grid-tile *ngFor="let item of this.favItemsList">
-                  <mat-card style="margin: 10px; text-align: center">
-                    <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" style="padding: 5px">
-                    <mat-card-header>
-                      <div style="width: 100%; margin-left: -15px">
-                        <mat-card-title><strong>{{item.name}}</strong></mat-card-title>
-                        <mat-card-subtitle>{{item.category}}</mat-card-subtitle>
-                      </div>
-                    </mat-card-header>
-                    <mat-divider></mat-divider>
-                    <mat-card-content style="margin-top: 10px">
-                      <p>Rs. {{item.price}}.00</p>
-                    </mat-card-content>
-                    <mat-card-actions>
-                      <button mat-button color="primary" style="width: 100%;" (click)="goToItem(item._id)">Details</button>
-                    </mat-card-actions>
-                  </mat-card>
-                </mat-grid-tile>
-              </mat-grid-list>
-            </mat-tab>
-
-            <mat-tab label="Services">
-              <mat-grid-list cols="4" rowHeight="400px">
-                <mat-grid-tile *ngFor="let service of this.favServicesList">
-                  <mat-card style="margin: 10px; text-align: center">
-                    <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px">
-                    <mat-card-header>
-                      <div style="width: 100%; margin-left: -15px">
-                        <mat-card-title><strong>{{service.name}}</strong></mat-card-title>
-                        <mat-card-subtitle>{{service.category}}</mat-card-subtitle>
-                      </div>
-                    </mat-card-header>
-                    <mat-divider></mat-divider>
-                    <mat-card-content style="margin-top: 10px">
-                      <p>Rs. {{service.price}}.00</p>
-                    </mat-card-content>
-                    <mat-card-actions>
-                      <button mat-button color="primary" style="width: 100%;" (click)="goToService(service._id)">Details</button>
-                    </mat-card-actions>
-                  </mat-card>
-                </mat-grid-tile>
-              </mat-grid-list>
-            </mat-tab>
-          </mat-tab-group>
-        </mat-tab>
-
-        <mat-tab label="Requested">
-          <mat-tab-group>
-            <mat-tab label="Items">
-
-            </mat-tab>
-            <mat-tab label="Services">
-
-            </mat-tab>
-          </mat-tab-group>
-        </mat-tab>
-        <mat-tab label="Bought">
-          <mat-tab-group>
-            <mat-tab label="Items">
-
-            </mat-tab>
-            <mat-tab label="Services">
-
-            </mat-tab>
-          </mat-tab-group>
-        </mat-tab>
-      </div>
-
 
       <div *ngIf="this.user.userType === 'seller'">
         <mat-tab label="Selling Items">
