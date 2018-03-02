@@ -35,50 +35,38 @@ const CustomerSchema = mongoose.Schema({
     },
     favItems: [
         {
-
             type: mongoose.Schema.Types.ObjectId,
             ref: "Item"
-
         }
     ],
     favServices: [
         {
-
             type: mongoose.Schema.Types.ObjectId,
             ref: "Service"
-
         }
     ],
     reqItems: [
         {
-
             type: mongoose.Schema.Types.ObjectId,
             ref: "Item"
-
         }
     ],
     reqServices: [
         {
-
             type: mongoose.Schema.Types.ObjectId,
             ref: "Service"
-
         }
     ],
     boughtItems: [
         {
-
             type: mongoose.Schema.Types.ObjectId,
             ref: "Item"
-
         }
     ],
     boughtServices: [
         {
-
             type: mongoose.Schema.Types.ObjectId,
             ref: "Service"
-
         }
     ]
     // profPic: {

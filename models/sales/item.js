@@ -29,7 +29,7 @@ const ItemSchema = mongoose.Schema({
         ref: "Seller",
         required: true
     },
-    watchedBy: [
+    favBy: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Customer"

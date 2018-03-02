@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {MatDialog} from "@angular/material";
 import {ConfirmDeleteDialog} from "./confirm-delete/confirm-delete.component";
+import {AuthService} from "../../../services/authenticate/auth.service";
 
 @Component({
   selector: 'app-view-item',
@@ -19,9 +20,11 @@ export class ViewItemComponent implements OnInit {
   itemId: String = this.routeArray[this.routeArray.length - 1];
   dataAvailable: Boolean = false;
   isOwner: Boolean = false;
+  isFav: Boolean = false;
 
   constructor(
     private itemService: ItemService,
+    private authService: AuthService,
     private router: Router,
     private flashMessagesService: FlashMessagesService,
     private dialog: MatDialog
@@ -43,6 +46,11 @@ export class ViewItemComponent implements OnInit {
           if(localStorage.getItem('user_type') === 'customer') {
             this.isCustomer = true;
           }
+
+          if(this.item.favBy.includes(localStorage.getItem('user_id'))){
+            this.isFav = true;
+          }
+
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
           return false;
@@ -65,7 +73,7 @@ export class ViewItemComponent implements OnInit {
             this.router.navigate(['/profile']);
           } else {
             if(data.msg) {
-              this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
+              this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
             }
           }
         });
@@ -80,7 +88,56 @@ export class ViewItemComponent implements OnInit {
   }
 
   favItem() {
-      console.log('Favorite Item');
+      if(!this.authService.loggedIn()) {
+        this.flashMessagesService.show('Please login', {cssClass: 'alert-danger', timeout: 5000});
+        return this.router.navigate(['/login']);
+      }
+
+      if(!(localStorage.getItem('user_type') === 'customer')) {
+        return this.flashMessagesService.show('You must be logged in as a customer to favorite an item', {cssClass: 'alert-danger', timeout: 5000});
+      }
+
+      if(!this.itemId) {
+        return this.flashMessagesService.show('Item not found', {cssClass: 'alert-danger', timeout: 5000});
+      }
+
+      this.itemService.favItem(this.itemId, localStorage.getItem('user_id'))
+        .subscribe(data => {
+          if(data.success) {
+            this.isFav = true;
+            this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
+          } else {
+            this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          }
+        });
   }
 
+  unfavItem() {
+    if(!this.authService.loggedIn()) {
+      this.flashMessagesService.show('Please login', {cssClass: 'alert-danger', timeout: 5000});
+      return this.router.navigate(['/login']);
+    }
+
+    if(!(localStorage.getItem('user_type') === 'customer')) {
+      return this.flashMessagesService.show('You must be logged in as a customer to favorite an item', {cssClass: 'alert-danger', timeout: 5000});
+    }
+
+    if(!this.itemId) {
+      return this.flashMessagesService.show('Item not found', {cssClass: 'alert-danger', timeout: 5000});
+    }
+
+    if(!this.isFav) {
+      return this.flashMessagesService.show('This item is not on your favorites', {cssClass: 'alert-danger', timeout: 5000});
+    }
+
+    this.itemService.unfavItem(this.itemId,  localStorage.getItem('user_id'))
+      .subscribe(data => {
+        if(data.success) {
+          this.isFav = false;
+          this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
+        } else {
+          this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+        }
+      });
+  }
 }

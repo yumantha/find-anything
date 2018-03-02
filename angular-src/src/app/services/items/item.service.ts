@@ -75,4 +75,36 @@ export class ItemService {
     return this.http.put(this.server + 'services/' + serviceId, service, {headers: headers})
       .map(res => res.json());
   }
+
+  //add an item to favorites
+  favItem(itemId, userId) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.post(this.server + 'items/' + itemId + '/favorite', {itemId: itemId, userId: userId}, {headers: headers})
+      .map(res => res.json());
+  }
+
+  //remove an item from favorites
+  unfavItem(itemId, userId) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.post(this.server + 'items/' + itemId + '/unfavorite', {itemId: itemId, userId: userId}, {headers: headers})
+      .map(res => res.json());
+  }
+
+  //add a service to favorites
+  favService(serviceId, userId) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.post(this.server + 'services/' + serviceId + '/favorite', {serviceId: serviceId, userId: userId}, {headers: headers})
+      .map(res => res.json());
+  }
+
+  //remove a service from favorites
+  unfavService(serviceId, userId) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.post(this.server + 'services/' + serviceId + '/unfavorite', {serviceId: serviceId, userId: userId}, {headers: headers})
+      .map(res => res.json());
+  }
 }

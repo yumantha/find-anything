@@ -43,9 +43,14 @@
             <button mat-fab color="warn" (click)="deleteItem()">Delete</button>
           </div>
 
-          <div class="buttons" *ngIf="isCustomer">
-            <button mat-fab color="primary" (click)="favItem()"><mat-icon>favorite</mat-icon></button>
-            <button mat-raised-button color="primary" (click)="requestItem()">Request Item</button>
+          <div class="buttons" *ngIf="isCustomer" style="width: 100%;">
+            <span matTooltip="Favourite Item" matTooltipPosition="below" *ngIf="!isFav">
+              <button mat-mini-fab color="primary" (click)="favItem()"><mat-icon>favorite</mat-icon></button>
+            </span>
+            <span matTooltip="Unavourite Item" matTooltipPosition="below" *ngIf="isFav">
+              <button mat-mini-fab color="warn" (click)="unfavItem()"><mat-icon>favorite</mat-icon></button>
+            </span>
+            <button mat-raised-button color="primary" (click)="requestItem()" style="float: right">Request Item</button>
           </div>
         </div>
       </mat-grid-tile>

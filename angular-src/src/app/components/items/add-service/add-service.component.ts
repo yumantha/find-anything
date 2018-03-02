@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ValidateService} from "../../../services/validate/validate.service";
 import {Router} from "@angular/router";
 import {ItemService} from "../../../services/items/item.service";

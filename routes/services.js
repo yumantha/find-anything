@@ -6,6 +6,7 @@ const config = require('../config/database');
 
 const Service = require('../models/sales/service ');
 const Seller = require('../models/users/seller');
+const Customer = require('../models/users/customer');
 
 //new service
 router.post('/', (req, res, next) => {
@@ -139,6 +140,74 @@ router.put('/:id', (req, res, next) => {
             return res.json({success: false, msg: 'Failed to update item. Error: ' + error});
         } else {
             return res.json({success: true, msg: 'Item updated'});
+        }
+    });
+});
+
+//favorite a service
+router.post('/:id/favorite', (req, res, next) => {
+    const userId = req.body.userId;
+    const serviceId = req.body.serviceId;
+
+    Customer.getUserById(userId, (error, customer) => {
+        if(error) {
+            return res.json({success: false, msg: 'Failed to add service to favorites. Error: ' + error});
+        }
+
+        if(!customer) {
+            return res.json({success: false, msg: 'User not found'});
+        } else {
+            Service.getItemById(serviceId, (error, service) => {
+                if(error) {
+                    return res.json({success: false, msg: 'Failed to add service to favorites' + error});
+                }
+
+                if(!service) {
+                    return res.json({success: false, msg: 'Service not found'});
+                } else {
+                    customer.favServices.push(service._id);
+                    service.favBy.push(customer._id);
+
+                    customer.save();
+                    service.save();
+
+                    return res.json({success: true, msg: 'The service has been added to your favorites'});
+                }
+            })
+        }
+    })
+});
+
+//unfavorite a service
+router.post('/:id/unfavorite', (req, res, next) => {
+    const userId = req.body.userId;
+    const serviceId = req.body.serviceId;
+
+    Customer.getUserById(userId, (error, customer) => {
+        if(error) {
+            return res.json({success: false, msg: 'Failed to add service to favorites' + error});
+        }
+
+        if(!customer) {
+            return res.json({success: false, msg: 'User not found'});
+        } else {
+            Service.getItemById(serviceId, (error, service) => {
+                if(error) {
+                    return res.json({success: false, msg: 'Failed to add service to favorites' + error});
+                }
+
+                if(!service) {
+                    return res.json({success: false, msg: 'Service not found'});
+                } else {
+                    customer.favServices.remove(service);
+                    service.favBy.remove(customer);
+
+                    customer.save();
+                    service.save();
+
+                    return res.json({success: true, msg: 'The service has been removed from your favorites'});
+                }
+            });
         }
     });
 });

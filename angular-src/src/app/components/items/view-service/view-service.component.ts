@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {MatDialog} from "@angular/material";
 import {ConfirmServicedeleteDialog} from "./confirm-servicedelete/confirm-servicedelete.component";
+import {AuthService} from "../../../services/authenticate/auth.service";
 
 @Component({
   selector: 'app-view-service',
@@ -19,9 +20,11 @@ export class ViewServiceComponent implements OnInit {
   serviceId: String = this.routeArray[this.routeArray.length - 1];
   dataAvailable: Boolean = false;
   isOwner: Boolean = false;
+  isFav: Boolean = false;
 
   constructor(
     private itemService: ItemService,
+    private authService: AuthService,
     private router: Router,
     private flashMessagesService: FlashMessagesService,
     private dialog: MatDialog
@@ -43,6 +46,11 @@ export class ViewServiceComponent implements OnInit {
           if(localStorage.getItem('user_type') === 'customer') {
             this.isCustomer = true;
           }
+
+          if(this.service.favBy.includes(localStorage.getItem('user_id'))){
+            this.isFav = true;
+          }
+
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
           return false;
@@ -80,6 +88,56 @@ export class ViewServiceComponent implements OnInit {
   }
 
   favService() {
-    console.log('Favorite Item');
+    if(!this.authService.loggedIn()) {
+      this.flashMessagesService.show('Please login', {cssClass: 'alert-danger', timeout: 5000});
+      return this.router.navigate(['/login']);
+    }
+
+    if(!(localStorage.getItem('user_type') === 'customer')) {
+      return this.flashMessagesService.show('You must be logged in as a customer to favorite a service', {cssClass: 'alert-danger', timeout: 5000});
+    }
+
+    if(!this.serviceId) {
+      return this.flashMessagesService.show('Service not found', {cssClass: 'alert-danger', timeout: 5000});
+    }
+
+    this.itemService.favService(this.serviceId, localStorage.getItem('user_id'))
+      .subscribe(data => {
+        if(data.success) {
+          this.isFav = true;
+          this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
+        } else {
+          this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+        }
+      });
+  }
+
+  unfavService() {
+    if(!this.authService.loggedIn()) {
+      this.flashMessagesService.show('Please login', {cssClass: 'alert-danger', timeout: 5000});
+      return this.router.navigate(['/login']);
+    }
+
+    if(!(localStorage.getItem('user_type') === 'customer')) {
+      return this.flashMessagesService.show('You must be logged in as a customer to favorite a service', {cssClass: 'alert-danger', timeout: 5000});
+    }
+
+    if(!this.serviceId) {
+      return this.flashMessagesService.show('Service not found', {cssClass: 'alert-danger', timeout: 5000});
+    }
+
+    if(!this.isFav) {
+      return this.flashMessagesService.show('This service is not on your favorites', {cssClass: 'alert-danger', timeout: 5000});
+    }
+
+    this.itemService.unfavService(this.serviceId,  localStorage.getItem('user_id'))
+      .subscribe(data => {
+        if(data.success) {
+          this.isFav = false;
+          this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
+        } else {
+          this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+        }
+      });
   }
 }
