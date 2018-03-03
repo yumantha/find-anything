@@ -24,6 +24,7 @@ const app = express();
 const users = require('./routes/users');
 const items = require('./routes/items');
 const services = require('./routes/services');
+const search = require('./routes/search');
 
 //port number
 const port = process.env.PORT || 3000;
@@ -46,6 +47,7 @@ require('./config/passport')(passport);
 app.use('/users', users);
 app.use('/items', items);
 app.use('/services', services);
+app.use('/search', search);
 
 //index route
 app.get('/', (req, res)=>{

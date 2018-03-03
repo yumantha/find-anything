@@ -6,14 +6,15 @@
 
     <form id="search-form">
       <div>
-        <button type="submit" mat-button [routerLink]="['/search/results']" style="float: right"><mat-icon>search</mat-icon> Search</button>
+        <button type="submit" mat-button style="float: right" (click)="quickSearch(searchKeyword)"><mat-icon>search</mat-icon></button>
         <div class="form-group" style="overflow: hidden; padding-right: .5em;">
-          <input class="form-control" type="text" placeholder="Search..." style="width: 100%;" />
+          <input class="form-control" type="text" placeholder="Quick Search..." style="width: 100%;"  [(ngModel)]="searchKeyword" name="searchKeyword"/>
         </div>​
       </div>
     </form>
 
     <div class="menu-buttons">
+      <button mat-button [routerLink]="['/search']"><mat-icon>search</mat-icon> Search</button>
       <button mat-button *ngIf="!this.authService.loggedIn()" [routerLink]="['/register']"><mat-icon>person_add</mat-icon> Register</button>
       <button mat-button *ngIf="!this.authService.loggedIn()" [routerLink]="['/login']"><mat-icon>person</mat-icon> LogIn</button>
       <button mat-button *ngIf="this.authService.loggedIn()" [routerLink]="['/profile']"><mat-icon>account_circle</mat-icon> Profile</button>
@@ -29,15 +30,9 @@
 
 </mat-toolbar>
 
-<mat-menu x-position="before" #menu="matMenu">
-  <form mat-menu-item>
-    <div>
-      <button type="submit" mat-button style="float: right"><mat-icon>search</mat-icon></button>
-      <div class="form-group" style="overflow: hidden; padding-right: .5em;">
-        <input class="form-control" type="text" placeholder="Search..." style="width: 100%;" />
-      </div>​
-    </div>
-  </form>
+<!--<mat-menu x-position="below" #menu="matMenu">-->
+<mat-menu #menu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item [routerLink]="['/search']"><mat-icon>search</mat-icon> Search</button>
   <button mat-menu-item *ngIf="!this.authService.loggedIn()" [routerLink]="['/register']"><mat-icon>person_add</mat-icon> Register</button>
   <button mat-menu-item *ngIf="!this.authService.loggedIn()" [routerLink]="['/login']"><mat-icon>person</mat-icon> LogIn</button>
   <button mat-menu-item *ngIf="this.authService.loggedIn()" [routerLink]="['/profile']"><mat-icon>account_circle</mat-icon> Profile</button>

@@ -66,6 +66,15 @@ module.exports.getItemById = function(id, callback) {
     Service.findById(id, callback);
 };
 
+module.exports.getItemsByName = function(keyword, callback) {
+    const query = {
+        name: new RegExp('\\b' + keyword + '\\b', 'i')
+    };
+
+    Service.find(query, callback);
+};
+
+
 module.exports.addItem = function(newItem, callback) {
     newItem.save(callback);
 };

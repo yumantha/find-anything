@@ -4,7 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
-const Service = require('../models/sales/service ');
+const Service = require('../models/sales/service');
 const Seller = require('../models/users/seller');
 const Customer = require('../models/users/customer');
 

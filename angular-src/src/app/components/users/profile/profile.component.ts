@@ -93,9 +93,6 @@ export class ProfileComponent implements OnInit {
         return false;
         }
       );
-
-    console.log(this.favItemsList);
-    console.log(this.favServicesList);
   }
 
   goToItem(itemId) {

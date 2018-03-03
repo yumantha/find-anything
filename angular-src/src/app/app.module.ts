@@ -35,12 +35,14 @@ import {ConfirmServicedeleteDialog } from './components/items/view-service/confi
 import {ValidateService} from "./services/validate/validate.service";
 import {AuthService} from "./services/authenticate/auth.service";
 import {ItemService} from "./services/items/item.service";
+import {SearchService} from './services/search/search.service';
 
 import {AuthGuard} from "./guards/auth.guard";
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'search', component: SearchComponent},
   {path: 'search/results', component: SearchResultsComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
@@ -99,7 +101,8 @@ const appRoutes = [
     ValidateService,
     AuthService,
     AuthGuard,
-    ItemService
+    ItemService,
+    SearchService
   ],
   bootstrap: [
     AppComponent
