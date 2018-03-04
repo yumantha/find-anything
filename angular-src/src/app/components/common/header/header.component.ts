@@ -17,7 +17,6 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private searchService: SearchService,
     private flashMessagesService: FlashMessagesService,
     private router: Router
   ) { }
@@ -37,25 +36,6 @@ export class HeaderComponent implements OnInit {
       return this.flashMessagesService.show("Please enter a keyword to search", {cssClass: 'alert-danger', timeout: 5000});
     }
 
-    this.searchService.quickSearch(searchKeyword)
-      .subscribe(data => {
-        if(!data.success) {
-          return this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
-        } else {
-          if(data.results) {
-            this.resultsAvailable = true;
-            data.results.forEach((result => {
-              if(result.type === 'item') {
-                this.resultItems.push(result);
-              } else if (result.type === 'service') {
-                this.resultServices.push(result);
-              }
-            }));
-          } else {
-
-          }
-        }
-      });
-    this.router.navigate(['search/results']);
+    this.router.navigate(['search/results', {name: searchKeyword}]);
   }
 }

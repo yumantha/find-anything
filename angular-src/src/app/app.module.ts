@@ -43,7 +43,7 @@ const appRoutes = [
   {path: '', component: WelcomeComponent},
   {path: 'home', component: HomeComponent},
   {path: 'search', component: SearchComponent},
-  {path: 'search/results', component: SearchResultsComponent},
+  {path: 'search/:query', component: SearchResultsComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
