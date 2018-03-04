@@ -12,12 +12,11 @@ export class SearchService {
   ) { }
 
   //quick search for an item
-  quickSearch(keyword) {
+  quickSearch(query) {
     let headers = new Headers();
     let searchParams = new URLSearchParams();
     headers.append('Content-Type', 'application/json');
-    searchParams.append('keyword', keyword);
-    return this.http.get(this.server + 'search', {headers: headers, params: searchParams})
+    return this.http.get(this.server + 'search/' + query, {headers: headers})
       .map(res => res.json());
   }
 }

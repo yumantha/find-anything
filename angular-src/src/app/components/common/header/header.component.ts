@@ -37,5 +37,7 @@ export class HeaderComponent implements OnInit {
     }
 
     this.router.navigate(['search/results', {name: searchKeyword}]);
+
+    window.location.reload();
   }
 }

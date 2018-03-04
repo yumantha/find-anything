@@ -1,3 +1,30 @@
-<p>
-  search-results works!
-</p>
+<div class="container">
+  <div *ngIf="!resultsAvailable" style="margin-top: 100px; text-align: center; width: 100%">
+    <p><mat-icon>report_problem</mat-icon></p>
+    <h3>Sorry! No results were found for your search</h3>
+  </div>
+  <div *ngIf="resultsAvailable">
+    <mat-grid-list cols="4" rowHeight="450px">
+      <mat-grid-tile *ngFor="let result of resultsArray">
+        <mat-card style="margin: 10px; text-align: center">
+          <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" style="padding: 5px" *ngIf="result.type==='item'">
+          <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px" *ngIf="result.type==='service'">
+          <mat-card-header>
+            <div style="width: 100%; margin-left: -15px">
+              <mat-card-title><strong>{{result.name}}</strong></mat-card-title>
+              <mat-card-subtitle>{{result.category}}</mat-card-subtitle>
+            </div>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content style="margin-top: 10px">
+            <p>Rs. {{result.price}}.00</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="primary" style="width: 100%;" (click)="goToItem(result.id)" *ngIf="result.type==='item'">Details</button>
+            <button mat-button color="primary" style="width: 100%;" (click)="goToService(result.id)" *ngIf="result.type==='service'">Details</button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
