@@ -22,10 +22,11 @@ export class SearchResultsComponent implements OnInit {
   district: String;
   name: String;
   category: String;
-  searchObject: any = {};
 
+  searchObject: any = {};
   types:any = {};
   priceRange: any = {};
+  sortBy: any = {};
 
   districts: Array<any> = [
     {value: 'Ampara', viewValue: 'Ampara'},
@@ -53,6 +54,12 @@ export class SearchResultsComponent implements OnInit {
     {value: 'Ratnapura', viewValue: 'Ratnapura'},
     {value: 'Trincomalee', viewValue: 'Trincomalee'},
     {value: 'Vavuniya', viewValue: 'Vavuniya'}
+  ];
+
+  sortCriterias: Array<any> = [
+    {value: 'name', viewValue: 'Name'},
+    {value: 'category', viewValue: 'Category'},
+    {value: 'price', viewValue: 'Price'}
   ];
 
   constructor(
@@ -122,6 +129,7 @@ export class SearchResultsComponent implements OnInit {
     this.searchObject.types = this.types;
     this.searchObject.district = this.district;
     this.searchObject.category = this.category;
+    this.searchObject.sortBy = this.sortBy;
 
     this.router.navigate(['search/results', {search: JSON.stringify(this.searchObject)}]);
 
@@ -158,6 +166,11 @@ export class SearchResultsComponent implements OnInit {
 
     if(this.searchObject.category) {
       this.category = this.searchObject.category;
+    }
+
+    if(this.searchObject.sortBy) {
+      this.sortBy.criteria = this.searchObject.sortBy.criteria;
+      this.sortBy.way = this.searchObject.sortBy.way;
     }
   }
 }

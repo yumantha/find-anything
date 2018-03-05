@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   searchKeyword: String;
   searchObject: any = {};
   types: any = {};
+  sortBy: any = {};
 
   constructor(
     private authService: AuthService,
@@ -38,8 +39,12 @@ export class HeaderComponent implements OnInit {
     this.types.items = true;
     this.types.services = true;
 
+    this.sortBy.criteria = 'name';
+    this.sortBy.way = 'asc';
+
     this.searchObject.name = searchKeyword;
     this.searchObject.types = this.types;
+    this.searchObject.sortBy = this.sortBy;
 
     this.router.navigate(['search/results', {search: JSON.stringify(this.searchObject)}]);
 

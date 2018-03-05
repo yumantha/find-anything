@@ -9,48 +9,75 @@
         </mat-expansion-panel-header>
 
         <form (submit)="refineSearch()" style="text-align: center">
-          <div>
-            <mat-form-field style="width: 75%">
-              <input matInput placeholder="Name" [(ngModel)]="name" name="name">
-            </mat-form-field>
-          </div>
+          <mat-card style="margin-bottom: 20px">
+            <div>
+              <mat-form-field style="width: 75%">
+                <input matInput placeholder="Name" [(ngModel)]="name" name="name">
+              </mat-form-field>
+            </div>
 
-          <div>
-            <mat-form-field style="width: 75%">
-              <input matInput placeholder="Category" [(ngModel)]="category" name="category">
-            </mat-form-field>
-          </div>
+            <div>
+              <mat-form-field style="width: 75%">
+                <input matInput placeholder="Category" [(ngModel)]="category" name="category">
+              </mat-form-field>
+            </div>
 
-          <div>
-            <mat-form-field style="width: 75%">
-              <mat-select placeholder="District" [(ngModel)]="district" name="district" [disabled]="!serviceCheck">
-                <mat-option>None</mat-option>
-                <mat-option *ngFor="let dis of districts" [value]="dis.value">
-                  {{dis.viewValue}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+            <div>
+              <mat-form-field style="width: 75%">
+                <mat-select placeholder="District (only for services)" [(ngModel)]="district" name="district" [disabled]="!serviceCheck">
+                  <mat-option>None</mat-option>
+                  <mat-option *ngFor="let dis of districts" [value]="dis.value">
+                    {{dis.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
 
-          <div>
-            <mat-form-field style="width: 35%; margin: 0 2.5%;">
-              <input matInput placeholder="Price Range: From" [(ngModel)]="priceLower" name="priceUpper" type="number">
-              <span matPrefix>Rs.&nbsp;</span>
-              <span matSuffix>.00</span>
-            </mat-form-field>
-            <mat-form-field style="width: 35%; margin: 0 2.5%;">
-              <input matInput placeholder="Price Range: To" [(ngModel)]="priceUpper" name="priceLower" type="number">
-              <span matPrefix>Rs.&nbsp;</span>
-              <span matSuffix>.00</span>
-            </mat-form-field>
-          </div>
+            <div>
+              <mat-form-field style="width: 35%; margin: 0 2.5%;">
+                <input matInput placeholder="Price Range: From" [(ngModel)]="priceLower" name="priceUpper" type="number">
+                <span matPrefix>Rs.&nbsp;</span>
+                <span matSuffix>.00</span>
+              </mat-form-field>
+              <mat-form-field style="width: 35%; margin: 0 2.5%;">
+                <input matInput placeholder="Price Range: To" [(ngModel)]="priceUpper" name="priceLower" type="number">
+                <span matPrefix>Rs.&nbsp;</span>
+                <span matSuffix>.00</span>
+              </mat-form-field>
+            </div>
 
-          <div>
-            <section>
-              <mat-checkbox [(ngModel)]="itemCheck" name="item" style="margin: 0 10%">Items</mat-checkbox>
-              <mat-checkbox [(ngModel)]="serviceCheck" name="service" style="margin: 0 10%">Services</mat-checkbox>
-            </section>
-          </div>
+            <div>
+              <section>
+                <mat-checkbox [(ngModel)]="itemCheck" name="item" style="margin: 0 10%">Items</mat-checkbox>
+                <mat-checkbox [(ngModel)]="serviceCheck" name="service" style="margin: 0 10%">Services</mat-checkbox>
+              </section>
+            </div>
+          </mat-card>
+
+          <mat-card style="margin-bottom: 20px">
+            <div id="sortSearch">
+              <div>
+                <mat-form-field style="width: 35%">
+                  <mat-select placeholder="Sort by" [(ngModel)]="sortBy.criteria" name="sortCriteria">
+                    <mat-option *ngFor="let criteria of sortCriterias" [value]="criteria.value">
+                      {{criteria.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div>
+                <mat-radio-group [(ngModel)]="sortBy.way" name="sortWay">
+                  <mat-radio-button value="asc" style="margin: 0 2.5%">
+                    Ascending
+                  </mat-radio-button>
+                  <mat-radio-button value="desc" style="margin: 0 2.5%">
+                    Descending
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+          </mat-card>
 
           <div>
             <button mat-raised-button color="primary" type="submit">Refine</button>

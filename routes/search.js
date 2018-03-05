@@ -4,6 +4,14 @@ const router = express.Router();
 const Item = require('../models/sales/item');
 const Service = require('../models/sales/service');
 
+function sortByKey(array, key) {
+    return array.sort(function(a, b) {
+        const x = a[key];
+        const y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+}
+
 router.get('/:query', (req, res, next)=>{
     const query = req.params.query;
     const queryArray = query.split(";");
@@ -74,6 +82,12 @@ router.get('/:query', (req, res, next)=>{
             if(resultsToSend.length === 0) {
                 return res.json({success: true, msg: "No results were found"});
             } else {
+                sortByKey(resultsToSend, searchObject.sortBy.criteria);
+
+                if(searchObject.sortBy.way === 'desc') {
+                    resultsToSend.reverse();
+                }
+
                 return res.json({success: true, results: resultsToSend});
             }
         });
