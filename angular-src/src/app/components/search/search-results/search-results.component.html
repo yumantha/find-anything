@@ -35,9 +35,13 @@
           <div>
             <mat-form-field style="width: 35%; margin: 0 2.5%;">
               <input matInput placeholder="Price Range: From" [(ngModel)]="priceLower" name="priceUpper" type="number">
+              <span matPrefix>Rs.&nbsp;</span>
+              <span matSuffix>.00</span>
             </mat-form-field>
             <mat-form-field style="width: 35%; margin: 0 2.5%;">
               <input matInput placeholder="Price Range: To" [(ngModel)]="priceUpper" name="priceLower" type="number">
+              <span matPrefix>Rs.&nbsp;</span>
+              <span matSuffix>.00</span>
             </mat-form-field>
           </div>
 

@@ -88,4 +88,12 @@ export class ValidateService {
       return true;
     }
   }
+
+  validatePriceRange(lowerPrice, upperPrice) {
+    if(lowerPrice > upperPrice) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

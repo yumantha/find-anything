@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {SearchService} from "../../../services/search/search.service";
 import {FlashMessagesService} from "angular2-flash-messages";
+import {ValidateService} from "../../../services/validate/validate.service";
 
 @Component({
   selector: 'app-search-results',
@@ -57,7 +58,8 @@ export class SearchResultsComponent implements OnInit {
   constructor(
     private router: Router,
     private searchService: SearchService,
-    private flashMessagesService: FlashMessagesService
+    private flashMessagesService: FlashMessagesService,
+    private validateService: ValidateService
   ) { }
 
   ngOnInit() {
@@ -87,6 +89,28 @@ export class SearchResultsComponent implements OnInit {
   }
 
   refineSearch() {
+    if(!this.name.trim()) {
+      return this.flashMessagesService.show('Please enter name to search for', {cssClass: 'alert-danger', timeout: 5000});
+    }
+
+    if(this.priceUpper) {
+      if(!this.validateService.validatePrice(this.priceUpper)) {
+        return this.flashMessagesService.show('Please enter a valid price', {cssClass: 'alert-danger', timeout: 5000});
+      }
+    }
+
+    if(this.priceLower) {
+      if(!this.validateService.validatePrice(this.priceLower)) {
+        return this.flashMessagesService.show('Please enter a valid price', {cssClass: 'alert-danger', timeout: 5000});
+      }
+    }
+
+    if(this.priceLower && this.priceUpper) {
+      if(!this.validateService.validatePriceRange(this.priceLower, this.priceUpper)) {
+        return this.flashMessagesService.show('Please enter a valid price range', {cssClass: 'alert-danger', timeout: 5000});
+      }
+    }
+
     this.types.items = this.itemCheck;
     this.types.services = this.serviceCheck;
 
@@ -106,7 +130,6 @@ export class SearchResultsComponent implements OnInit {
 
   getSearchObject() {
     this.searchObject = JSON.parse(decodeURIComponent(this.query.split(';')[1].split('=')[1]));
-    console.log(this.searchObject);
   }
 
   assignValues() {
