@@ -33,7 +33,12 @@
 
           <div>
             <mat-form-field class="add-service-field">
-              <input placeholder="District" matInput type="text" [(ngModel)]="service.district" name="district">
+              <mat-select placeholder="District" [(ngModel)]="service.district" name="district">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let dis of districts" [value]="dis.value">
+                  {{dis.viewValue}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
 

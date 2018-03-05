@@ -15,6 +15,34 @@ export class EditServiceComponent implements OnInit {
   serviceId: String = this.routeArray[this.routeArray.length - 2];
   dataAvailable: Boolean = false;
 
+  districts: Array<any> = [
+    {value: 'Ampara', viewValue: 'Ampara'},
+    {value: 'Anuradhapura', viewValue: 'Anuradhapura'},
+    {value: 'Badulla', viewValue: 'Badulla'},
+    {value: 'Batticaloa', viewValue: 'Batticaloa'},
+    {value: 'Colombo', viewValue: 'Colombo'},
+    {value: 'Galle', viewValue: 'Galle'},
+    {value: 'Gampaha', viewValue: 'Gampaha'},
+    {value: 'Hambantota', viewValue: 'Hambantota'},
+    {value: 'Jaffna', viewValue: 'Jaffna'},
+    {value: 'Kalutara', viewValue: 'Kalutara'},
+    {value: 'Kandy', viewValue: 'Kandy'},
+    {value: 'Kegalle', viewValue: 'Kegalle'},
+    {value: 'Kilinochchi', viewValue: 'Kilinochchi'},
+    {value: 'Kurunegala', viewValue: 'Kurunegala'},
+    {value: 'Mannar', viewValue: 'Mannar'},
+    {value: 'Matale', viewValue: 'Matale'},
+    {value: 'Matara', viewValue: 'Matara'},
+    {value: 'Monaragala', viewValue: 'Monaragala'},
+    {value: 'Mullaitivu', viewValue: 'Mullaitivu'},
+    {value: 'Nuwara Eliya', viewValue: 'Nuwara Eliya'},
+    {value: 'Polonnaruwa', viewValue: 'Polonnaruwa'},
+    {value: 'Puttalam', viewValue: 'Puttalam'},
+    {value: 'Ratnapura', viewValue: 'Ratnapura'},
+    {value: 'Trincomalee', viewValue: 'Trincomalee'},
+    {value: 'Vavuniya', viewValue: 'Vavuniya'}
+  ];
+
   constructor(
     private router: Router,
     private itemService: ItemService,

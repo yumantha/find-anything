@@ -33,8 +33,6 @@ router.get('/:query', (req, res, next)=>{
         }
     }
 
-    console.log(searchObject);
-
     const resultsToSend = [];
 
     Item.searchItems(searchObject, (error, items) => {
