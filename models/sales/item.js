@@ -55,9 +55,12 @@ module.exports.getItemById = function(id, callback) {
     Item.findById(id, callback);
 };
 
-module.exports.getItemsByName = function(keyword, callback) {
+//search for items
+module.exports.searchItems = function(searchObject, callback) {
     const query = {
-        name: new RegExp('\\b' + keyword + '\\b', 'i')
+        name: new RegExp('\\b' + searchObject.name.trim() + '\\b', 'i'),
+        category: new RegExp('\\b' + searchObject.category.trim() + '\\b', 'i'),
+        price: {$gt: searchObject.priceRange.priceLower, $lt: searchObject.priceRange.priceUpper}
     };
 
     Item.find(query, callback);

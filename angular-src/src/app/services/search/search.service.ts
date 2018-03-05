@@ -12,9 +12,8 @@ export class SearchService {
   ) { }
 
   //quick search for an item
-  quickSearch(query) {
+  search(query) {
     let headers = new Headers();
-    let searchParams = new URLSearchParams();
     headers.append('Content-Type', 'application/json');
     return this.http.get(this.server + 'search/' + query, {headers: headers})
       .map(res => res.json());

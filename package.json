@@ -15,7 +15,7 @@
     "fs": "0.0.1-security",
     "jsonwebtoken": "*",
     "mongoose": "*",
-    "nodemon": "^1.14.11",
+    "nodemon": "^1.17.1",
     "passport": "*",
     "passport-jwt": "*"
   },

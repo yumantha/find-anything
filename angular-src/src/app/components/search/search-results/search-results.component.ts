@@ -14,6 +14,46 @@ export class SearchResultsComponent implements OnInit {
   resultsAvailable: Boolean = false;
   resultsArray: Array<any> = [];
 
+  itemCheck: Boolean = true;
+  serviceCheck: Boolean = true;
+  priceUpper: Number;
+  priceLower: Number;
+  district: String;
+  name: String;
+  category: String;
+  searchObject: any = {};
+
+  types:any = {};
+  priceRange: any = {};
+
+  districts: Array<any> = [
+    {value: 'Ampara', viewValue: 'Ampara'},
+    {value: 'Anuradhapura', viewValue: 'Anuradhapura'},
+    {value: 'Badulla', viewValue: 'Badulla'},
+    {value: 'Batticaloa', viewValue: 'Batticaloa'},
+    {value: 'Colombo', viewValue: 'Colombo'},
+    {value: 'Galle', viewValue: 'Galle'},
+    {value: 'Gampaha', viewValue: 'Gampaha'},
+    {value: 'Hambantota', viewValue: 'Hambantota'},
+    {value: 'Jaffna', viewValue: 'Jaffna'},
+    {value: 'Kalutara', viewValue: 'Kalutara'},
+    {value: 'Kandy', viewValue: 'Kandy'},
+    {value: 'Kegalle', viewValue: 'Kegalle'},
+    {value: 'Kilinochchi', viewValue: 'Kilinochchi'},
+    {value: 'Kurunegala', viewValue: 'Kurunegala'},
+    {value: 'Mannar', viewValue: 'Mannar'},
+    {value: 'Matale', viewValue: 'Matale'},
+    {value: 'Matara', viewValue: 'Matara'},
+    {value: 'Monaragala', viewValue: 'Monaragala'},
+    {value: 'Mullaitivu', viewValue: 'Mullaitivu'},
+    {value: 'Nuwara Eliya', viewValue: 'Nuwara Eliya'},
+    {value: 'Polonnaruwa', viewValue: 'Polonnaruwa'},
+    {value: 'Puttalam', viewValue: 'Puttalam'},
+    {value: 'Ratnapura', viewValue: 'Ratnapura'},
+    {value: 'Trincomalee', viewValue: 'Trincomalee'},
+    {value: 'Vavuniya', viewValue: 'Vavuniya'}
+  ];
+
   constructor(
     private router: Router,
     private searchService: SearchService,
@@ -21,7 +61,9 @@ export class SearchResultsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.searchService.quickSearch(this.query)
+    this.getSearchObject();
+    this.assignValues();
+    this.searchService.search(this.query)
       .subscribe(data => {
         if(data.success) {
           if(data.results) {
@@ -44,4 +86,55 @@ export class SearchResultsComponent implements OnInit {
     this.router.navigate(['/services/' + serviceId])
   }
 
+  refineSearch() {
+    this.types.items = this.itemCheck;
+    this.types.services = this.serviceCheck;
+
+    this.priceRange.priceUpper = this.priceUpper;
+    this.priceRange.priceLower = this.priceLower;
+
+    this.searchObject.name = this.name;
+    this.searchObject.priceRange = this.priceRange;
+    this.searchObject.types = this.types;
+    this.searchObject.district = this.district;
+    this.searchObject.category = this.category;
+
+    this.router.navigate(['search/results', {search: JSON.stringify(this.searchObject)}]);
+
+    window.location.reload();
+  }
+
+  getSearchObject() {
+    this.searchObject = JSON.parse(decodeURIComponent(this.query.split(';')[1].split('=')[1]));
+    console.log(this.searchObject);
+  }
+
+  assignValues() {
+    if(this.searchObject.name) {
+      this.name = this.searchObject.name;
+    }
+
+    if(this.searchObject.priceRange) {
+      if(this.searchObject.priceRange.priceUpper) {
+        this.priceUpper = this.searchObject.priceRange.priceUpper
+      }
+
+      if(this.searchObject.priceRange.priceLower) {
+        this.priceLower = this.searchObject.priceRange.priceLower
+      }
+    }
+
+    if(this.searchObject.types) {
+      this.itemCheck = this.searchObject.types.items;
+      this.serviceCheck = this.searchObject.types.services;
+    }
+
+    if(this.searchObject.district) {
+      this.district = this.searchObject.district;
+    }
+
+    if(this.searchObject.category) {
+      this.category = this.searchObject.category;
+    }
+  }
 }

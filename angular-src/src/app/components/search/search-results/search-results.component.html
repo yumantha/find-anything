@@ -1,30 +1,99 @@
 <div class="container">
+  <div id="searchRefine">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Refine Search
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <form (submit)="refineSearch()" style="text-align: center">
+          <div>
+            <mat-form-field style="width: 75%">
+              <input matInput placeholder="Name" [(ngModel)]="name" name="name">
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field style="width: 75%">
+              <input matInput placeholder="Category" [(ngModel)]="category" name="category">
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field style="width: 75%">
+              <mat-select placeholder="District" [(ngModel)]="district" name="district" [disabled]="!serviceCheck">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let dis of districts" [value]="dis.value">
+                  {{dis.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field style="width: 35%; margin: 0 2.5%;">
+              <input matInput placeholder="Price Range: From" [(ngModel)]="priceLower" name="priceUpper" type="number">
+            </mat-form-field>
+            <mat-form-field style="width: 35%; margin: 0 2.5%;">
+              <input matInput placeholder="Price Range: To" [(ngModel)]="priceUpper" name="priceLower" type="number">
+            </mat-form-field>
+          </div>
+
+          <div>
+            <section>
+              <mat-checkbox [(ngModel)]="itemCheck" name="item" style="margin: 0 10%">Items</mat-checkbox>
+              <mat-checkbox [(ngModel)]="serviceCheck" name="service" style="margin: 0 10%">Services</mat-checkbox>
+            </section>
+          </div>
+
+          <div>
+            <button mat-raised-button color="primary" type="submit">Refine</button>
+          </div>
+        </form>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
   <div *ngIf="!resultsAvailable" style="margin-top: 100px; text-align: center; width: 100%">
     <p><mat-icon>report_problem</mat-icon></p>
     <h3>Sorry! No results were found for your search</h3>
   </div>
+
   <div *ngIf="resultsAvailable">
-    <mat-grid-list cols="4" rowHeight="450px">
-      <mat-grid-tile *ngFor="let result of resultsArray">
-        <mat-card style="margin: 10px; text-align: center">
-          <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" style="padding: 5px" *ngIf="result.type==='item'">
-          <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px" *ngIf="result.type==='service'">
-          <mat-card-header>
-            <div style="width: 100%; margin-left: -15px">
-              <mat-card-title><strong>{{result.name}}</strong></mat-card-title>
-              <mat-card-subtitle>{{result.category}}</mat-card-subtitle>
-            </div>
-          </mat-card-header>
-          <mat-divider></mat-divider>
-          <mat-card-content style="margin-top: 10px">
-            <p>Rs. {{result.price}}.00</p>
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button color="primary" style="width: 100%;" (click)="goToItem(result.id)" *ngIf="result.type==='item'">Details</button>
-            <button mat-button color="primary" style="width: 100%;" (click)="goToService(result.id)" *ngIf="result.type==='service'">Details</button>
-          </mat-card-actions>
-        </mat-card>
-      </mat-grid-tile>
-    </mat-grid-list>
+    <mat-card style="width: 100%; margin-bottom: 5px" *ngFor="let result of resultsArray">
+      <mat-grid-list cols="8" rowHeight="40px">
+        <mat-grid-tile colspan="2" rowspan="4">
+          <div style="width: 100%; height: 100%;" *ngIf="result.type==='item'">
+            <img src="http://myarenaonline.com/screen/demos/demo_item.png" style="width: 100%">
+          </div>
+          <div style="width: 100%; height: 100%" *ngIf="result.type==='service'">
+            <img src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx">
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="6" rowspan="1">
+          <div style="width: 100%; height: 100%; padding-left: 25px">
+            <mat-card-title><strong>{{result.name}}</strong></mat-card-title>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3" rowspan="3">
+          <div style="width: 100%; height: 100%; padding-left: 25px">
+            <mat-card-subtitle>{{result.category}}</mat-card-subtitle>
+            <p><strong>Rs. {{result.price}}.00</strong></p>
+            <button mat-raised-button color="primary" (click)="goToItem(result.id)" *ngIf="result.type==='item'">Details</button>
+            <button mat-raised-button color="primary" (click)="goToService(result.id)" *ngIf="result.type==='service'">Details</button>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3" rowspan="3">
+          <div style="width: 100%; height: 100%">
+            <p *ngIf="result.district">District: <strong>{{result.district}}</strong></p>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card>
   </div>
 </div>

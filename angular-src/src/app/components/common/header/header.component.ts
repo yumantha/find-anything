@@ -11,9 +11,8 @@ import {SearchService} from "../../../services/search/search.service";
 })
 export class HeaderComponent implements OnInit {
   searchKeyword: String;
-  resultItems: Array<any> = [];
-  resultServices: Array<any> = [];
-  resultsAvailable: Boolean = false;
+  searchObject: any = {};
+  types: any = {};
 
   constructor(
     private authService: AuthService,
@@ -36,7 +35,13 @@ export class HeaderComponent implements OnInit {
       return this.flashMessagesService.show("Please enter a keyword to search", {cssClass: 'alert-danger', timeout: 5000});
     }
 
-    this.router.navigate(['search/results', {name: searchKeyword}]);
+    this.types.items = true;
+    this.types.services = true;
+
+    this.searchObject.name = searchKeyword;
+    this.searchObject.types = this.types;
+
+    this.router.navigate(['search/results', {search: JSON.stringify(this.searchObject)}]);
 
     window.location.reload();
   }
