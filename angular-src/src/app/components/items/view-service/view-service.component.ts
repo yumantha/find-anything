@@ -6,6 +6,7 @@ import {MatDialog} from "@angular/material";
 import {ConfirmServicedeleteDialog} from "./confirm-servicedelete/confirm-servicedelete.component";
 import {AddServiceReviewDialog} from "./add-service-review/add-service-review.component";
 import {AuthService} from "../../../services/authenticate/auth.service";
+import {ReviewService} from "../../../services/reviews/review.service";
 
 @Component({
   selector: 'app-view-service',
@@ -26,9 +27,12 @@ export class ViewServiceComponent implements OnInit {
   reviewsAvailable: Boolean = false;
   reviewAdded: Boolean = false;
 
+  reviews: any[] = [];
+
   constructor(
     private itemService: ItemService,
     private authService: AuthService,
+    private reviewService: ReviewService,
     private router: Router,
     private flashMessagesService: FlashMessagesService,
     private dialog: MatDialog
@@ -55,6 +59,16 @@ export class ViewServiceComponent implements OnInit {
             this.isFav = true;
           }
 
+          if(this.service.reviews.length > 0) {
+            this.reviewsAvailable = true;
+
+            this.service.reviews.forEach((review) => {
+              this.reviewService.getReview(review, 'any', 'any')
+                .subscribe(data => {
+                  this.reviews.push(data.review);
+                })
+            });
+          }
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
           return false;

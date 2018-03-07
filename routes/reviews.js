@@ -95,6 +95,85 @@ router.post('/', (req, res, next) => {
     })
 });
 
+//get a review
+router.get('/:id', (req, res, next) => {
+    const reviewId = req.params.id;
+
+    const revCustomer = {};
+    const revItem = {};
+
+    const reviewToSend = {};
+
+    Review.getReviewById(reviewId, (error, review) => {
+        if(error) {
+            return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+        }
+
+        if(!review) {
+            return res.json({success: false, msg: 'Review not found'});
+        } else {
+            Customer.getUserById(review.customer, (error, customer) => {
+                if(error) {
+                    return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                }
+
+                if(!customer) {
+                    return res.json({success: false, msg: 'Review owner not found'});
+                } else {
+                    revCustomer.id = customer._id;
+                    revCustomer.username = customer.username;
+
+                    if(review.itemType === 'item') {
+                        Item.getItemById(review.item, (error, item) => {
+                            if(error) {
+                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                            }
+
+                            if(!item) {
+                                return res.json({success: false, msg: 'Reviewed item not found'});
+                            } else {
+                                revItem.id = item._id;
+                                revItem.name = item.name;
+                                revItem.type = 'item';
+
+                                reviewToSend.item = revItem;
+                                reviewToSend.customer = revCustomer;
+                                reviewToSend.rating = review.rating;
+                                reviewToSend.review = review.review;
+
+                                return res.json({success: true, review: reviewToSend});
+                            }
+                        });
+                    } else if(review.itemType === 'service') {
+                        Service.getItemById(review.item, (error, item) => {
+                            if(error) {
+                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                            }
+
+                            if(!item) {
+                                return res.json({success: false, msg: 'Reviewed item not found'});
+                            } else {
+                                revItem.id = item._id;
+                                revItem.name = item.name;
+                                revItem.type = 'service';
+
+                                reviewToSend.item = revItem;
+                                reviewToSend.customer = revCustomer;
+                                reviewToSend.rating = review.rating;
+                                reviewToSend.review = review.review;
+
+                                return res.json({success: true, review: reviewToSend});
+                            }
+                        });
+                    } else {
+                        return res.json({success: false, msg: 'An error occurred'});
+                    }
+                }
+            });
+        }
+    });
+});
+
 //delete a review
 router.delete('/:id', (req, res, next) => {
     const reviewId = req.params._id;

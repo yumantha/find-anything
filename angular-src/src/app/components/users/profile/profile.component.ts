@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/authenticate/auth.service";
 import {Router} from "@angular/router";
 import {ItemService} from "../../../services/items/item.service";
-import {log} from "util";
+import {ReviewService} from "../../../services/reviews/review.service";
 
 @Component({
   selector: 'app-profile',
@@ -19,10 +19,12 @@ export class ProfileComponent implements OnInit {
   boughtServicesList: any[] = [];
   reqItemsList: any[] = [];
   reqServicesList: any[] = [];
+  reviews: any[] = [];
 
   constructor(
     private authService: AuthService,
     private itemService: ItemService,
+    private reviewService: ReviewService,
     private router: Router
   ) { }
 
@@ -84,6 +86,13 @@ export class ProfileComponent implements OnInit {
             this.itemService.getService(service)
               .subscribe(data => {
                 this.reqServicesList.push(data.service);
+              })
+          });
+
+          this.user.reviews.forEach((review) => {
+            this.reviewService.getReview(review, 'any', 'any')
+              .subscribe(data => {
+                this.reviews.push(data.review);
               })
           });
         }

@@ -18,4 +18,11 @@ export class ReviewService {
       .map(res => res.json());
   }
 
+  //get a review from the database
+  getReview(reviewId, itemId, itemType) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.get(this.server + itemType + 's/' + itemId + '/reviews/' + reviewId, {headers: headers})
+      .map(res => res.json());
+  }
 }

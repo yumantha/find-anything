@@ -184,6 +184,25 @@
             </mat-tab>
           </mat-tab-group>
         </mat-tab>
+
+        <mat-tab label="Reviews">
+          <div *ngFor="let review of this.reviews">
+            <mat-card>
+
+              <mat-card-title *ngIf="review.item.type === 'item'"><a href="/items/{{review.item.id}}">{{review.item.name}}</a></mat-card-title>
+              <mat-card-title *ngIf="review.item.type === 'service'"><a href="/services/{{review.item.id}}">{{review.item.name}}</a></mat-card-title>
+
+              <mat-card-subtitle>{{review.customer.username}}</mat-card-subtitle>
+              <mat-card-content>
+                <p>Rating: <strong>{{review.rating}}</strong>/5</p>
+
+                <h5>Review</h5>
+                <p>{{review.review}}</p>
+              </mat-card-content>
+            </mat-card>
+            <mat-divider></mat-divider>
+          </div>
+        </mat-tab>
       </div>
 
 

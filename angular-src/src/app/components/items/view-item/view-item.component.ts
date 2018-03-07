@@ -6,6 +6,7 @@ import {MatDialog} from "@angular/material";
 import {ConfirmDeleteDialog} from "./confirm-delete/confirm-delete.component";
 import {AddReviewDialog} from "./add-review/add-review.component";
 import {AuthService} from "../../../services/authenticate/auth.service";
+import {ReviewService} from "../../../services/reviews/review.service";
 
 @Component({
   selector: 'app-view-item',
@@ -23,12 +24,16 @@ export class ViewItemComponent implements OnInit {
   isOwner: Boolean = false;
   isFav: Boolean = false;
 
+
   reviewsAvailable: Boolean = false;
   reviewAdded: Boolean = false;
+
+  reviews: any[] = [];
 
   constructor(
     private itemService: ItemService,
     private authService: AuthService,
+    private reviewService: ReviewService,
     private router: Router,
     private flashMessagesService: FlashMessagesService,
     private dialog: MatDialog
@@ -55,6 +60,16 @@ export class ViewItemComponent implements OnInit {
             this.isFav = true;
           }
 
+          if(this.item.reviews.length > 0) {
+            this.reviewsAvailable = true;
+
+            this.item.reviews.forEach((review) => {
+              this.reviewService.getReview(review, 'any', 'any')
+                .subscribe(data => {
+                  this.reviews.push(data.review);
+                })
+            });
+          }
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
           return false;
