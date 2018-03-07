@@ -31,11 +31,14 @@ import {EditServiceComponent} from './components/items/edit-service/edit-service
 import {EnterPassDialog} from './components/users/edit-profile/enter-pass/enter-pass.component';
 import {ConfirmDeleteDialog} from "./components/items/view-item/confirm-delete/confirm-delete.component";
 import {ConfirmServicedeleteDialog } from './components/items/view-service/confirm-servicedelete/confirm-servicedelete.component';
+import {AddReviewDialog} from './components/items/view-item/add-review/add-review.component';
+import {AddServiceReviewDialog} from './components/items/view-service/add-service-review/add-service-review.component';
 
 import {ValidateService} from "./services/validate/validate.service";
 import {AuthService} from "./services/authenticate/auth.service";
 import {ItemService} from "./services/items/item.service";
 import {SearchService} from './services/search/search.service';
+import {ReviewService} from './services/reviews/review.service';
 
 import {AuthGuard} from "./guards/auth.guard";
 
@@ -81,6 +84,8 @@ const appRoutes = [
     ConfirmServicedeleteDialog,
     SearchComponent,
     ViewUserComponent,
+    AddReviewDialog,
+    AddServiceReviewDialog,
   ],
   imports: [
     BrowserModule,
@@ -95,14 +100,17 @@ const appRoutes = [
   entryComponents: [
     EnterPassDialog,
     ConfirmDeleteDialog,
-    ConfirmServicedeleteDialog
+    ConfirmServicedeleteDialog,
+    AddReviewDialog,
+    AddServiceReviewDialog
   ],
   providers: [
     ValidateService,
     AuthService,
     AuthGuard,
     ItemService,
-    SearchService
+    SearchService,
+    ReviewService
   ],
   bootstrap: [
     AppComponent

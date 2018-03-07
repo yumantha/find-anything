@@ -6,10 +6,15 @@ const Item = require('../models/sales/item');
 const Service = require('../models/sales/service');
 const Customer = require('../models/users/customer');
 
+
+// function calcAvgRating(item) {
+//     Review.aggregate()
+// }
+
 //new review
 router.post('/', (req, res, next) => {
     const customerId = req.body.customerId;
-    const itemType = req.params.type;
+    const itemType = req.body.itemType;
     const itemId = req.body.itemId;
 
     Customer.getUserById(customerId, (error, customer) => {
@@ -20,7 +25,7 @@ router.post('/', (req, res, next) => {
         if(!customer) {
             return res.json({success: false, msg: 'User not found'});
         } else {
-            if(itemType === 'items') {
+            if(itemType === 'item') {
                 Item.getItemById(itemId, (error, item) => {
                     if(error) {
                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
@@ -36,7 +41,6 @@ router.post('/', (req, res, next) => {
                             review: req.body.review,
                             rating: req.body.rating
                         });
-
                         Review.addReview(newReview, (error, review) => {
                             if(error) {
                                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
@@ -52,7 +56,7 @@ router.post('/', (req, res, next) => {
                         });
                     }
                 });
-            } else if (itemType === 'services') {
+            } else if (itemType === 'service') {
                 Service.getItemById(itemId, (error, service) => {
                     if(error) {
                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});

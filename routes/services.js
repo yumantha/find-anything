@@ -66,7 +66,7 @@ router.get('/:id', (req, res, next) => {
                 if(!seller) {
                     return res.json({success: false, msg: "Seller not found"});
                 } else {
-                    Review.getReviewsByItem(item._id, (error, reviews) => {
+                    Review.getReviewsByItem(service._id, (error, reviews) => {
                         if(error) {
                             return res.json({success: false, msg: "An error occurred: " + error});
                         }

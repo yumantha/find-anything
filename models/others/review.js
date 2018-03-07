@@ -26,10 +26,10 @@ const ReviewSchema = mongoose.Schema( {
     }
 });
 
-const Review = module.expports = mongoose.model('Review', ReviewSchema);
+const Review = module.exports = mongoose.model('Review', ReviewSchema);
 
 module.exports.addReview = function(newReview, callback) {
-    newReview.save();
+    newReview.save(callback);
 };
 
 module.exports.getReviewById = function(reviewId, callback) {

@@ -23,7 +23,7 @@ export class ItemService {
   addService(service) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    // console.log(item);
+    // console.log(service);
     return this.http.post(this.server + 'services/', service, {headers: headers})
       .map(res => res.json());
   }

@@ -52,7 +52,10 @@ const ItemSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Review"
         }
-    ]
+    ],
+    avgRating: {
+        type: Number
+    }
 });
 
 const Item = module.exports = mongoose.model('Item', ItemSchema);

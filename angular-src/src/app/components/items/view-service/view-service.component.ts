@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {MatDialog} from "@angular/material";
 import {ConfirmServicedeleteDialog} from "./confirm-servicedelete/confirm-servicedelete.component";
+import {AddServiceReviewDialog} from "./add-service-review/add-service-review.component";
 import {AuthService} from "../../../services/authenticate/auth.service";
 
 @Component({
@@ -21,6 +22,9 @@ export class ViewServiceComponent implements OnInit {
   dataAvailable: Boolean = false;
   isOwner: Boolean = false;
   isFav: Boolean = false;
+
+  reviewsAvailable: Boolean = false;
+  reviewAdded: Boolean = false;
 
   constructor(
     private itemService: ItemService,
@@ -137,6 +141,27 @@ export class ViewServiceComponent implements OnInit {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+        }
+      });
+  }
+
+  addReview() {
+    let dialogRef = this.dialog.open(AddServiceReviewDialog, {
+      width: '600px',
+      data: {
+        itemId: this.serviceId,
+        itemType: 'service'
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(data => {
+        if(data.success) {
+          this.flashMessagesService.show('The review and rating were successfully added', {cssClass: 'alert-success', timeout: 5000});
+        } else {
+          if(data.msg) {
+            this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          }
         }
       });
   }

@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {MatDialog} from "@angular/material";
 import {ConfirmDeleteDialog} from "./confirm-delete/confirm-delete.component";
+import {AddReviewDialog} from "./add-review/add-review.component";
 import {AuthService} from "../../../services/authenticate/auth.service";
 
 @Component({
@@ -21,6 +22,9 @@ export class ViewItemComponent implements OnInit {
   dataAvailable: Boolean = false;
   isOwner: Boolean = false;
   isFav: Boolean = false;
+
+  reviewsAvailable: Boolean = false;
+  reviewAdded: Boolean = false;
 
   constructor(
     private itemService: ItemService,
@@ -58,29 +62,29 @@ export class ViewItemComponent implements OnInit {
       });
   }
 
-  deleteItem() {
-      let dialogRef = this.dialog.open(ConfirmDeleteDialog, {
-        width: '450px',
-        data: {
-          itemId: this.itemId
-        }
-      });
-
-      dialogRef.afterClosed()
-        .subscribe(data => {
-          if(data.success) {
-            this.flashMessagesService.show('The item was successfully deleted', {cssClass: 'alert-success', timeout: 5000});
-            this.router.navigate(['/profile']);
-          } else {
-            if(data.msg) {
-              this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
-            }
-          }
-        });
-  }
-
   editItem() {
       this.router.navigate(['/items/' + this.itemId + '/edit'])
+  }
+
+  deleteItem() {
+    let dialogRef = this.dialog.open(ConfirmDeleteDialog, {
+      width: '450px',
+      data: {
+        itemId: this.itemId
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(data => {
+        if(data.success) {
+          this.flashMessagesService.show('The item was successfully deleted', {cssClass: 'alert-success', timeout: 5000});
+          this.router.navigate(['/profile']);
+        } else {
+          if(data.msg) {
+            this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          }
+        }
+      });
   }
 
   requestItem() {
@@ -139,5 +143,26 @@ export class ViewItemComponent implements OnInit {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
       });
+  }
+
+  addReview() {
+      let dialogRef = this.dialog.open(AddReviewDialog, {
+        width: '600px',
+        data: {
+          itemId: this.itemId,
+          itemType: 'item'
+        }
+      });
+
+      dialogRef.afterClosed()
+        .subscribe(data => {
+          if(data.success) {
+            this.flashMessagesService.show('The review and rating were successfully added', {cssClass: 'alert-success', timeout: 5000});
+          } else {
+            if(data.msg) {
+              this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+            }
+          }
+        });
   }
 }

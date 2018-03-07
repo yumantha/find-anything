@@ -1,67 +1,77 @@
 <div class="container">
-  <div *ngIf="dataAvailable">
-    <mat-grid-list cols="2" rowHeight="400px">
-      <mat-grid-tile colspan="1">
-        <div class="grid-item">
-          <img src="https://cdn.takas.lk/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/a/samsung_50_4.jpeg">
-        </div>
-      </mat-grid-tile>
-
-      <mat-grid-tile colspan="1">
-        <div class="grid-item">
-          <div>
-            <h1>{{item.name}}</h1>
+  <mat-card style="margin-top: 75px; margin-bottom: 10px">
+    <div *ngIf="dataAvailable">
+      <mat-grid-list cols="2" rowHeight="200px">
+        <mat-grid-tile colspan="1" rowspan="2">
+          <div class="grid-item">
+            <img src="https://cdn.takas.lk/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/a/samsung_50_4.jpeg">
           </div>
+        </mat-grid-tile>
 
-          <div *ngIf="item.category">
-            <p>Category: {{item.category}}</p>
-          </div>
-
-          <div>
-            <p>Price: Rs. {{item.price}}.00</p>
-          </div>
-
-          <div *ngIf="item.location">
-            <p>Location: {{item.location}}</p>
-          </div>
-
-          <div>
-            <p>Sold by: <a [href]="sellerProfile">{{seller}}</a></p>
-          </div>
-
-          <div>
-            <div *ngIf="item.isAvailable; else unavailable">
-              <p style="color: blue"><strong>Item is available</strong></p>
+        <mat-grid-tile colspan="1" rowspan="2">
+          <div class="grid-item">
+            <div>
+              <h1>{{item.name}}</h1>
             </div>
-            <ng-template #unavailable>
-              <p style="color: red"><strong>Item is not available</strong></p>
-            </ng-template>
-          </div>
 
-          <div class="buttons" *ngIf="isOwner">
-            <button mat-fab color="primary" (click)="editItem()">Edit</button>
-            <button mat-fab color="warn" (click)="deleteItem()">Delete</button>
-          </div>
+            <div *ngIf="item.category">
+              <p>Category: {{item.category}}</p>
+            </div>
 
-          <div class="buttons" *ngIf="isCustomer" style="width: 100%;">
+            <div>
+              <p>Price: Rs. {{item.price}}.00</p>
+            </div>
+
+            <div *ngIf="item.location">
+              <p>Location: {{item.location}}</p>
+            </div>
+
+            <div>
+              <p>Sold by: <a [href]="sellerProfile">{{seller}}</a></p>
+            </div>
+
+            <div>
+              <div *ngIf="item.isAvailable; else unavailable">
+                <p style="color: blue"><strong>Item is available</strong></p>
+              </div>
+              <ng-template #unavailable>
+                <p style="color: red"><strong>Item is not available</strong></p>
+              </ng-template>
+            </div>
+
+            <div class="buttons" *ngIf="isOwner">
+              <button mat-fab color="primary" (click)="editItem()">Edit</button>
+              <button mat-fab color="warn" (click)="deleteItem()">Delete</button>
+            </div>
+
+            <div class="buttons" *ngIf="isCustomer" style="width: 100%;">
             <span matTooltip="Favourite Item" matTooltipPosition="below" *ngIf="!isFav">
               <button mat-mini-fab color="primary" (click)="favItem()"><mat-icon>favorite</mat-icon></button>
             </span>
-            <span matTooltip="Unavourite Item" matTooltipPosition="below" *ngIf="isFav">
+              <span matTooltip="Unavourite Item" matTooltipPosition="below" *ngIf="isFav">
               <button mat-mini-fab color="warn" (click)="unfavItem()"><mat-icon>favorite</mat-icon></button>
             </span>
-            <button mat-raised-button color="primary" (click)="requestItem()" style="float: right">Request Item</button>
+              <button mat-raised-button color="primary" (click)="requestItem()" style="float: right">Request Item</button>
+            </div>
           </div>
-        </div>
-      </mat-grid-tile>
+        </mat-grid-tile>
 
-      <mat-grid-tile colspan="2">
-        <div class="grid-item">
-          <br/>
-          <p><strong>Description</strong></p>
-          {{item.description}}
-        </div>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </div>
+        <mat-grid-tile colspan="2">
+          <div class="grid-item">
+            <br/>
+            <p><strong>Description</strong></p>
+            {{item.description}}
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>Reviews</mat-card-title>
+
+    <span matTooltip="Add Review" matTooltipPosition="after" *ngIf="!reviewAdded && isCustomer" style="position:absolute; bottom: 10px; right: 10px">
+      <button mat-mini-fab color="primary" (click)="addReview()"><mat-icon>add</mat-icon></button>
+    </span>
+  </mat-card>
 </div>

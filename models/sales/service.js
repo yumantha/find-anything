@@ -63,7 +63,10 @@ const ServiceSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Review"
         }
-    ]
+    ],
+    avgRating: {
+        type: Number
+    }
 });
 
 const Service = module.exports = mongoose.model('Service', ServiceSchema);
