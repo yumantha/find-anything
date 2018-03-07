@@ -68,6 +68,12 @@ const CustomerSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Service"
         }
+    ],
+    reviews: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Review"
+        }
     ]
     // profPic: {
     //     data: Buffer,

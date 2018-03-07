@@ -1,12 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const config = require('../config/database');
 
 const Service = require('../models/sales/service');
 const Seller = require('../models/users/seller');
 const Customer = require('../models/users/customer');
+const Review = require('../models/others/review');
 
 //new service
 router.post('/', (req, res, next) => {
@@ -68,7 +66,17 @@ router.get('/:id', (req, res, next) => {
                 if(!seller) {
                     return res.json({success: false, msg: "Seller not found"});
                 } else {
-                    return res.json({success: true, service: service, seller: seller.username});
+                    Review.getReviewsByItem(item._id, (error, reviews) => {
+                        if(error) {
+                            return res.json({success: false, msg: "An error occurred: " + error});
+                        }
+
+                        if(!reviews) {
+                            return res.json({success: true, service: service, seller: seller.username});
+                        } else {
+                            return res.json({success: true, service: service, seller: seller.username, reviews: reviews});
+                        }
+                    });
                 }
             });
         }

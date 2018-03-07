@@ -1,17 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const config = require('../config/database');
 
 const Item = require('../models/sales/item');
 const Seller = require('../models/users/seller');
 const Customer = require('../models/users/customer');
+const Review = require('../models/others/review');
 
 //new item
 router.post('/', (req, res, next) => {
     const sellerID = req.body.sellerID;
-    // console.log(req.body);
 
     Seller.getUserById(sellerID, (error, seller) => {
         if(error) {
@@ -64,7 +61,17 @@ router.get('/:id', (req, res, next) => {
                 if(!seller) {
                     return res.json({success: false, msg: "Seller not found"});
                 } else {
-                    return res.json({success: true, item: item, seller: seller.username});
+                    Review.getReviewsByItem(item._id, (error, reviews) => {
+                        if(error) {
+                            return res.json({success: false, msg: "An error occurred: " + error});
+                        }
+
+                        if(!reviews) {
+                            return res.json({success: true, item: item, seller: seller.username});
+                        } else {
+                            return res.json({success: true, item: item, seller: seller.username, reviews: reviews});
+                        }
+                    });
                 }
             });
         }
@@ -94,7 +101,6 @@ router.delete('/:id', (req, res, next) => {
                 }
                 else {
                     seller.sellingItems.remove(item);
-                    seller.save();
 
                     Item.deleteItemById(id, (error, item) => {
                         if(error) {
@@ -104,9 +110,24 @@ router.delete('/:id', (req, res, next) => {
                         if(!item) {
                             return res.json({success: false, msg: "Item not found"});
                         } else {
-                            return res.json({success: true, item: item});
-                        }
+                            seller.save();
 
+                            Review.getReviewsByItem(item._id, (error, reviews) => {
+                                if(error) {
+                                    return res.json({success: false, msg: 'An error occurred: ' + error});
+                                }
+
+                                reviews.forEach((review) => {
+                                    Review.deleteReview(review._id, (error, deletedReview) => {
+                                        if(error) {
+                                            return res.json({success: false, msg: 'An error occurred: ' + error});
+                                        }
+                                    })
+                                });
+                            });
+
+                            return res.json({success: true, msg: 'Item deleted'});
+                        }
                     });
                 }
             })
@@ -127,10 +148,15 @@ router.put('/:id', (req, res, next) => {
         isAvailable: req.body.isAvailable
     };
 
-    Item.updateItem(itemId, editedItem, (error, user) => {
+    Item.updateItem(itemId, editedItem, (error, item) => {
         if(error) {
             return res.json({success: false, msg: 'Failed to update item. Error: ' + error});
-        } else {
+        }
+
+        if(!item) {
+            return res.json({success: false, msg: 'Item not found'});
+        }
+        else {
             return res.json({success: true, msg: 'Item updated'});
         }
     });

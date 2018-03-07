@@ -57,6 +57,12 @@ const ServiceSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Customer"
         }
+    ],
+    reviews: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Review"
+        }
     ]
 });
 

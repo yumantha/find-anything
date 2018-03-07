@@ -24,6 +24,7 @@ const app = express();
 const users = require('./routes/users');
 const items = require('./routes/items');
 const services = require('./routes/services');
+const reviews = require('./routes/reviews');
 const search = require('./routes/search');
 
 //port number
@@ -48,6 +49,7 @@ app.use('/users', users);
 app.use('/items', items);
 app.use('/services', services);
 app.use('/search', search);
+app.use('/:type/:itemId/reviews', reviews);
 
 //index route
 app.get('/', (req, res)=>{
