@@ -5,6 +5,7 @@ import {FlashMessagesService} from "angular2-flash-messages";
 import {MatDialog} from "@angular/material";
 import {ConfirmDeleteDialog} from "./confirm-delete/confirm-delete.component";
 import {ConfirmReviewDeleteDialog} from "../../users/profile/confirm-review-delete/confirm-review-delete.component";
+import {EditReviewDialog} from "../../users/profile/edit-review/edit-review.component";
 import {AddReviewDialog} from "./add-review/add-review.component";
 import {AuthService} from "../../../services/authenticate/auth.service";
 import {ReviewService} from "../../../services/reviews/review.service";
@@ -25,7 +26,6 @@ export class ViewItemComponent implements OnInit {
   dataAvailable: Boolean = false;
   isOwner: Boolean = false;
   isFav: Boolean = false;
-
   reviewsAvailable: Boolean = false;
   reviewAdded: Boolean = false;
 
@@ -67,6 +67,9 @@ export class ViewItemComponent implements OnInit {
             this.item.reviews.forEach((review) => {
               this.reviewService.getReview(review, 'any', 'any')
                 .subscribe(data => {
+                  if(data.review.customer.id === this.loggedUser) {
+                    this.reviewAdded = true;
+                  }
                   this.reviews.push(data.review);
                 })
             });
@@ -184,7 +187,24 @@ export class ViewItemComponent implements OnInit {
   }
 
   editReview(review) {
-    console.log(review, 'edrev')
+    let dialogRef = this.dialog.open(EditReviewDialog, {
+      width: '600px',
+      data: {
+        review: review
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(data => {
+        if(data.success) {
+          this.flashMessagesService.show('The review and rating were successfully edited', {cssClass: 'alert-success', timeout: 5000});
+          // window.location.reload();
+        } else {
+          if(data.msg) {
+            this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          }
+        }
+      });
   }
 
   deleteReview(review) {

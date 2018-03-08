@@ -1,11 +1,11 @@
 <div style="text-align: center">
-  <h1 mat-dialog-title><strong>Add Review and Rating</strong></h1>
+  <h1 mat-dialog-title><strong>Edit Review and Rating</strong></h1>
 
   <mat-dialog-content style="text-align: center">
     <form>
       <div>
         <span><strong>Rating: </strong></span>
-        <mat-radio-group [(ngModel)]="rating" name="rating" style="margin-left: 20px" required>
+        <mat-radio-group [(ngModel)]="review.rating" name="review.rating" style="margin-left: 20px" required>
           <mat-radio-button value=1>1</mat-radio-button>
           <mat-radio-button value=2>2</mat-radio-button>
           <mat-radio-button value=3>3</mat-radio-button>
@@ -16,7 +16,7 @@
 
       <div>
         <mat-form-field style="width: 90%">
-          <textarea matInput placeholder="Add a review..." name="review" [(ngModel)]="review" required></textarea>
+          <textarea matInput placeholder="Add a review..." name="review" [(ngModel)]="review.review" required></textarea>
         </mat-form-field>
       </div>
     </form>

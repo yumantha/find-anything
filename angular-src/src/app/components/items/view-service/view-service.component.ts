@@ -6,6 +6,7 @@ import {MatDialog} from "@angular/material";
 import {ConfirmServicedeleteDialog} from "./confirm-servicedelete/confirm-servicedelete.component";
 import {ConfirmReviewDeleteDialog} from "../../users/profile/confirm-review-delete/confirm-review-delete.component";
 import {AddServiceReviewDialog} from "./add-service-review/add-service-review.component";
+import {EditReviewDialog} from "../../users/profile/edit-review/edit-review.component";
 import {AuthService} from "../../../services/authenticate/auth.service";
 import {ReviewService} from "../../../services/reviews/review.service";
 
@@ -67,6 +68,10 @@ export class ViewServiceComponent implements OnInit {
             this.service.reviews.forEach((review) => {
               this.reviewService.getReview(review, 'any', 'any')
                 .subscribe(data => {
+                  if(data.review.customer.id === this.loggedUser) {
+                    this.reviewAdded = true;
+                  }
+
                   this.reviews.push(data.review);
                 })
             });
@@ -184,7 +189,24 @@ export class ViewServiceComponent implements OnInit {
   }
 
   editReview(review) {
-    console.log(review, 'edrev')
+    let dialogRef = this.dialog.open(EditReviewDialog, {
+      width: '600px',
+      data: {
+        review: review
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(data => {
+        if(data.success) {
+          this.flashMessagesService.show('The review and rating were successfully edited', {cssClass: 'alert-success', timeout: 5000});
+          // window.location.reload();
+        } else {
+          if(data.msg) {
+            this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          }
+        }
+      });
   }
 
   deleteReview(review) {

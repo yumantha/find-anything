@@ -6,6 +6,7 @@ import {ReviewService} from "../../../services/reviews/review.service";
 import {MatDialog} from "@angular/material";
 import {ConfirmReviewDeleteDialog} from "./confirm-review-delete/confirm-review-delete.component";
 import {FlashMessagesService} from "angular2-flash-messages";
+import {EditReviewDialog} from "./edit-review/edit-review.component";
 
 @Component({
   selector: 'app-profile',
@@ -118,7 +119,24 @@ export class ProfileComponent implements OnInit {
   }
 
   editReview(review) {
-    console.log(review, 'edrev')
+    let dialogRef = this.dialog.open(EditReviewDialog, {
+      width: '600px',
+      data: {
+        review: review
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(data => {
+        if(data.success) {
+          this.flashMessagesService.show('The review and rating were successfully edited', {cssClass: 'alert-success', timeout: 5000});
+          // window.location.reload();
+        } else {
+          if(data.msg) {
+            this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          }
+        }
+      });
   }
 
   deleteReview(review) {
