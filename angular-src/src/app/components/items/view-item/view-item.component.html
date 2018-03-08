@@ -82,6 +82,10 @@
           <p>Rating: <strong>{{review.rating}}</strong>/5</p>
           <p>{{review.review}}</p>
 
+          <div *ngIf="review.customer.id === loggedUser">
+            <button mat-raised-button color="primary" (click)="editReview(review)">Edit</button>
+            <button mat-raised-button color="warn" (click)="deleteReview(review)">Delete</button>
+          </div>
         </mat-card>
       </div>
     </div>

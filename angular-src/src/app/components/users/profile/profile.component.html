@@ -198,13 +198,15 @@
 
                 <h5>Review</h5>
                 <p>{{review.review}}</p>
+
+                <button mat-raised-button color="primary" (click)="editReview(review)">Edit</button>
+                <button mat-raised-button color="warn" (click)="deleteReview(review)">Delete</button>
               </mat-card-content>
             </mat-card>
             <mat-divider></mat-divider>
           </div>
         </mat-tab>
       </div>
-
 
       <div *ngIf="this.user.userType === 'seller'">
         <mat-tab label="Selling Items">

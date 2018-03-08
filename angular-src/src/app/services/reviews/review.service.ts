@@ -25,4 +25,12 @@ export class ReviewService {
     return this.http.get(this.server + itemType + 's/' + itemId + '/reviews/' + reviewId, {headers: headers})
       .map(res => res.json());
   }
+
+  //delete a review
+  deleteReview(reviewId, itemId, itemType) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.delete(this.server + itemType + 's/' + itemId + '/reviews/' + reviewId, {headers: headers})
+      .map(res => res.json());
+  }
 }

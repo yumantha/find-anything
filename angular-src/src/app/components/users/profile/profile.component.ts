@@ -3,6 +3,9 @@ import {AuthService} from "../../../services/authenticate/auth.service";
 import {Router} from "@angular/router";
 import {ItemService} from "../../../services/items/item.service";
 import {ReviewService} from "../../../services/reviews/review.service";
+import {MatDialog} from "@angular/material";
+import {ConfirmReviewDeleteDialog} from "./confirm-review-delete/confirm-review-delete.component";
+import {FlashMessagesService} from "angular2-flash-messages";
 
 @Component({
   selector: 'app-profile',
@@ -25,7 +28,9 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService,
     private itemService: ItemService,
     private reviewService: ReviewService,
-    private router: Router
+    private flashMessagesService: FlashMessagesService,
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -110,5 +115,30 @@ export class ProfileComponent implements OnInit {
 
   goToService(serviceId) {
     this.router.navigate(['/services/' + serviceId])
+  }
+
+  editReview(review) {
+    console.log(review, 'edrev')
+  }
+
+  deleteReview(review) {
+    let dialogRef = this.dialog.open(ConfirmReviewDeleteDialog, {
+      width: '450px',
+      data: {
+        review: review
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(data => {
+        if(data.success) {
+          this.flashMessagesService.show('The review was successfully deleted', {cssClass: 'alert-success', timeout: 5000});
+          window.location.reload();
+        } else {
+          if(data.msg) {
+            this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          }
+        }
+      });
   }
 }

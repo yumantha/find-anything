@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {MatDialog} from "@angular/material";
 import {ConfirmDeleteDialog} from "./confirm-delete/confirm-delete.component";
+import {ConfirmReviewDeleteDialog} from "../../users/profile/confirm-review-delete/confirm-review-delete.component";
 import {AddReviewDialog} from "./add-review/add-review.component";
 import {AuthService} from "../../../services/authenticate/auth.service";
 import {ReviewService} from "../../../services/reviews/review.service";
@@ -14,6 +15,7 @@ import {ReviewService} from "../../../services/reviews/review.service";
   styleUrls: ['./view-item.component.css']
 })
 export class ViewItemComponent implements OnInit {
+  loggedUser: String = localStorage.getItem('user_id');
   item: any;
   seller: String;
   sellerProfile: String;
@@ -23,7 +25,6 @@ export class ViewItemComponent implements OnInit {
   dataAvailable: Boolean = false;
   isOwner: Boolean = false;
   isFav: Boolean = false;
-
 
   reviewsAvailable: Boolean = false;
   reviewAdded: Boolean = false;
@@ -173,11 +174,37 @@ export class ViewItemComponent implements OnInit {
         .subscribe(data => {
           if(data.success) {
             this.flashMessagesService.show('The review and rating were successfully added', {cssClass: 'alert-success', timeout: 5000});
+            window.location.reload();
           } else {
             if(data.msg) {
               this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
             }
           }
         });
+  }
+
+  editReview(review) {
+    console.log(review, 'edrev')
+  }
+
+  deleteReview(review) {
+    let dialogRef = this.dialog.open(ConfirmReviewDeleteDialog, {
+      width: '450px',
+      data: {
+        review: review
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(data => {
+        if(data.success) {
+          this.flashMessagesService.show('The review was successfully deleted', {cssClass: 'alert-success', timeout: 5000});
+          window.location.reload();
+        } else {
+          if(data.msg) {
+            this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          }
+        }
+      });
   }
 }

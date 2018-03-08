@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {MatDialog} from "@angular/material";
 import {ConfirmServicedeleteDialog} from "./confirm-servicedelete/confirm-servicedelete.component";
+import {ConfirmReviewDeleteDialog} from "../../users/profile/confirm-review-delete/confirm-review-delete.component";
 import {AddServiceReviewDialog} from "./add-service-review/add-service-review.component";
 import {AuthService} from "../../../services/authenticate/auth.service";
 import {ReviewService} from "../../../services/reviews/review.service";
@@ -14,6 +15,7 @@ import {ReviewService} from "../../../services/reviews/review.service";
   styleUrls: ['./view-service.component.css']
 })
 export class ViewServiceComponent implements OnInit {
+  loggedUser: String = localStorage.getItem('user_id');
   service: any;
   seller: String;
   sellerProfile: String;
@@ -172,6 +174,32 @@ export class ViewServiceComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.flashMessagesService.show('The review and rating were successfully added', {cssClass: 'alert-success', timeout: 5000});
+          window.location.reload();
+        } else {
+          if(data.msg) {
+            this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          }
+        }
+      });
+  }
+
+  editReview(review) {
+    console.log(review, 'edrev')
+  }
+
+  deleteReview(review) {
+    let dialogRef = this.dialog.open(ConfirmReviewDeleteDialog, {
+      width: '450px',
+      data: {
+        review: review
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(data => {
+        if(data.success) {
+          this.flashMessagesService.show('The review was successfully deleted', {cssClass: 'alert-success', timeout: 5000});
+          window.location.reload();
         } else {
           if(data.msg) {
             this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});

@@ -136,6 +136,7 @@ router.get('/:id', (req, res, next) => {
                                 revItem.name = item.name;
                                 revItem.type = 'item';
 
+                                reviewToSend.id = review._id;
                                 reviewToSend.item = revItem;
                                 reviewToSend.customer = revCustomer;
                                 reviewToSend.rating = review.rating;
@@ -157,6 +158,7 @@ router.get('/:id', (req, res, next) => {
                                 revItem.name = item.name;
                                 revItem.type = 'service';
 
+                                reviewToSend.id = review._id;
                                 reviewToSend.item = revItem;
                                 reviewToSend.customer = revCustomer;
                                 reviewToSend.rating = review.rating;
@@ -176,10 +178,11 @@ router.get('/:id', (req, res, next) => {
 
 //delete a review
 router.delete('/:id', (req, res, next) => {
-    const reviewId = req.params._id;
+    const reviewId = req.params.id;
 
     Review.getReviewById(reviewId, (error, review) => {
         if(error) {
+            // console.log(error);
             return res.json({success: false, msg: 'An error occurred. Error: ' + error});
         }
 
@@ -224,7 +227,6 @@ router.delete('/:id', (req, res, next) => {
                             }
                         });
                     } else if(review.itemType === 'service') {
-
                         Service.getItemById(review.item, (error, service) => {
                             if(error) {
                                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});

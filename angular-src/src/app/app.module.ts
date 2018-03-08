@@ -33,6 +33,7 @@ import {ConfirmDeleteDialog} from "./components/items/view-item/confirm-delete/c
 import {ConfirmServicedeleteDialog } from './components/items/view-service/confirm-servicedelete/confirm-servicedelete.component';
 import {AddReviewDialog} from './components/items/view-item/add-review/add-review.component';
 import {AddServiceReviewDialog} from './components/items/view-service/add-service-review/add-service-review.component';
+import {ConfirmReviewDeleteDialog} from './components/users/profile/confirm-review-delete/confirm-review-delete.component';
 
 import {ValidateService} from "./services/validate/validate.service";
 import {AuthService} from "./services/authenticate/auth.service";
@@ -86,6 +87,7 @@ const appRoutes = [
     ViewUserComponent,
     AddReviewDialog,
     AddServiceReviewDialog,
+    ConfirmReviewDeleteDialog,
   ],
   imports: [
     BrowserModule,
@@ -102,7 +104,8 @@ const appRoutes = [
     ConfirmDeleteDialog,
     ConfirmServicedeleteDialog,
     AddReviewDialog,
-    AddServiceReviewDialog
+    AddServiceReviewDialog,
+    ConfirmReviewDeleteDialog
   ],
   providers: [
     ValidateService,
