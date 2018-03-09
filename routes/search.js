@@ -41,6 +41,10 @@ router.get('/:query', (req, res, next)=>{
         }
     }
 
+    if(!searchObject.rating) {
+        searchObject.rating = 0;
+    }
+
     const resultsToSend = [];
 
     Item.searchItems(searchObject, (error, items) => {
@@ -56,7 +60,8 @@ router.get('/:query', (req, res, next)=>{
                     category: item.category,
                     price: item.price,
                     district: item.district,
-                    id: item._id
+                    id: item._id,
+                    avgRating: item.avgRating
                 });
             });
         }
@@ -74,7 +79,8 @@ router.get('/:query', (req, res, next)=>{
                         category: service.category,
                         price: service.price,
                         district: service.district,
-                        id: service._id
+                        id: service._id,
+                        avgRating: service.avgRating
                     });
                 });
             }

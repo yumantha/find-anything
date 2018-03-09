@@ -47,6 +47,17 @@
             </div>
 
             <div>
+              <mat-form-field style="width: 50%">
+                <mat-select placeholder="Rating" [(ngModel)]="rating" name="rating">
+                  <mat-option>None</mat-option>
+                  <mat-option *ngFor="let rating of ratings" [value]="rating.value">
+                    {{rating.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div>
               <section>
                 <mat-checkbox [(ngModel)]="itemCheck" name="item" style="margin: 0 10%">Items</mat-checkbox>
                 <mat-checkbox [(ngModel)]="serviceCheck" name="service" style="margin: 0 10%">Services</mat-checkbox>
@@ -121,6 +132,7 @@
 
         <mat-grid-tile colspan="3" rowspan="3">
           <div style="width: 100%; height: 100%">
+            <h5 *ngIf="result.avgRating">Rating: <strong>{{result.avgRating}}</strong></h5>
             <p *ngIf="result.district">District: <strong>{{result.district}}</strong></p>
           </div>
         </mat-grid-tile>

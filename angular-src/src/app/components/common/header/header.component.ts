@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
     this.types.items = true;
     this.types.services = true;
 
-    this.sortBy.criteria = 'name';
+    this.sortBy.criteria = 'rating';
     this.sortBy.way = 'asc';
 
     this.searchObject.name = searchKeyword;

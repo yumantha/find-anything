@@ -22,6 +22,7 @@ export class SearchResultsComponent implements OnInit {
   district: String;
   name: String;
   category: String;
+  rating: Number;
 
   searchObject: any = {};
   types:any = {};
@@ -56,7 +57,15 @@ export class SearchResultsComponent implements OnInit {
     {value: 'Vavuniya', viewValue: 'Vavuniya'}
   ];
 
+  ratings: Array<any> = [
+    {value: '1', viewValue: '1+'},
+    {value: '2', viewValue: '2+'},
+    {value: '3', viewValue: '3+'},
+    {value: '4', viewValue: '4+'},
+  ];
+
   sortCriterias: Array<any> = [
+    {value: 'rating', viewValue: 'Rating'},
     {value: 'name', viewValue: 'Name'},
     {value: 'category', viewValue: 'Category'},
     {value: 'price', viewValue: 'Price'}
@@ -130,8 +139,11 @@ export class SearchResultsComponent implements OnInit {
     this.searchObject.district = this.district;
     this.searchObject.category = this.category;
     this.searchObject.sortBy = this.sortBy;
+    this.searchObject.rating = this.rating;
 
     this.router.navigate(['search/results', {search: JSON.stringify(this.searchObject)}]);
+
+    console.log(this.searchObject);
 
     window.location.reload();
   }
