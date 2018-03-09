@@ -6,11 +6,6 @@ const Item = require('../models/sales/item');
 const Service = require('../models/sales/service');
 const Customer = require('../models/users/customer');
 
-
-// function calcAvgRating(item) {
-//     Review.aggregate()
-// }
-
 //new review
 router.post('/', (req, res, next) => {
     const customerId = req.body.customerId;
@@ -49,7 +44,20 @@ router.post('/', (req, res, next) => {
                                 item.reviews.push(review._id);
 
                                 customer.save();
-                                item.save();
+
+                                Review.getAvgByItem(review.item, (error, results) => {
+                                    if(error) {
+                                        return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                    }
+
+                                    results.forEach((result) => {
+                                        if(result._id.toString() === itemId) {
+                                            item.avgRating = result.avgRating.toString();
+                                        }
+                                    });
+
+                                    item.save()
+                                });
 
                                 return res.json({success: true, msg: 'Review added'});
                             }
@@ -81,7 +89,20 @@ router.post('/', (req, res, next) => {
                                 service.reviews.push(review._id);
 
                                 customer.save();
-                                service.save();
+
+                                Review.getAvgByItem(review.item, (error, results) => {
+                                    if(error) {
+                                        return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                    }
+
+                                    results.forEach((result) => {
+                                        if(result._id.toString() === itemId) {
+                                            service.avgRating = result.avgRating.toString();
+                                        }
+                                    });
+
+                                    service.save()
+                                });
 
                                 return res.json({success: true, msg: 'Review added'});
                             }
@@ -219,7 +240,20 @@ router.delete('/:id', (req, res, next) => {
                                         return res.json({success: false, msg: 'Review not found'});
                                     } else {
                                         customer.save();
-                                        item.save();
+
+                                        Review.getAvgByItem(review.item, (error, results) => {
+                                            if(error) {
+                                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                            }
+
+                                            results.forEach((result) => {
+                                                if(result._id.toString() === item._id.toString()) {
+                                                    item.avgRating = result.avgRating.toString();
+                                                }
+                                            });
+
+                                            item.save()
+                                        });
 
                                         return res.json({success: true, msg: 'Review deleted'})
                                     }
@@ -246,7 +280,20 @@ router.delete('/:id', (req, res, next) => {
                                         return res.json({success: false, msg: 'Review not found'});
                                     } else {
                                         customer.save();
-                                        service.save();
+
+                                        Review.getAvgByItem(review.item, (error, results) => {
+                                            if(error) {
+                                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                            }
+
+                                            results.forEach((result) => {
+                                                if(result._id.toString() === service._id.toString()) {
+                                                    service.avgRating = result.avgRating.toString();
+                                                }
+                                            });
+
+                                            service.save()
+                                        });
 
                                         return res.json({success: true, msg: 'Review deleted'})
                                     }
@@ -265,6 +312,8 @@ router.delete('/:id', (req, res, next) => {
 //edit a review
 router.put('/:id', (req, res, next) => {
     const reviewId = req.params.id;
+    const itemId = req.body.itemId;
+    const itemType = req.body.itemType;
 
     const editedReview = {
         review: req.body.review,
@@ -279,6 +328,55 @@ router.put('/:id', (req, res, next) => {
         if(!review) {
             return res.json({success: false, msg: 'Review not found'});
         } else {
+            if(itemType === 'item') {
+                Item.getItemById(itemId, (error, item) => {
+                    if(error) {
+                        return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                    }
+
+                    if(!item) {
+                        return res.json({success: false, msg: 'Item not found'});
+                    } else {
+                        Review.getAvgByItem(review.item, (error, results) => {
+                            if(error) {
+                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                            }
+
+                            results.forEach((result) => {
+                                if(result._id.toString() === item._id.toString()) {
+                                    item.avgRating = result.avgRating.toString();
+                                }
+                            });
+
+                            item.save()
+                        });
+                    }
+                });
+            } else if (itemType === 'service') {
+                Service.getItemById(itemId, (error, service) => {
+                    if(error) {
+                        return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                    }
+
+                    if(!service) {
+                        return res.json({success: false, msg: 'Service not found'});
+                    } else {
+                        Review.getAvgByItem(review.item, (error, results) => {
+                            if(error) {
+                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                            }
+
+                            results.forEach((result) => {
+                                if(result._id.toString() === service._id.toString()) {
+                                    service.avgRating = result.avgRating.toString();
+                                }
+                            });
+
+                            service.save()
+                        });
+                    }
+                })
+            }
             return res.json({success: true, msg: 'Review updated'});
         }
     })

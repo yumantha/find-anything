@@ -130,7 +130,7 @@ export class ProfileComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.flashMessagesService.show('The review and rating were successfully edited', {cssClass: 'alert-success', timeout: 5000});
-          // window.location.reload();
+          window.location.reload();
         } else {
           if(data.msg) {
             this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});

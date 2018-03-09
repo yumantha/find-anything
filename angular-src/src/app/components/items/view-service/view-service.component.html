@@ -1,7 +1,8 @@
 <div class="container">
   <mat-card style="margin-top: 75px; margin-bottom: 10px">
     <div *ngIf="dataAvailable">
-      <mat-grid-list cols="2" rowHeight="200px">
+      <h1>{{service.name}}</h1>
+      <mat-grid-list cols="2" rowHeight="200px" style="margin-top: 25px">
         <mat-grid-tile colspan="1" rowspan="2">
           <div class="grid-item">
             <img src="http://www.cambridgescientific.com/images/inside/service/toolset.png">
@@ -10,7 +11,7 @@
         <mat-grid-tile colspan="1" rowspan="2">
           <div class="grid-item">
             <div>
-              <h1>{{service.name}}</h1>
+              <p>Rating: <strong>{{service.avgRating}}</strong>/5</p>
             </div>
 
             <div *ngIf="service.category">

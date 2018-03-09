@@ -22,7 +22,9 @@ export class EditReviewDialog implements OnInit {
   onDialogOk() {
     const editedReview = {
       review: this.review.review,
-      rating: this.review.rating
+      rating: this.review.rating,
+      itemId: this.review.item.id,
+      itemType: this.review.item.type
     };
 
     if(localStorage.getItem('user_type') !== 'customer') {

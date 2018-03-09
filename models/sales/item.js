@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const config = require('../../config/database');
 
+const Review = require('../others/review');
+
 //item schema
 const ItemSchema = mongoose.Schema({
     name: {

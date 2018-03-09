@@ -1,7 +1,8 @@
 <div class="container">
   <mat-card style="margin-top: 75px; margin-bottom: 10px">
     <div *ngIf="dataAvailable">
-      <mat-grid-list cols="2" rowHeight="200px">
+      <h1>{{item.name}}</h1>
+      <mat-grid-list cols="2" rowHeight="200px" style="margin-top: 25px">
         <mat-grid-tile colspan="1" rowspan="2">
           <div class="grid-item">
             <img src="https://cdn.takas.lk/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/a/samsung_50_4.jpeg">
@@ -11,7 +12,7 @@
         <mat-grid-tile colspan="1" rowspan="2">
           <div class="grid-item">
             <div>
-              <h1>{{item.name}}</h1>
+              <p>Rating: <strong>{{item.avgRating}}</strong>/5</p>
             </div>
 
             <div *ngIf="item.category">

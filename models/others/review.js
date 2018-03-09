@@ -62,3 +62,16 @@ module.exports.updateReview = function(reviewId, editedReview, callback) {
         }
     }, callback);
 };
+
+module.exports.getAvgByItem = function(itemId, callback) {
+    Review.aggregate([
+        {
+            $group: {
+                _id: "$item",
+                avgRating: {
+                    $avg: "$rating"
+                }
+            }
+        }
+    ], callback)
+};
