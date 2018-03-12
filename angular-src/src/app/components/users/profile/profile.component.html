@@ -16,6 +16,7 @@
 
       <mat-grid-tile colspan="1">
         <div id="addItem" *ngIf="this.user.userType === 'seller'">
+          <p>Rating: <span style="font-weight: bolder">{{user.avgRating}}</span>/5</p>
           <button mat-raised-button color="primary" [routerLink]="['/items/new']"><mat-icon>add_circle_outline</mat-icon> Add Item for Sale</button>
           <button mat-raised-button color="primary" [routerLink]="['/services/new']"><mat-icon>add_circle_outline</mat-icon> Add Service for Sale</button>
         </div>
