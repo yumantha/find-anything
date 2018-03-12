@@ -44,7 +44,10 @@ const SellerSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Service"
         }
-    ]
+    ],
+    avgRating: {
+        type: Number
+    }
     // profPic: {
     //     data: Buffer,
     //     contentType: String

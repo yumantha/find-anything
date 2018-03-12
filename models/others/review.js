@@ -16,6 +16,11 @@ const ReviewSchema = mongoose.Schema( {
         ref: "Customer",
         required: true
     },
+    seller: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Seller",
+        required: true
+    },
     review: {
         type: String,
         required: true
@@ -68,6 +73,19 @@ module.exports.getAvgByItem = function(itemId, callback) {
         {
             $group: {
                 _id: "$item",
+                avgRating: {
+                    $avg: "$rating"
+                }
+            }
+        }
+    ], callback)
+};
+
+module.exports.getAvgBySeller = function(sellerId, callback) {
+    Review.aggregate([
+        {
+            $group: {
+                _id: "$seller",
                 avgRating: {
                     $avg: "$rating"
                 }

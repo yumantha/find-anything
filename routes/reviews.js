@@ -5,6 +5,7 @@ const Review = require('../models/others/review');
 const Item = require('../models/sales/item');
 const Service = require('../models/sales/service');
 const Customer = require('../models/users/customer');
+const Seller = require('../models/users/seller');
 
 //new review
 router.post('/', (req, res, next) => {
@@ -33,6 +34,7 @@ router.post('/', (req, res, next) => {
                             item: item,
                             itemType: 'item',
                             customer: customer,
+                            seller: item.seller,
                             review: req.body.review,
                             rating: req.body.rating
                         });
@@ -59,6 +61,32 @@ router.post('/', (req, res, next) => {
                                     item.save()
                                 });
 
+                                Seller.getUserById(review.seller, (error, seller) => {
+                                    if(error) {
+                                        return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                    }
+
+                                    if(!seller) {
+                                        return res.json({success: false, msg: 'Item seller not found'});
+                                    } else {
+                                        Review.getAvgBySeller(seller._id, (error, results) => {
+                                            if(error) {
+                                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                            }
+
+                                            results.forEach((result) => {
+                                                if(result._id) {
+                                                    if(result._id.toString() === seller._id.toString()) {
+                                                        seller.avgRating = result.avgRating.toString();
+                                                    }
+                                                }
+                                            });
+
+                                            seller.save();
+                                        })
+                                    }
+                                });
+
                                 return res.json({success: true, msg: 'Review added'});
                             }
                         });
@@ -77,6 +105,7 @@ router.post('/', (req, res, next) => {
                             item: service,
                             itemType: 'service',
                             customer: customer,
+                            seller: service.seller,
                             review: req.body.review,
                             rating: req.body.rating
                         });
@@ -102,6 +131,32 @@ router.post('/', (req, res, next) => {
                                     });
 
                                     service.save()
+                                });
+
+                                Seller.getUserById(review.seller, (error, seller) => {
+                                    if(error) {
+                                        return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                    }
+
+                                    if(!seller) {
+                                        return res.json({success: false, msg: 'Item seller not found'});
+                                    } else {
+                                        Review.getAvgBySeller(seller._id, (error, results) => {
+                                            if(error) {
+                                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                            }
+
+                                            results.forEach((result) => {
+                                                if(result._id) {
+                                                    if(result._id.toString() === seller._id.toString()) {
+                                                        seller.avgRating = result.avgRating.toString();
+                                                    }
+                                                }
+                                            });
+
+                                            seller.save();
+                                        })
+                                    }
                                 });
 
                                 return res.json({success: true, msg: 'Review added'});
@@ -255,6 +310,32 @@ router.delete('/:id', (req, res, next) => {
                                             item.save()
                                         });
 
+                                        Seller.getUserById(review.seller, (error, seller) => {
+                                            if(error) {
+                                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                            }
+
+                                            if(!seller) {
+                                                return res.json({success: false, msg: 'Item seller not found'});
+                                            } else {
+                                                Review.getAvgBySeller(seller._id, (error, results) => {
+                                                    if(error) {
+                                                        return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                                    }
+
+                                                    results.forEach((result) => {
+                                                        if(result._id) {
+                                                            if(result._id.toString() === seller._id.toString()) {
+                                                                seller.avgRating = result.avgRating.toString();
+                                                            }
+                                                        }
+                                                    });
+
+                                                    seller.save();
+                                                })
+                                            }
+                                        });
+
                                         return res.json({success: true, msg: 'Review deleted'})
                                     }
                                 });
@@ -293,6 +374,32 @@ router.delete('/:id', (req, res, next) => {
                                             });
 
                                             service.save()
+                                        });
+
+                                        Seller.getUserById(review.seller, (error, seller) => {
+                                            if(error) {
+                                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                            }
+
+                                            if(!seller) {
+                                                return res.json({success: false, msg: 'Item seller not found'});
+                                            } else {
+                                                Review.getAvgBySeller(seller._id, (error, results) => {
+                                                    if(error) {
+                                                        return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                                    }
+
+                                                    results.forEach((result) => {
+                                                        if(result._id) {
+                                                            if(result._id.toString() === seller._id.toString()) {
+                                                                seller.avgRating = result.avgRating.toString();
+                                                            }
+                                                        }
+                                                    });
+
+                                                    seller.save();
+                                                })
+                                            }
                                         });
 
                                         return res.json({success: true, msg: 'Review deleted'})
@@ -350,6 +457,32 @@ router.put('/:id', (req, res, next) => {
 
                             item.save()
                         });
+
+                        Seller.getUserById(review.seller, (error, seller) => {
+                            if(error) {
+                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                            }
+
+                            if(!seller) {
+                                return res.json({success: false, msg: 'Item seller not found'});
+                            } else {
+                                Review.getAvgBySeller(seller._id, (error, results) => {
+                                    if(error) {
+                                        return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                    }
+
+                                    results.forEach((result) => {
+                                        if(result._id) {
+                                            if(result._id.toString() === seller._id.toString()) {
+                                                seller.avgRating = result.avgRating.toString();
+                                            }
+                                        }
+                                    });
+
+                                    seller.save();
+                                })
+                            }
+                        });
                     }
                 });
             } else if (itemType === 'service') {
@@ -373,6 +506,32 @@ router.put('/:id', (req, res, next) => {
                             });
 
                             service.save()
+                        });
+
+                        Seller.getUserById(review.seller, (error, seller) => {
+                            if(error) {
+                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                            }
+
+                            if(!seller) {
+                                return res.json({success: false, msg: 'Item seller not found'});
+                            } else {
+                                Review.getAvgBySeller(seller._id, (error, results) => {
+                                    if(error) {
+                                        return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                    }
+
+                                    results.forEach((result) => {
+                                        if(result._id) {
+                                            if(result._id.toString() === seller._id.toString()) {
+                                                seller.avgRating = result.avgRating.toString();
+                                            }
+                                        }
+                                    });
+
+                                    seller.save();
+                                })
+                            }
                         });
                     }
                 })
