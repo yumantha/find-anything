@@ -5,6 +5,7 @@ const Item = require('../models/sales/item');
 const Seller = require('../models/users/seller');
 const Customer = require('../models/users/customer');
 const Review = require('../models/others/review');
+const Notification = require('../models/others/notification');
 
 //new item
 router.post('/', (req, res, next) => {
@@ -126,6 +127,21 @@ router.delete('/:id', (req, res, next) => {
                                 });
                             });
 
+                            item.favBy.forEach((user) => {
+                                let newNot = new Notification({
+                                    from: item.seller,
+                                    to: user,
+                                    type: 'delete',
+                                    checked: false
+                                });
+
+                                Notification.newNotification(newNot, (error, notification) => {
+                                    if(error) {
+                                        console.log('Error sending notification. Error: ' + error);
+                                    }
+                                })
+                            });
+
                             return res.json({success: true, msg: 'Item deleted'});
                         }
                     });
@@ -157,6 +173,22 @@ router.put('/:id', (req, res, next) => {
             return res.json({success: false, msg: 'Item not found'});
         }
         else {
+            item.favBy.forEach((user) => {
+                let newNot = new Notification({
+                    from: item.seller,
+                    to: user,
+                    item: item._id,
+                    type: 'update',
+                    checked: false
+                });
+
+                Notification.newNotification(newNot, (error, notification) => {
+                    if(error) {
+                        console.log('Error sending notification. Error: ' + error);
+                    }
+                })
+            });
+
             return res.json({success: true, msg: 'Item updated'});
         }
     });
@@ -188,6 +220,20 @@ router.post('/:id/favorite', (req, res, next) => {
 
                     customer.save();
                     item.save();
+
+                    let newNot = new Notification({
+                        from: customer._id,
+                        to: item.seller,
+                        item: item._id,
+                        type: 'favorite',
+                        checked: false
+                    });
+
+                    Notification.newNotification(newNot, (error, notification) => {
+                        if(error) {
+                            console.log('Error sending notification. Error: ' + error);
+                        }
+                    });
 
                     return res.json({success: true, msg: 'The item has been added to your favorites'});
                 }
@@ -222,6 +268,12 @@ router.post('/:id/unfavorite', (req, res, next) => {
 
                     customer.save();
                     item.save();
+
+                    Notification.deleteFavNot(item._id, customer._id, (error, notification) => {
+                        if(error) {
+                            console.log('Error sending notification. Error: ' + error);
+                        }
+                    });
 
                     return res.json({success: true, msg: 'The item has been removed from your favorites'});
                 }

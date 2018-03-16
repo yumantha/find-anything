@@ -14,11 +14,11 @@
     </form>
 
     <div class="menu-buttons">
-      <button mat-button [routerLink]="['/search']"><mat-icon>search</mat-icon> Search</button>
-      <button mat-button *ngIf="!this.authService.loggedIn()" [routerLink]="['/register']"><mat-icon>person_add</mat-icon> Register</button>
-      <button mat-button *ngIf="!this.authService.loggedIn()" [routerLink]="['/login']"><mat-icon>person</mat-icon> LogIn</button>
+      <button mat-button *ngIf="this.authService.loggedIn()" [routerLink]="['/notifications']"><mat-icon>notifications</mat-icon> Notifications</button>
       <button mat-button *ngIf="this.authService.loggedIn()" [routerLink]="['/profile']"><mat-icon>account_circle</mat-icon> Profile</button>
       <button mat-button *ngIf="this.authService.loggedIn()" (click)="onLogoutClick()"><mat-icon>person_outline</mat-icon> LogOut</button>
+      <button mat-button *ngIf="!this.authService.loggedIn()" [routerLink]="['/register']"><mat-icon>person_add</mat-icon> Register</button>
+      <button mat-button *ngIf="!this.authService.loggedIn()" [routerLink]="['/login']"><mat-icon>person</mat-icon> LogIn</button>
     </div>
 
 
@@ -32,7 +32,6 @@
 
 <!--<mat-menu x-position="below" #menu="matMenu">-->
 <mat-menu #menu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/search']"><mat-icon>search</mat-icon> Search</button>
   <button mat-menu-item *ngIf="!this.authService.loggedIn()" [routerLink]="['/register']"><mat-icon>person_add</mat-icon> Register</button>
   <button mat-menu-item *ngIf="!this.authService.loggedIn()" [routerLink]="['/login']"><mat-icon>person</mat-icon> LogIn</button>
   <button mat-menu-item *ngIf="this.authService.loggedIn()" [routerLink]="['/profile']"><mat-icon>account_circle</mat-icon> Profile</button>

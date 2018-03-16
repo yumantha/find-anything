@@ -5,6 +5,7 @@ const Service = require('../models/sales/service');
 const Seller = require('../models/users/seller');
 const Customer = require('../models/users/customer');
 const Review = require('../models/others/review');
+const Notification = require('../models/others/notification');
 
 //new service
 router.post('/', (req, res, next) => {
@@ -106,7 +107,6 @@ router.delete('/:id', (req, res, next) => {
                 }
                 else {
                     seller.sellingServices.remove(service);
-                    seller.save();
 
                     Service.deleteItemById(id, (error, service) => {
                         if(error) {
@@ -116,6 +116,37 @@ router.delete('/:id', (req, res, next) => {
                         if(!service) {
                             return res.json({success: false, msg: "Service not found"});
                         } else {
+                            seller.save();
+
+                            Review.getReviewsByItem(service._id, (error, reviews) => {
+                                if(error) {
+                                    return res.json({success: false, msg: 'An error occurred: ' + error});
+                                }
+
+                                reviews.forEach((review) => {
+                                    Review.deleteReview(review._id, (error, deletedReview) => {
+                                        if(error) {
+                                            return res.json({success: false, msg: 'An error occurred: ' + error});
+                                        }
+                                    })
+                                });
+                            });
+
+                            service.favBy.forEach((user) => {
+                                let newNot = new Notification({
+                                    from: service.seller,
+                                    to: user,
+                                    type: 'delete',
+                                    checked: false
+                                });
+
+                                Notification.newNotification(newNot, (error, notification) => {
+                                    if(error) {
+                                        console.log('Error sending notification. Error: ' + error);
+                                    }
+                                })
+                            });
+
                             return res.json({success: true, item: service});
                         }
 
@@ -143,11 +174,31 @@ router.put('/:id', (req, res, next) => {
         extraNotes: req.body.extraNotes
     };
 
-    Service.updateItem(serviceId, editedService, (error, user) => {
+    Service.updateItem(serviceId, editedService, (error, service) => {
         if(error) {
             return res.json({success: false, msg: 'Failed to update item. Error: ' + error});
+        }
+
+        if(!service) {
+            return res.json({success: false, msg: 'Service not found'});
         } else {
-            return res.json({success: true, msg: 'Item updated'});
+            service.favBy.forEach((user) => {
+                let newNot = new Notification({
+                    from: service.seller,
+                    to: user,
+                    item: service._id,
+                    type: 'update',
+                    checked: false
+                });
+
+                Notification.newNotification(newNot, (error, notification) => {
+                    if(error) {
+                        console.log('Error sending notification. Error: ' + error);
+                    }
+                })
+            });
+
+            return res.json({success: true, msg: 'Service updated'});
         }
     });
 });
@@ -178,6 +229,20 @@ router.post('/:id/favorite', (req, res, next) => {
 
                     customer.save();
                     service.save();
+
+                    let newNot = new Notification({
+                        from: customer._id,
+                        to: service.seller,
+                        item: service._id,
+                        type: 'favorite',
+                        checked: false
+                    });
+
+                    Notification.newNotification(newNot, (error, notification) => {
+                        if(error) {
+                            console.log('Error sending notification. Error: ' + error);
+                        }
+                    });
 
                     return res.json({success: true, msg: 'The service has been added to your favorites'});
                 }
@@ -212,6 +277,12 @@ router.post('/:id/unfavorite', (req, res, next) => {
 
                     customer.save();
                     service.save();
+
+                    Notification.deleteFavNot(service._id, customer._id, (error, notification) => {
+                        if(error) {
+                            console.log('Error sending notification. Error: ' + error);
+                        }
+                    });
 
                     return res.json({success: true, msg: 'The service has been removed from your favorites'});
                 }

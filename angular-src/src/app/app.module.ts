@@ -13,7 +13,6 @@ import {AppComponent} from './app.component';
 import {HeaderComponent} from './components/common/header/header.component';
 import {HomeComponent} from './components/common/home/home.component';
 import {WelcomeComponent} from './components/common/welcome/welcome.component';
-import {SearchComponent} from './components/search/search/search.component';
 import {SearchResultsComponent} from './components/search/search-results/search-results.component';
 import {RegisterComponent} from './components/users/register/register.component';
 import {LoginComponent} from './components/users/login/login.component';
@@ -27,6 +26,7 @@ import {ViewUserComponent} from './components/users/view-user/view-user.componen
 import {EditAccountComponent} from './components/users/edit-account/edit-account.component';
 import {EditItemComponent} from './components/items/edit-item/edit-item.component';
 import {EditServiceComponent} from './components/items/edit-service/edit-service.component';
+import {NotificationsComponent} from './components/common/notifications/notifications.component';
 
 import {EnterPassDialog} from './components/users/edit-profile/enter-pass/enter-pass.component';
 import {ConfirmDeleteDialog} from "./components/items/view-item/confirm-delete/confirm-delete.component";
@@ -41,16 +41,17 @@ import {AuthService} from "./services/authenticate/auth.service";
 import {ItemService} from "./services/items/item.service";
 import {SearchService} from './services/search/search.service';
 import {ReviewService} from './services/reviews/review.service';
+import {NotificationsService} from './services/notifications/notifications.service';
 
 import {AuthGuard} from "./guards/auth.guard";
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
   {path: 'home', component: HomeComponent},
-  {path: 'search', component: SearchComponent},
   {path: 'search/:query', component: SearchResultsComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'notifications', component: NotificationsComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'profile/editProf', component: EditProfileComponent, canActivate: [AuthGuard]},
   {path: 'profile/editAcc', component: EditAccountComponent, canActivate: [AuthGuard]},
@@ -84,12 +85,12 @@ const appRoutes = [
     EditServiceComponent,
     ViewServiceComponent,
     ConfirmServicedeleteDialog,
-    SearchComponent,
     ViewUserComponent,
     AddReviewDialog,
     AddServiceReviewDialog,
     ConfirmReviewDeleteDialog,
     EditReviewDialog,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -116,7 +117,8 @@ const appRoutes = [
     AuthGuard,
     ItemService,
     SearchService,
-    ReviewService
+    ReviewService,
+    NotificationsService
   ],
   bootstrap: [
     AppComponent
