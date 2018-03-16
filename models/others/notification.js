@@ -2,16 +2,23 @@ const mongoose  = require('mongoose');
 
 //notification schema
 const NotificationSchema = mongoose.Schema({
-    from: {
+    fromId: {
         type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    fromType: {
+        type: String,
         required: true
     },
     to: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    item: {
+    itemId: {
         type: mongoose.Schema.Types.ObjectId
+    },
+    itemType: {
+        type: String
     },
     type: {
         type: String,
@@ -19,6 +26,10 @@ const NotificationSchema = mongoose.Schema({
     },
     checked: {
         type: Boolean,
+        required: true
+    },
+    timestamp: {
+        type: String,
         required: true
     }
 });
@@ -35,9 +46,19 @@ module.exports.deleteNotification = function(notId, callback) {
 
 module.exports.deleteFavNot = function(itemId, userId, callback) {
     const query = {
-        item: itemId,
-        from: userId,
+        itemId: itemId,
+        fromId: userId,
         type: 'favorite'
+    };
+
+    Notification.remove(query, callback);
+};
+
+module.exports.deleteRevNot = function(itemId, userId, callback) {
+    const query = {
+        itemId: itemId,
+        fromId: userId,
+        type: 'review'
     };
 
     Notification.remove(query, callback);

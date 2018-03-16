@@ -134,10 +134,12 @@ router.delete('/:id', (req, res, next) => {
 
                             service.favBy.forEach((user) => {
                                 let newNot = new Notification({
-                                    from: service.seller,
+                                    fromId: seller._id,
+                                    fromType: 'seller',
                                     to: user,
                                     type: 'delete',
-                                    checked: false
+                                    checked: false,
+                                    timestamp: Date.now().toString()
                                 });
 
                                 Notification.newNotification(newNot, (error, notification) => {
@@ -183,21 +185,34 @@ router.put('/:id', (req, res, next) => {
             return res.json({success: false, msg: 'Service not found'});
         } else {
             service.favBy.forEach((user) => {
-                let newNot = new Notification({
-                    from: service.seller,
-                    to: user,
-                    item: service._id,
-                    type: 'update',
-                    checked: false
-                });
-
-                Notification.newNotification(newNot, (error, notification) => {
+                Seller.getUserById(service.seller, (error, seller) => {
                     if(error) {
                         console.log('Error sending notification. Error: ' + error);
                     }
-                })
-            });
 
+                    if(!seller) {
+                        console.log('Error sending notification. Error: ' + error);
+                    } else {
+                        let newNot = new Notification({
+                            fromId: seller._id,
+                            fromType: 'seller',
+                            to: user,
+                            itemId: service._id,
+                            itemType: 'service',
+                            type: 'update',
+                            checked: false,
+                            timestamp: Date.now().toString()
+                        });
+
+                        Notification.newNotification(newNot, (error, notification) => {
+                            if(error) {
+                                console.log('Error sending notification. Error: ' + error);
+                            }
+                        })
+                    }
+                });
+
+            });
             return res.json({success: true, msg: 'Service updated'});
         }
     });
@@ -231,11 +246,14 @@ router.post('/:id/favorite', (req, res, next) => {
                     service.save();
 
                     let newNot = new Notification({
-                        from: customer._id,
+                        fromId: customer._id,
+                        fromType: 'customer',
                         to: service.seller,
-                        item: service._id,
+                        itemId: service._id,
+                        itemType: 'service',
                         type: 'favorite',
-                        checked: false
+                        checked: false,
+                        timestamp: Date.now().toString()
                     });
 
                     Notification.newNotification(newNot, (error, notification) => {

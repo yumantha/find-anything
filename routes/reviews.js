@@ -6,6 +6,7 @@ const Item = require('../models/sales/item');
 const Service = require('../models/sales/service');
 const Customer = require('../models/users/customer');
 const Seller = require('../models/users/seller');
+const Notification = require('../models/others/notification');
 
 //new review
 router.post('/', (req, res, next) => {
@@ -87,6 +88,23 @@ router.post('/', (req, res, next) => {
                                     }
                                 });
 
+                                let newNot = new Notification({
+                                    fromId: customer._id,
+                                    fromType: 'customer',
+                                    to: user,
+                                    itemId: item._id,
+                                    itemType: 'item',
+                                    type: 'review',
+                                    checked: false,
+                                    timestamp: Date.now().toString()
+                                });
+
+                                Notification.newNotification(newNot, (error, notification) => {
+                                    if(error) {
+                                        console.log('Error sending notification. Error: ' + error);
+                                    }
+                                });
+
                                 return res.json({success: true, msg: 'Review added'});
                             }
                         });
@@ -156,6 +174,23 @@ router.post('/', (req, res, next) => {
 
                                             seller.save();
                                         })
+                                    }
+                                });
+
+                                let newNot = new Notification({
+                                    fromId: customer._id,
+                                    fromType: 'customer',
+                                    to: user,
+                                    itemId: service._id,
+                                    itemType: 'service',
+                                    type: 'review',
+                                    checked: false,
+                                    timestamp: Date.now().toString()
+                                });
+
+                                Notification.newNotification(newNot, (error, notification) => {
+                                    if(error) {
+                                        console.log('Error sending notification. Error: ' + error);
                                     }
                                 });
 
@@ -336,6 +371,12 @@ router.delete('/:id', (req, res, next) => {
                                             }
                                         });
 
+                                        Notification.deleteRevNot(item._id, customer._id, (error, notification) => {
+                                            if(error) {
+                                                console.log('Error sending notification. Error: ' + error);
+                                            }
+                                        });
+
                                         return res.json({success: true, msg: 'Review deleted'})
                                     }
                                 });
@@ -402,6 +443,11 @@ router.delete('/:id', (req, res, next) => {
                                             }
                                         });
 
+                                        Notification.deleteRevNot(service._id, customer._id, (error, notification) => {
+                                            if(error) {
+                                                console.log('Error sending notification. Error: ' + error);
+                                            }
+                                        });
                                         return res.json({success: true, msg: 'Review deleted'})
                                     }
                                 });
@@ -480,6 +526,33 @@ router.put('/:id', (req, res, next) => {
                                     });
 
                                     seller.save();
+
+                                    Customer.getUserById(review.customer, (error, customer) => {
+                                        if(error) {
+                                            return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                        }
+
+                                        if(!customer) {
+                                            return res.json({success: false, msg: 'Customer not found'});
+                                        } else {
+                                            let newNot = new Notification({
+                                                fromId: customer._id,
+                                                fromType: 'customer',
+                                                to: user,
+                                                itemId: item._id,
+                                                itemType: 'item',
+                                                type: 'editReview',
+                                                checked: false,
+                                                timestamp: Date.now().toString()
+                                            });
+
+                                            Notification.newNotification(newNot, (error, notification) => {
+                                                if(error) {
+                                                    console.log('Error sending notification. Error: ' + error);
+                                                }
+                                            });
+                                        }
+                                    });
                                 })
                             }
                         });
@@ -528,8 +601,34 @@ router.put('/:id', (req, res, next) => {
                                             }
                                         }
                                     });
-
                                     seller.save();
+
+                                    Customer.getUserById(review.customer, (error, customer) => {
+                                        if(error) {
+                                            return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                        }
+
+                                        if(!customer) {
+                                            return res.json({success: false, msg: 'Customer not found'});
+                                        } else {
+                                            let newNot = new Notification({
+                                                fromId: customer._id,
+                                                fromType: 'customer',
+                                                to: user,
+                                                itemId: service._id,
+                                                itemType: 'service',
+                                                type: 'editReview',
+                                                checked: false,
+                                                timestamp: Date.now().toString()
+                                            });
+
+                                            Notification.newNotification(newNot, (error, notification) => {
+                                                if(error) {
+                                                    console.log('Error sending notification. Error: ' + error);
+                                                }
+                                            });
+                                        }
+                                    });
                                 })
                             }
                         });

@@ -129,10 +129,12 @@ router.delete('/:id', (req, res, next) => {
 
                             item.favBy.forEach((user) => {
                                 let newNot = new Notification({
-                                    from: item.seller,
+                                    fromId: seller._id,
+                                    fromType: 'seller',
                                     to: user,
                                     type: 'delete',
-                                    checked: false
+                                    checked: false,
+                                    timestamp: Date.now().toString()
                                 });
 
                                 Notification.newNotification(newNot, (error, notification) => {
@@ -174,21 +176,33 @@ router.put('/:id', (req, res, next) => {
         }
         else {
             item.favBy.forEach((user) => {
-                let newNot = new Notification({
-                    from: item.seller,
-                    to: user,
-                    item: item._id,
-                    type: 'update',
-                    checked: false
-                });
-
-                Notification.newNotification(newNot, (error, notification) => {
+                Seller.getUserById(item.seller, (error, seller) => {
                     if(error) {
                         console.log('Error sending notification. Error: ' + error);
                     }
-                })
-            });
 
+                    if(!seller) {
+                        console.log('Error sending notification. Error: ' + error);
+                    } else {
+                        let newNot = new Notification({
+                            fromId: seller._id,
+                            fromType: 'seller',
+                            to: user,
+                            itemId: item._id,
+                            itemType: 'item',
+                            type: 'update',
+                            checked: false,
+                            timestamp: Date.now().toString()
+                        });
+
+                        Notification.newNotification(newNot, (error, notification) => {
+                            if(error) {
+                                console.log('Error sending notification. Error: ' + error);
+                            }
+                        })
+                    }
+                });
+            });
             return res.json({success: true, msg: 'Item updated'});
         }
     });
@@ -222,11 +236,14 @@ router.post('/:id/favorite', (req, res, next) => {
                     item.save();
 
                     let newNot = new Notification({
-                        from: customer._id,
+                        fromId: customer._id,
+                        fromType: 'customer',
                         to: item.seller,
-                        item: item._id,
+                        itemId: item._id,
+                        itemType: 'item',
                         type: 'favorite',
-                        checked: false
+                        checked: false,
+                        timestamp: Date.now().toString()
                     });
 
                     Notification.newNotification(newNot, (error, notification) => {

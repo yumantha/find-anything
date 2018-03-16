@@ -10,6 +10,11 @@ export class NotificationsService {
     private http: Http
   ) { }
 
-  //new notification
-  
+  //get notifications
+  getNotifications(userId) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.get(this.server + 'notifications/' + userId, {headers: headers})
+      .map(res => res.json());
+  }
 }
