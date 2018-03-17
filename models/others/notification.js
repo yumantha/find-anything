@@ -10,6 +10,10 @@ const NotificationSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    fromUsername: {
+        type: String,
+        required: true
+    },
     to: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
@@ -77,5 +81,5 @@ module.exports.checkNot = function(notId, callback) {
         $set: {
             checked: true
         }
-    });
+    }, callback);
 };

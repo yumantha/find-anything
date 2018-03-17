@@ -91,7 +91,8 @@ router.post('/', (req, res, next) => {
                                 let newNot = new Notification({
                                     fromId: customer._id,
                                     fromType: 'customer',
-                                    to: user,
+                                    fromUsername: customer.username,
+                                    to: item.seller,
                                     itemId: item._id,
                                     itemType: 'item',
                                     type: 'review',
@@ -180,7 +181,8 @@ router.post('/', (req, res, next) => {
                                 let newNot = new Notification({
                                     fromId: customer._id,
                                     fromType: 'customer',
-                                    to: user,
+                                    fromUsername: customer.username,
+                                    to: service.seller,
                                     itemId: service._id,
                                     itemType: 'service',
                                     type: 'review',
@@ -538,10 +540,11 @@ router.put('/:id', (req, res, next) => {
                                             let newNot = new Notification({
                                                 fromId: customer._id,
                                                 fromType: 'customer',
-                                                to: user,
+                                                fromUsername: customer.username,
+                                                to: item.seller,
                                                 itemId: item._id,
                                                 itemType: 'item',
-                                                type: 'editReview',
+                                                type: 'review',
                                                 checked: false,
                                                 timestamp: Date.now().toString()
                                             });
@@ -614,10 +617,11 @@ router.put('/:id', (req, res, next) => {
                                             let newNot = new Notification({
                                                 fromId: customer._id,
                                                 fromType: 'customer',
-                                                to: user,
+                                                fromUsername: customer.username,
+                                                to: service.seller,
                                                 itemId: service._id,
                                                 itemType: 'service',
-                                                type: 'editReview',
+                                                type: 'review',
                                                 checked: false,
                                                 timestamp: Date.now().toString()
                                             });

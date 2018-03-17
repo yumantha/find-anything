@@ -17,4 +17,20 @@ export class NotificationsService {
     return this.http.get(this.server + 'notifications/' + userId, {headers: headers})
       .map(res => res.json());
   }
+
+  //check notification
+  checkNotification(notId) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.post(this.server + 'notifications/' + notId + '/check', {},{headers: headers})
+      .map(res => res.json());
+  }
+
+  //delete notification
+  deleteNotification(notId) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.delete(this.server + 'notifications/' + notId,{headers: headers})
+      .map(res => res.json());
+  }
 }

@@ -131,8 +131,9 @@ router.delete('/:id', (req, res, next) => {
                                 let newNot = new Notification({
                                     fromId: seller._id,
                                     fromType: 'seller',
+                                    fromUsername: seller.username,
                                     to: user,
-                                    type: 'delete',
+                                    type: 'deleteFav',
                                     checked: false,
                                     timestamp: Date.now().toString()
                                 });
@@ -187,10 +188,11 @@ router.put('/:id', (req, res, next) => {
                         let newNot = new Notification({
                             fromId: seller._id,
                             fromType: 'seller',
+                            fromUsername: seller.username,
                             to: user,
                             itemId: item._id,
                             itemType: 'item',
-                            type: 'update',
+                            type: 'updateFav',
                             checked: false,
                             timestamp: Date.now().toString()
                         });
@@ -238,6 +240,7 @@ router.post('/:id/favorite', (req, res, next) => {
                     let newNot = new Notification({
                         fromId: customer._id,
                         fromType: 'customer',
+                        fromUsername: customer.username,
                         to: item.seller,
                         itemId: item._id,
                         itemType: 'item',

@@ -1,6 +1,101 @@
-<div class="container">
-  <div *ngFor="let notification of notifications">
-    <p style="padding-top: 10px">{{notification.from}} has {{notification.type}}d {{notification.item}}</p>
-    <mat-divider></mat-divider>
+<div class="container" style="margin-top: 10px">
+  <div *ngIf="!notsAvailable" style="margin-top: 100px; text-align: center; width: 100%">
+    <p><mat-icon>report_problem</mat-icon></p>
+    <h3>You have no notifications</h3>
+  </div>
+
+  <div *ngIf="notsAvailable">
+    <div *ngFor="let notification of notifications">
+      <p *ngIf="!notification.checked" style="padding: 10px; background: lightblue">
+
+        <span *ngIf="notification.type === 'review'">
+          <span><mat-icon>rate_review</mat-icon> &nbsp;&nbsp;</span>
+
+          <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
+
+          <span> has </span>
+
+          <span>reviewed your <a [routerLink]="['/' + notification.itemType + 's/' + notification.itemId]">{{notification.itemType}}</a></span>
+        </span>
+
+        <span *ngIf="notification.type === 'favorite'">
+          <span><mat-icon>favorite</mat-icon> &nbsp;&nbsp;</span>
+
+          <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
+
+          <span> has </span>
+
+          <span>favorited your <a [routerLink]="['/' + notification.itemType + 's/' + notification.itemId]">{{notification.itemType}}</a></span>
+        </span>
+
+        <span *ngIf="notification.type === 'updateFav'">
+          <span><mat-icon>edit</mat-icon> &nbsp;&nbsp;</span>
+
+          <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
+
+          <span> has </span>
+
+          <span>updated the <a [routerLink]="['/' + notification.itemType + 's/' + notification.itemId]">{{notification.itemType}}</a> you have favorited</span>
+        </span>
+
+        <span *ngIf="notification.type === 'deleteFav'">
+          <span><mat-icon>delete</mat-icon> &nbsp;&nbsp;</span>
+
+          <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
+
+          <span> has </span>
+
+          <span>deleted the item/service you have favorited</span>
+        </span>
+
+        <button mat-icon-button style="float: right" color="warn" (click)="deleteNot(notification._id)"><mat-icon>delete</mat-icon></button>
+      </p>
+
+      <p *ngIf="notification.checked" style="padding: 10px">
+
+        <span *ngIf="notification.type === 'review'">
+          <span><mat-icon>rate_review</mat-icon> &nbsp;&nbsp;</span>
+
+          <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
+
+          <span> has </span>
+
+          <span>reviewed your <a [routerLink]="['/' + notification.itemType + 's/' + notification.itemId]">{{notification.itemType}}</a></span>
+        </span>
+
+        <span *ngIf="notification.type === 'favorite'">
+          <span><mat-icon>favorite</mat-icon> &nbsp;&nbsp;</span>
+
+          <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
+
+          <span> has </span>
+
+          <span>favorited your <a [routerLink]="['/' + notification.itemType + 's/' + notification.itemId]">{{notification.itemType}}</a></span>
+        </span>
+
+        <span *ngIf="notification.type === 'updateFav'">
+          <span><mat-icon>edit</mat-icon> &nbsp;&nbsp;</span>
+
+          <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
+
+          <span> has </span>
+
+          <span>updated the <a [routerLink]="['/' + notification.itemType + 's/' + notification.itemId]">{{notification.itemType}}</a> you have favorited</span>
+        </span>
+
+        <span *ngIf="notification.type === 'deleteFav'">
+          <span><mat-icon>delete</mat-icon> &nbsp;&nbsp;</span>
+
+          <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
+
+          <span> has </span>
+
+          <span>deleted the item/service you have favorited</span>
+        </span>
+
+        <button mat-icon-button style="float: right" color="warn" (click)="deleteNot(notification._id)"><mat-icon>delete</mat-icon></button>
+      </p>
+      <mat-divider></mat-divider>
+  </div>
   </div>
 </div>
