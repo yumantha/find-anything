@@ -2,10 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const Notification = require('../models/others/notification');
-const Item = require('../models/sales/item');
-const Service = require('../models/sales/service');
-const Seller = require('../models/users/seller');
-const Customer = require('../models/users/customer');
 
 //get notifications
 router.get('/:id', (req, res, next) => {
