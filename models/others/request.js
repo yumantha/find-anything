@@ -1,7 +1,7 @@
 const mongoose  = require('mongoose');
 
 //request schema
-const RequestSchema = mongoose.schema(
+const RequestSchema = mongoose.Schema(
     {
         from: {
             type: mongoose.Schema.Types.ObjectId,
