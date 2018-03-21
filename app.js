@@ -53,7 +53,7 @@ app.use('/services', services);
 app.use('/search', search);
 app.use('/:type/:itemId/reviews', reviews);
 app.use('/notifications', notifications);
-app.use('/requests', notifications);
+app.use('/requests', requests);
 
 //index route
 app.get('/', (req, res)=>{

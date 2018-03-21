@@ -1,0 +1,60 @@
+<div class="container">
+  <div style="width: 100%; text-align: center"><h2>Purchase Requests</h2></div>
+
+  <div *ngIf="!reqsAvailable" style="margin-top: 100px; text-align: center; width: 100%">
+    <p><mat-icon>report_problem</mat-icon></p>
+    <h3>You have no purchase requests</h3>
+  </div>
+
+  <div *ngIf="reqsAvailable">
+    <mat-card style="width: 100%; margin-bottom: 5px" *ngFor="let request of requests">
+      <mat-grid-list cols="16" rowHeight="20px">
+        <mat-grid-tile colspan="2" rowspan="4">
+          <div style="width: 100%; height: 100%;" *ngIf="request.itemType==='item'">
+            <img src="http://myarenaonline.com/screen/demos/demo_item.png" style="width: 100%">
+          </div>
+          <div style="width: 100%; height: 100%" *ngIf="request.itemType==='service'">
+            <img src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx">
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3" rowspan="2">
+          <div style="width: 100%; height: 100%; padding-left: 25px">
+            <p>Item/Service: </p>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="8" rowspan="2">
+          <div style="width: 100%; height: 100%; padding-left: 25px">
+            <a [routerLink]="['/' + request.itemType + 's/' + request.item._id]"><p>{{request.item.name}}</p></a>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3" rowspan="2">
+          <div style="width: 100%; height: 100%; padding-left: 25px" *ngIf="!request.accepted">
+            <button mat-raised-button color="primary" (click)="acceptReq(request.id)">Accept</button>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3" rowspan="2">
+          <div style="width: 100%; height: 100%; padding-left: 25px">
+            <p>Request By: </p>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="8" rowspan="2">
+          <div style="width: 100%; height: 100%; padding-left: 25px">
+            <a [routerLink]="['/users/customer/' + request.from._id]"><p>{{request.from.username}}</p></a>
+
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="3" rowspan="2">
+          <div style="width: 100%; height: 100%; padding-left: 25px" *ngIf="!request.accepted">
+            <button mat-raised-button color="warn" (click)="declineReq(request.id)">Decline</button>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card>
+  </div>
+</div>

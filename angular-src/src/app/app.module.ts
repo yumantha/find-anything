@@ -27,6 +27,7 @@ import {EditAccountComponent} from './components/users/edit-account/edit-account
 import {EditItemComponent} from './components/items/edit-item/edit-item.component';
 import {EditServiceComponent} from './components/items/edit-service/edit-service.component';
 import {NotificationsComponent} from './components/common/notifications/notifications.component';
+import {RequestsComponent} from './components/common/requests/requests.component';
 
 import {EnterPassDialog} from './components/users/edit-profile/enter-pass/enter-pass.component';
 import {ConfirmDeleteDialog} from "./components/items/view-item/confirm-delete/confirm-delete.component";
@@ -42,6 +43,7 @@ import {ItemService} from "./services/items/item.service";
 import {SearchService} from './services/search/search.service';
 import {ReviewService} from './services/reviews/review.service';
 import {NotificationsService} from './services/notifications/notifications.service';
+import {RequestService} from './services/requests/request.service';
 
 import {AuthGuard} from "./guards/auth.guard";
 
@@ -52,6 +54,7 @@ const appRoutes = [
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'notifications', component: NotificationsComponent},
+  {path: 'requests', component: RequestsComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'profile/editProf', component: EditProfileComponent, canActivate: [AuthGuard]},
   {path: 'profile/editAcc', component: EditAccountComponent, canActivate: [AuthGuard]},
@@ -91,6 +94,7 @@ const appRoutes = [
     ConfirmReviewDeleteDialog,
     EditReviewDialog,
     NotificationsComponent,
+    RequestsComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,7 +103,7 @@ const appRoutes = [
     FlexLayoutModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, {onSameUrlNavigation: 'reload'}),
     FlashMessagesModule.forRoot()
   ],
   entryComponents: [
@@ -118,7 +122,8 @@ const appRoutes = [
     ItemService,
     SearchService,
     ReviewService,
-    NotificationsService
+    NotificationsService,
+    RequestService
   ],
   bootstrap: [
     AppComponent

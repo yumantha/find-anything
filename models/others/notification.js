@@ -68,6 +68,16 @@ module.exports.deleteRevNot = function(itemId, userId, callback) {
     Notification.remove(query, callback);
 };
 
+module.exports.deleteReqNot = function(itemId, userId, callback) {
+    const query = {
+        itemId: itemId,
+        fromId: userId,
+        type: 'request'
+    };
+
+    Notification.remove(query, callback);
+};
+
 module.exports.getNotByUser = function(userId, callback) {
     const query = {
         to: userId

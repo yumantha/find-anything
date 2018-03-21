@@ -7,6 +7,7 @@ const Notification = require('../models/others/notification');
 const Item = require('../models/sales/item');
 const Service = require('../models/sales/service');
 const Customer = require('../models/users/customer');
+const Seller = require('../models/users/seller');
 
 //new request
 router.post('/', (req, res, next) => {
@@ -106,7 +107,7 @@ router.post('/', (req, res, next) => {
                                 customer.save();
                                 service.save();
 
-                                return res.json({success: true, msg: 'Item requested'});
+                                return res.json({success: true, msg: 'Service requested'});
                             }
                         });
                     }
@@ -119,10 +120,11 @@ router.post('/', (req, res, next) => {
 });
 
 //delete request
-router.delete('/:id', (req, res, next) => {
-    const reqId = req.params.id;
+router.delete('/:query', (req, res, next) => {
+    const userId = req.params.query.split('+')[0];
+    const itemId= req.params.query.split('+')[1];
 
-    Request.deleteRequest(reqId, (error, request) => {
+    Request.findRequestandDelete(userId, itemId, (error, request) => {
         if(error) {
             return res.json({success: false, msg: 'An error occurred: ' + error});
         }
@@ -153,6 +155,12 @@ router.delete('/:id', (req, res, next) => {
                                 customer.save();
                                 item.save();
 
+                                Notification.deleteReqNot(item._id, customer._id, (error, notification) => {
+                                    if(error) {
+                                        console.log('Error sending notification. Error: ' + error);
+                                    }
+                                });
+
                                 return res.json({success: true, msg: 'Request deleted'});
                             }
                         });
@@ -170,6 +178,12 @@ router.delete('/:id', (req, res, next) => {
 
                                 customer.save();
                                 service.save();
+
+                                Notification.deleteReqNot(service._id, customer._id, (error, notification) => {
+                                    if(error) {
+                                        console.log('Error sending notification. Error: ' + error);
+                                    }
+                                });
 
                                 return res.json({success: true, msg: 'Request deleted'});
                             }
@@ -201,7 +215,7 @@ router.get('/seller/:id', (req, res, next) => {
 });
 
 //accept request
-router.post('/:id', (req, res, next) => {
+router.post('/:id/accept', (req, res, next) => {
     const reqId = req.params.id;
 
     Request.acceptRequest(reqId, (error, request) => {
@@ -235,10 +249,38 @@ router.post('/:id', (req, res, next) => {
                                 item.requestedBy.remove(customer);
                                 item.boughtBy.push(customer._id);
 
-                                customer.save();
-                                item.save();
+                                Seller.getUserById(item.seller, (error, seller) => {
+                                    if(error) {
+                                        return res.json({success: false, msg: 'An error occurred: ' + error});
+                                    }
 
-                                return res.json({success: true, msg: 'Request for purchase accepted'});
+                                    if(!seller) {
+                                        return res.json({success: false, msg: 'Seller not found'});
+                                    } else {
+                                        let newNot = new Notification({
+                                            fromId: seller._id,
+                                            fromType: 'seller',
+                                            fromUsername: seller.username,
+                                            to: customer._id,
+                                            itemId: item._id,
+                                            itemType: 'item',
+                                            type: 'reqAccept',
+                                            checked: false,
+                                            timestamp: Date.now().toString()
+                                        });
+
+                                        Notification.newNotification(newNot, (error, notification) => {
+                                            if(error) {
+                                                console.log('Error sending notification. Error: ' + error);
+                                            }
+                                        });
+
+                                        customer.save();
+                                        item.save();
+
+                                        return res.json({success: true, msg: 'Request for purchase accepted'});
+                                    }
+                                });
                             }
                         });
                     } else if(request.itemType === 'service') {
@@ -256,10 +298,39 @@ router.post('/:id', (req, res, next) => {
                                 service.requestedBy.remove(customer);
                                 service.boughtBy.push(customer._id);
 
-                                customer.save();
-                                service.save();
 
-                                return res.json({success: true, msg: 'Request for purchase accepted'});
+                                Seller.getUserById(service.seller, (error, seller) => {
+                                    if(error) {
+                                        return res.json({success: false, msg: 'An error occurred: ' + error});
+                                    }
+
+                                    if(!seller) {
+                                        return res.json({success: false, msg: 'Seller not found'});
+                                    } else {
+                                        let newNot = new Notification({
+                                            fromId: seller._id,
+                                            fromType: 'seller',
+                                            fromUsername: seller.username,
+                                            to: customer._id,
+                                            itemId: service._id,
+                                            itemType: 'service',
+                                            type: 'reqAccept',
+                                            checked: false,
+                                            timestamp: Date.now().toString()
+                                        });
+
+                                        Notification.newNotification(newNot, (error, notification) => {
+                                            if(error) {
+                                                console.log('Error sending notification. Error: ' + error);
+                                            }
+                                        });
+
+                                        customer.save();
+                                        service.save();
+
+                                        return res.json({success: true, msg: 'Request for purchase accepted'});
+                                    }
+                                });
                             }
                         });
                     } else {
@@ -270,3 +341,127 @@ router.post('/:id', (req, res, next) => {
         }
     });
 });
+
+//decline request
+router.post('/:id/decline', (req, res, next) => {
+    const reqId = req.params.id;
+
+    Request.deleteRequest(reqId, (error, request) => {
+        if(error) {
+            return res.json({success: false, msg: 'An error occurred: ' + error});
+        }
+
+        if(!request) {
+            return res.json({success: false, msg: 'Request not found'});
+        } else {
+            Customer.getUserById(request.from, (error, customer) => {
+                if(error) {
+                    return res.json({success: false, msg: 'An error occurred: ' + error});
+                }
+
+                if(!customer) {
+                    return res.json({success: false, msg: 'Customer not found'});
+                } else {
+                    if(request.itemType === 'item') {
+                        Item.getItemById(request.item, (error, item) => {
+                            if(error) {
+                                return res.json({success: false, msg: 'An error occurred: ' + error});
+                            }
+
+                            if(!item) {
+                                return res.json({success: false, msg: 'Item not found'});
+                            } else {
+                                customer.reqItems.remove(item);
+                                item.requestedBy.remove(customer);
+
+                                Seller.getUserById(item.seller, (error, seller) => {
+                                    if(error) {
+                                        return res.json({success: false, msg: 'An error occurred: ' + error});
+                                    }
+
+                                    if(!seller) {
+                                        return res.json({success: false, msg: 'Seller not found'});
+                                    } else {
+                                        let newNot = new Notification({
+                                            fromId: seller._id,
+                                            fromType: 'seller',
+                                            fromUsername: seller.username,
+                                            to: customer._id,
+                                            itemId: item._id,
+                                            itemType: 'item',
+                                            type: 'reqDecline',
+                                            checked: false,
+                                            timestamp: Date.now().toString()
+                                        });
+
+                                        Notification.newNotification(newNot, (error, notification) => {
+                                            if(error) {
+                                                console.log('Error sending notification. Error: ' + error);
+                                            }
+                                        });
+
+                                        customer.save();
+                                        item.save();
+
+                                        return res.json({success: true, msg: 'Request declined'});
+                                    }
+                                });
+                            }
+                        });
+                    } else if(request.itemType === 'service') {
+                        Service.getItemById(request.item, (error, service) => {
+                            if(error) {
+                                return res.json({success: false, msg: 'An error occurred: ' + error});
+                            }
+
+                            if(!service) {
+                                return res.json({success: false, msg: 'Service not found'});
+                            } else {
+                                customer.reqServices.remove(service);
+                                service.requestedBy.remove(customer);
+
+
+                                Seller.getUserById(service.seller, (error, seller) => {
+                                    if(error) {
+                                        return res.json({success: false, msg: 'An error occurred: ' + error});
+                                    }
+
+                                    if(!seller) {
+                                        return res.json({success: false, msg: 'Seller not found'});
+                                    } else {
+                                        let newNot = new Notification({
+                                            fromId: seller._id,
+                                            fromType: 'seller',
+                                            fromUsername: seller.username,
+                                            to: customer._id,
+                                            itemId: service._id,
+                                            itemType: 'service',
+                                            type: 'reqDecline',
+                                            checked: false,
+                                            timestamp: Date.now().toString()
+                                        });
+
+                                        Notification.newNotification(newNot, (error, notification) => {
+                                            if(error) {
+                                                console.log('Error sending notification. Error: ' + error);
+                                            }
+                                        });
+
+                                        customer.save();
+                                        service.save();
+
+                                        return res.json({success: true, msg: 'Request declined'});
+                                    }
+                                });
+                            }
+                        });
+                    } else {
+                        return res.json({success: false, msg: 'An error occurred'});
+                    }
+                }
+            })
+        }
+    });
+});
+
+module.exports = router;

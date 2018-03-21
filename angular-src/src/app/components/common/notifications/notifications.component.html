@@ -48,6 +48,38 @@
           <span>deleted the item/service you have favorited</span>
         </span>
 
+        <span *ngIf="notification.type === 'request'">
+          <span><mat-icon>info</mat-icon> &nbsp;&nbsp;</span>
+
+          <span>You have a new purchase </span>
+
+          <span><a [routerLink]="['/requests/']">request</a></span>
+        </span>
+
+        <span *ngIf="notification.type === 'reqAccept'">
+          <span><mat-icon>done</mat-icon> &nbsp;&nbsp;</span>
+
+          <span>The </span>
+
+          <span><a [routerLink]="['/' + notification.itemType + 's/' + notification.itemId]">{{notification.itemType}}</a></span>
+
+          <span> you have request for purchase has been accepted by</span>
+
+          <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
+        </span>
+
+        <span *ngIf="notification.type === 'reqDecline'">
+          <span><mat-icon>clear</mat-icon> &nbsp;&nbsp;</span>
+
+          <span>The </span>
+
+          <span><a [routerLink]="['/' + notification.itemType + 's/' + notification.itemId]">{{notification.itemType}}</a></span>
+
+          <span> you have request for purchase has been declined by</span>
+
+          <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
+        </span>
+
         <button mat-icon-button style="float: right" color="warn" (click)="deleteNot(notification._id)"><mat-icon>delete</mat-icon></button>
       </p>
 
@@ -91,6 +123,38 @@
           <span> has </span>
 
           <span>deleted the item/service you have favorited</span>
+        </span>
+
+        <span *ngIf="notification.type === 'request'">
+          <span><mat-icon>info</mat-icon> &nbsp;&nbsp;</span>
+
+          <span>You have a new purchase </span>
+
+          <span><a [routerLink]="['/requests/']">request</a></span>
+        </span>
+
+        <span *ngIf="notification.type === 'reqAccept'">
+          <span><mat-icon>done</mat-icon> &nbsp;&nbsp;</span>
+
+          <span>The </span>
+
+          <span><a [routerLink]="['/' + notification.itemType + 's/' + notification.itemId]">{{notification.itemType}}</a></span>
+
+          <span> you have request for purchase has been accepted by</span>
+
+          <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
+        </span>
+
+        <span *ngIf="notification.type === 'reqDecline'">
+          <span><mat-icon>clear</mat-icon> &nbsp;&nbsp;</span>
+
+          <span>The </span>
+
+          <span><a [routerLink]="['/' + notification.itemType + 's/' + notification.itemId]">{{notification.itemType}}</a></span>
+
+          <span> you have request for purchase has been declined by</span>
+
+          <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
         </span>
 
         <button mat-icon-button style="float: right" color="warn" (click)="deleteNot(notification._id)"><mat-icon>delete</mat-icon></button>

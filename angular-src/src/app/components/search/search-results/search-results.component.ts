@@ -143,9 +143,7 @@ export class SearchResultsComponent implements OnInit {
 
     this.router.navigate(['search/results', {search: JSON.stringify(this.searchObject)}]);
 
-    console.log(this.searchObject);
-
-    window.location.reload();
+    // window.location.reload();
   }
 
   getSearchObject() {

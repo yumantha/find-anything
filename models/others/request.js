@@ -65,3 +65,13 @@ module.exports.getReqBySeller = function(sellerId, callback) {
 
     Request.find(query, callback);
 };
+
+module.exports.findRequestandDelete = function(userId, itemId, callback) {
+    const query = {
+        from: userId,
+        item: itemId,
+        accepted: false
+    };
+
+    Request.findOneAndRemove(query, callback);
+};
