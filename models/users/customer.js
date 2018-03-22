@@ -10,11 +10,13 @@ const CustomerSchema = mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     userType: {
         type: String,
@@ -156,4 +158,8 @@ module.exports.updateUserAcc = function(userId, updatedUser, callback) {
             },
             callback);
     }
+};
+
+module.exports.deleteUser = function(userId, callback) {
+    Customer.findByIdAndRemove(userId, callback);
 };

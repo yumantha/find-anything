@@ -11,8 +11,7 @@ const ServiceSchema = mongoose.Schema({
         type: String
     },
     price: {
-        type: Number,
-        required: true
+        type: Number
     },
     location: {
         type: String
@@ -113,4 +112,12 @@ module.exports.updateItem = function(itemId, editedItem, callback) {
             }
         },
         callback);
+};
+
+module.exports.deleteItemsByUser = function(userId, callback) {
+    const query = {
+        seller: userId
+    };
+
+    Service.remove(query, callback);
 };

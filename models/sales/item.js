@@ -99,3 +99,11 @@ module.exports.updateItem = function(itemId, editedItem, callback) {
         },
         callback);
 };
+
+module.exports.deleteItemsByUser = function(userId, callback) {
+    const query = {
+        seller: userId
+    };
+
+    Item.remove(query, callback);
+};

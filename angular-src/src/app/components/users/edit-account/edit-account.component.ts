@@ -3,6 +3,8 @@ import {ValidateService} from "../../../services/validate/validate.service";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {AuthService} from "../../../services/authenticate/auth.service";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material";
+import {ConfirmDeleteAccountDialog} from "./confirm-delete-account/confirm-delete-account.component";
 
 @Component({
   selector: 'app-edit-account',
@@ -25,7 +27,8 @@ export class EditAccountComponent implements OnInit {
     private validateService: ValidateService,
     private flashMessagesService: FlashMessagesService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -86,5 +89,28 @@ export class EditAccountComponent implements OnInit {
       });
   }
 
+  deleteAccount() {
+    let dialogRef = this.dialog.open(ConfirmDeleteAccountDialog, {
+      width: '450px',
+      data: {
+        userId: localStorage.getItem('user_id'),
+        userType: localStorage.getItem('user_type')
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(data => {
+        if(data.success) {
+          this.flashMessagesService.show('The user was successfully deleted', {cssClass: 'alert-success', timeout: 5000});
+          this.authService.logout();
+          this.router.navigate(['/login']);
+        } else {
+          if(data.msg) {
+            this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+            this.router.navigate(['/profile']);
+          }
+        }
+      });
+  }
 
 }

@@ -36,6 +36,7 @@ import {AddReviewDialog} from './components/items/view-item/add-review/add-revie
 import {AddServiceReviewDialog} from './components/items/view-service/add-service-review/add-service-review.component';
 import {ConfirmReviewDeleteDialog} from './components/users/profile/confirm-review-delete/confirm-review-delete.component';
 import {EditReviewDialog} from './components/users/profile/edit-review/edit-review.component';
+import {ConfirmDeleteAccountDialog} from './components/users/edit-account/confirm-delete-account/confirm-delete-account.component';
 
 import {ValidateService} from "./services/validate/validate.service";
 import {AuthService} from "./services/authenticate/auth.service";
@@ -95,6 +96,7 @@ const appRoutes = [
     EditReviewDialog,
     NotificationsComponent,
     RequestsComponent,
+    ConfirmDeleteAccountDialog,
   ],
   imports: [
     BrowserModule,
@@ -113,7 +115,8 @@ const appRoutes = [
     AddReviewDialog,
     AddServiceReviewDialog,
     ConfirmReviewDeleteDialog,
-    EditReviewDialog
+    EditReviewDialog,
+    ConfirmDeleteAccountDialog
   ],
   providers: [
     ValidateService,

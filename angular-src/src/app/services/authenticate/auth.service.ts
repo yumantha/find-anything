@@ -75,6 +75,14 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  //delete a user
+  deleteUser(userId, userType) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.delete(this.server + 'users/' + userType + '/' + userId, {headers: headers})
+      .map(res => res.json());
+  }
+
   //store user data in local storage
   storeUserData(token, user) {
     localStorage.setItem('id_token', token);

@@ -93,3 +93,19 @@ module.exports.getAvgBySeller = function(sellerId, callback) {
         }
     ], callback)
 };
+
+module.exports.deleteReviewByCustomer = function(userId, callback) {
+    const query = {
+        customer: userId
+    };
+
+    Review.remove(query, callback);
+};
+
+module.exports.deleteReviewBySeller = function(userId, callback) {
+    const query = {
+        seller: userId
+    };
+
+    Review.remove(query, callback);
+};

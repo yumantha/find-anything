@@ -75,3 +75,19 @@ module.exports.findRequestandDelete = function(userId, itemId, callback) {
 
     Request.findOneAndRemove(query, callback);
 };
+
+module.exports.deleteRequestsByCustomer = function(userId, callback) {
+    const query = {
+        from: userId
+    };
+
+    Request.remove(query, callback);
+};
+
+module.exports.deleteRequestsBySeller = function(userId, callback) {
+    const query = {
+        to: userId
+    };
+
+    Request.remove(query, callback);
+};

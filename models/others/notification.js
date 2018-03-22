@@ -93,3 +93,19 @@ module.exports.checkNot = function(notId, callback) {
         }
     }, callback);
 };
+
+module.exports.deleteNotificationsBySender = function(userId, callback) {
+    const query = {
+        fromId: userId
+    };
+
+    Notification.remove(query, callback);
+};
+
+module.exports.deleteNotificationsByReceiver = function(userId, callback) {
+    const query = {
+        to: userId
+    };
+
+    Notification.remove(query, callback);
+};
