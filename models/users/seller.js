@@ -49,11 +49,11 @@ const SellerSchema = mongoose.Schema({
     ],
     avgRating: {
         type: Number
+    },
+    timestamp: {
+        type: String,
+        required: true
     }
-    // profPic: {
-    //     data: Buffer,
-    //     contentType: String
-    // }
 });
 
 const Seller = module.exports = mongoose.model('Seller', SellerSchema);

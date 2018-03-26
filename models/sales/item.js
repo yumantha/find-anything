@@ -57,6 +57,10 @@ const ItemSchema = mongoose.Schema({
     ],
     avgRating: {
         type: Number
+    },
+    timestamp: {
+        type: String,
+        required: true
     }
 });
 

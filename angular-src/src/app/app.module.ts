@@ -50,12 +50,12 @@ import {AuthGuard} from "./guards/auth.guard";
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
-  {path: 'home', component: HomeComponent},
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'search/:query', component: SearchResultsComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'notifications', component: NotificationsComponent},
-  {path: 'requests', component: RequestsComponent},
+  {path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard]},
+  {path: 'requests', component: RequestsComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'profile/editProf', component: EditProfileComponent, canActivate: [AuthGuard]},
   {path: 'profile/editAcc', component: EditAccountComponent, canActivate: [AuthGuard]},

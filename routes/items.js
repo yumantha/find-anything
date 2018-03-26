@@ -26,7 +26,8 @@ router.post('/', (req, res, next) => {
                 price: req.body.price,
                 location: req.body.location,
                 description: req.body.description,
-                seller: seller
+                seller: seller,
+                timestamp: Date.now().toString()
             });
 
             Item.addItem(newItem, (error, item) => {

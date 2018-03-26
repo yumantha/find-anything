@@ -76,11 +76,11 @@ const CustomerSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Review"
         }
-    ]
-    // profPic: {
-    //     data: Buffer,
-    //     contentType: String
-    // }
+    ],
+    timestamp: {
+        type: String,
+        required: true
+    }
 });
 
 const Customer = module.exports = mongoose.model('Customer', CustomerSchema);

@@ -31,7 +31,8 @@ router.post('/', (req, res, next) => {
                 startTime: req.body.startTime,
                 endTime: req.body.endTime,
                 extraNotes: req.body.extraNotes,
-                seller: seller
+                seller: seller,
+                timestamp: Date.now().toString()
             });
 
             Service.addItem(newItem, (error, service) => {

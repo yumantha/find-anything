@@ -23,7 +23,8 @@ router.post('/register', (req, res, next)=>{
             telephone: req.body.telephone,
             mobile: req.body.mobile,
             address: req.body.address,
-            userType: req.body.userType
+            userType: req.body.userType,
+            timestamp: Date.now().toString()
         });
 
         Seller.addUser(newUser, (error, user)=>{
@@ -42,7 +43,8 @@ router.post('/register', (req, res, next)=>{
             telephone: req.body.telephone,
             mobile: req.body.mobile,
             address: req.body.address,
-            userType: req.body.userType
+            userType: req.body.userType,
+            timestamp: Date.now().toString()
         });
 
         Customer.addUser(newUser, (error, user)=>{

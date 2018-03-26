@@ -28,6 +28,10 @@ const ReviewSchema = mongoose.Schema( {
     rating: {
         type: Number,
         required: true
+    },
+    timestamp: {
+        type: String,
+        required: true
     }
 });
 
