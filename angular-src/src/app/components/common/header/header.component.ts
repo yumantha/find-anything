@@ -50,4 +50,8 @@ export class HeaderComponent implements OnInit {
 
     window.location.reload();
   }
+
+  isAdmin() {
+    return (localStorage.getItem('user_type') === 'admin');
+  }
 }

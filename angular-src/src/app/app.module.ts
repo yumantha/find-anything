@@ -28,6 +28,7 @@ import {EditItemComponent} from './components/items/edit-item/edit-item.componen
 import {EditServiceComponent} from './components/items/edit-service/edit-service.component';
 import {NotificationsComponent} from './components/common/notifications/notifications.component';
 import {RequestsComponent} from './components/common/requests/requests.component';
+import {AdminDashboardComponent} from './components/common/admin-dashboard/admin-dashboard.component';
 
 import {EnterPassDialog} from './components/users/edit-profile/enter-pass/enter-pass.component';
 import {ConfirmDeleteDialog} from "./components/items/view-item/confirm-delete/confirm-delete.component";
@@ -65,7 +66,8 @@ const appRoutes = [
   {path: 'items/:id/edit', component: EditItemComponent, canActivate: [AuthGuard]},
   {path: 'services/new', component: AddServiceComponent, canActivate: [AuthGuard]},
   {path: 'services/:id', component: ViewServiceComponent},
-  {path: 'services/:id/edit', component: EditServiceComponent, canActivate: [AuthGuard]}
+  {path: 'services/:id/edit', component: EditServiceComponent, canActivate: [AuthGuard]},
+  {path: 'dashboard', component: AdminDashboardComponent}
 ];
 
 @NgModule({
@@ -97,6 +99,7 @@ const appRoutes = [
     NotificationsComponent,
     RequestsComponent,
     ConfirmDeleteAccountDialog,
+    AdminDashboardComponent,
   ],
   imports: [
     BrowserModule,

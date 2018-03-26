@@ -6,6 +6,7 @@ const config = require('../config/database');
 
 const Seller = require('../models/users/seller');
 const Customer = require('../models/users/customer');
+const Admin = require('../models/users/admin');
 const Item = require('../models/sales/item');
 const Service = require('../models/sales/service');
 const Review = require('../models/others/review');
@@ -116,8 +117,6 @@ router.post('/editAcc', (req, res, next) => {
             password: req.body.password
         });
 
-        // console.log(editedUser);
-
         Seller.updateUserAcc(userId, editedUser, (error, user)=>{
             if(error) {
                 return res.json({success: false, msg: 'Failed to update user. Error: ' + error});
@@ -151,7 +150,39 @@ router.post('/authenticate', (req, res, next)=>{
     const password = req.body.password;
     const userType = req.body.userType;
 
-    if(userType === 'seller') {
+    if(userType === 'admin') {
+        Admin.getAdmin((error, admin) => {
+            if(error) {
+                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+            }
+
+            if(!admin) {
+                return res.json({success: false, msg: 'Admin not found'});
+            } else {
+                Admin.comparePassword(password, admin.password, (error, isMatch) => {
+                    if(error) {
+                        return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                    }
+
+                    if(isMatch) {
+                        const token = jwt.sign(admin.toJSON(), config.secret, {
+                            expiresIn: 604800, //week
+                        });
+                        return res.json({success: true,
+                            token: 'JWT ' + token,
+                            user: {
+                                id: admin._id,
+                                username: admin.username,
+                                userType: admin.userType
+                            }
+                        })
+                    } else {
+                        return res.json({success: false, msg: 'Invalid password'});
+                    }
+                });
+            }
+        })
+    } else if(userType === 'seller') {
         Seller.getUserByUsername(username, (error, user)=>{
             if(error) {
                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
@@ -162,7 +193,9 @@ router.post('/authenticate', (req, res, next)=>{
             }
 
             Seller.comparePassword(password, user.password, (error, isMatch)=>{
-                if(error) throw error;
+                if(error) {
+                    return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                }
 
                 if(isMatch) {
                     const token = jwt.sign(user.toJSON(), config.secret, {
@@ -224,7 +257,29 @@ router.post('/comparePass', (req, res, next) => {
     const password = req.body.password;
     const userType = req.body.userType;
 
-    if(userType === 'seller') {
+    if(userType === 'admin') {
+        Admin.getAdmin((error, admin) => {
+            if(error) {
+                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+            }
+
+            if(!admin) {
+                return res.json({success: false, msg: 'Admin not found'});
+            }
+
+            Admin.comparePassword(password, admin.password, (error, isMatch) => {
+                if(error) {
+                    return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                }
+
+                if(!isMatch) {
+                    return res.json({success: false, msg: 'Invalid password'});
+                } else {
+                    return res.json({success: true, msg: 'Password accepted'});
+                }
+            })
+        })
+    } else if(userType === 'seller') {
         Seller.getUserById(userId, (error, user) => {
             if(error) {
                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
