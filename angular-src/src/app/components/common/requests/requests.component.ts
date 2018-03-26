@@ -111,6 +111,7 @@ export class RequestsComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.flashMessagesService.show("The request for purchase has been accepted", {cssClass: 'alert-success', timeout: 5000});
+          window.location.reload();
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
@@ -122,6 +123,7 @@ export class RequestsComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.flashMessagesService.show("The was successfully declined", {cssClass: 'alert-success', timeout: 5000});
+          window.location.reload();
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }

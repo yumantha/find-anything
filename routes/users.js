@@ -30,7 +30,11 @@ router.post('/register', (req, res, next)=>{
 
         Seller.addUser(newUser, (error, user)=>{
             if(error) {
-                return res.json({success: false, msg: 'Failed to register user. Error: ' + error})
+                if(error.code === 11000) {
+                    return res.json({success: false, msg: 'Failed to register user: the username or email you entered already exists'})
+                } else {
+                    return res.json({success: false, msg: 'Failed to register user. Error: ' + error})
+                }
             } else {
                 return res.json({success: true, msg: 'User registered'});
             }
@@ -50,7 +54,11 @@ router.post('/register', (req, res, next)=>{
 
         Customer.addUser(newUser, (error, user)=>{
             if(error) {
-                return res.json({success: false, msg: 'Failed to register user. Error: ' + error})
+                if(error.code === 11000) {
+                    return res.json({success: false, msg: 'Failed to register user: the username or email you entered already exists'})
+                } else {
+                    return res.json({success: false, msg: 'Failed to register user. Error: ' + error})
+                }
             } else {
                 return res.json({success: true, msg: 'User registered'});
             }

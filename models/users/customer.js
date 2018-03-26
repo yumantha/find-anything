@@ -11,12 +11,14 @@ const CustomerSchema = mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        index: true
     },
     username: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        index: true
     },
     userType: {
         type: String,
