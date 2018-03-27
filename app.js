@@ -28,6 +28,7 @@ const reviews = require('./routes/reviews');
 const search = require('./routes/search');
 const notifications = require('./routes/notifications');
 const requests = require('./routes/requests');
+const admin = require('./routes/admin');
 
 //port number
 const port = process.env.PORT || 3000;
@@ -54,6 +55,7 @@ app.use('/search', search);
 app.use('/:type/:itemId/reviews', reviews);
 app.use('/notifications', notifications);
 app.use('/requests', requests);
+app.use('/admin', admin);
 
 //index route
 app.get('/', (req, res)=>{

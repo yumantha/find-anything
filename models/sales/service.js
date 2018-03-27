@@ -125,3 +125,48 @@ module.exports.deleteItemsByUser = function(userId, callback) {
 
     Service.remove(query, callback);
 };
+
+module.exports.mostFavs = function(callback) {
+    Service.aggregate(
+        [
+            {
+                $project: {
+                    name: 1,
+                    favs: {
+                        $size: "$favBy"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
+module.exports.mostReqs = function(callback) {
+    Service.aggregate(
+        [
+            {
+                $project: {
+                    name: 1,
+                    reqs: {
+                        $size: "$requestedBy"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
+module.exports.mostBuys = function(callback) {
+    Service.aggregate(
+        [
+            {
+                $project: {
+                    name: 1,
+                    buys: {
+                        $size: "$boughtBy"
+                    }
+                }
+            }
+        ]
+        , callback)
+};

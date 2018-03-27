@@ -46,6 +46,7 @@ import {SearchService} from './services/search/search.service';
 import {ReviewService} from './services/reviews/review.service';
 import {NotificationsService} from './services/notifications/notifications.service';
 import {RequestService} from './services/requests/request.service';
+import {AdminService} from './services/admin/admin.service';
 
 import {AuthGuard} from "./guards/auth.guard";
 
@@ -129,7 +130,8 @@ const appRoutes = [
     SearchService,
     ReviewService,
     NotificationsService,
-    RequestService
+    RequestService,
+    AdminService
   ],
   bootstrap: [
     AppComponent

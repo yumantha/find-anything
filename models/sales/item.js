@@ -111,3 +111,48 @@ module.exports.deleteItemsByUser = function(userId, callback) {
 
     Item.remove(query, callback);
 };
+
+module.exports.mostFavs = function(callback) {
+    Item.aggregate(
+        [
+            {
+                $project: {
+                    name: 1,
+                    favs: {
+                        $size: "$favBy"
+                    }
+                }
+            }
+        ]
+    , callback)
+};
+
+module.exports.mostReqs = function(callback) {
+    Item.aggregate(
+        [
+            {
+                $project: {
+                    name: 1,
+                    reqs: {
+                        $size: "$requestedBy"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
+module.exports.mostBuys = function(callback) {
+    Item.aggregate(
+        [
+            {
+                $project: {
+                    name: 1,
+                    buys: {
+                        $size: "$boughtBy"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
