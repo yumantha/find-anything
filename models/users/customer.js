@@ -175,3 +175,93 @@ module.exports.getTimes = function(callback) {
 module.exports.getNumber = function(callback) {
     Customer.count(callback);
 };
+
+module.exports.favItemNum = function(callback) {
+    Customer.aggregate(
+        [
+            {
+                $project: {
+                    username: 1,
+                    favItems: {
+                        $size: "$favItems"
+                    }
+                }
+            }
+        ]
+    , callback)
+};
+
+module.exports.favServiceNum = function(callback) {
+    Customer.aggregate(
+        [
+            {
+                $project: {
+                    username: 1,
+                    favServices: {
+                        $size: "$favServices"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
+module.exports.reqItemNum = function(callback) {
+    Customer.aggregate(
+        [
+            {
+                $project: {
+                    username: 1,
+                    reqItems: {
+                        $size: "$reqItems"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
+module.exports.reqServiceNum = function(callback) {
+    Customer.aggregate(
+        [
+            {
+                $project: {
+                    username: 1,
+                    reqServices: {
+                        $size: "$reqServices"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
+module.exports.boughtItemNum = function(callback) {
+    Customer.aggregate(
+        [
+            {
+                $project: {
+                    username: 1,
+                    boughtItems: {
+                        $size: "$boughtItems"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
+module.exports.boughtServiceNum = function(callback) {
+    Customer.aggregate(
+        [
+            {
+                $project: {
+                    username: 1,
+                    boughtServices: {
+                        $size: "$boughtServices"
+                    }
+                }
+            }
+        ]
+        , callback)
+};

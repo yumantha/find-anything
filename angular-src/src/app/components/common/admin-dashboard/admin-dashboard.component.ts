@@ -42,6 +42,11 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(data => {
         console.log(data)
       });
+
+    this.adminService.getCustomerStats()
+      .subscribe(data => {
+        console.log(data)
+      });
   }
 
 }

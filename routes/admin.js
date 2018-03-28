@@ -306,6 +306,70 @@ router.get('/getstats/sellers', (req, res, next) => {
     });
 });
 
+//get customer stats
+router.get('/getstats/customers', (req, res, next) => {
+    const customerStats = {};
+
+    Customer.favItemNum((error, favItems) => {
+        const fav = {};
+
+        if(error) {
+            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+        } else {
+            fav.items = getTopNum(favItems, 5, 'favItems');
+
+            Customer.favServiceNum((error, favServices) => {
+                if(error) {
+                    return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+                } else {
+                    fav.services = getTopNum(favServices, 5, 'favServices');
+                    customerStats.fav = fav;
+
+                    Customer.reqItemNum((error, reqItems) => {
+                        const req = {};
+
+                        if(error) {
+                            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+                        } else {
+                            req.items = getTopNum(reqItems, 5, 'reqItems');
+
+                            Customer.reqServiceNum((error, reqServices) => {
+                                if(error) {
+                                    return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+                                } else {
+                                    req.services = getTopNum(reqServices, 5, 'reqServices');
+                                    customerStats.req = req;
+
+                                    Customer.boughtItemNum((error, boughtItems) => {
+                                        const bought = {};
+
+                                        if(error) {
+                                            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+                                        } else {
+                                            bought.items = getTopNum(boughtItems, 5, 'boughtItems');
+
+                                            Customer.boughtServiceNum((error, boughtServices) => {
+                                                if(error) {
+                                                    return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+                                                } else {
+                                                    bought.services = getTopNum(boughtServices, 5, 'boughtServices');
+                                                    customerStats.bought = bought;
+
+                                                    return res.json({success: true, stats: customerStats});
+                                                }
+                                            });
+                                        }
+                                    })
+                                }
+                            });
+                        }
+                    })
+                }
+            });
+        }
+    })
+});
+
 //get top rated
 router.get('/getstats/toprated', (req, res, next) => {
     const topRated = {};

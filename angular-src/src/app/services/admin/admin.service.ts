@@ -34,6 +34,14 @@ export class AdminService {
       .map(res => res.json());
   }
 
+  //get customer stats
+  getCustomerStats() {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.get(this.server + 'admin/getstats/customers', {headers: headers})
+      .map(res => res.json());
+  }
+
   //get top rated items. services and sellers
   getTopRated() {
     let headers = new Headers();
