@@ -17,7 +17,15 @@ function sortByKey(array, key) {
 }
 
 function getTopNum(array, num, key) {
-    return sortByKey(array, key).reverse().filter((el) => {return el[key] !== 0}).slice(0, num);
+    return sortByKey(array, key)
+        .reverse()
+        .filter((el) => {
+            return el[key] !== 0
+        })
+        .filter((el) => {
+            return el[key] !== undefined
+        })
+        .slice(0, num);
 }
 
 //get item statistics
@@ -76,6 +84,38 @@ router.get('/getstats/services', (req, res, next) => {
                     })
                 }
             })
+        }
+    });
+});
+
+//get top rated
+router.get('/getstats/toprated', (req, res, next) => {
+    const topRated = {};
+
+    Item.getTopRated((error, topItems) => {
+        if(error) {
+            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+        } else {
+            topRated.items = getTopNum(topItems, 5, 'avgRating');
+
+            Service.getTopRated((error, topServices) => {
+                if(error) {
+                    return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                } else {
+                    topRated.services = getTopNum(topServices, 5, 'avgRating');
+
+                    Seller.getTopRated((error, topSellers) => {
+                        if(error) {
+                            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                        } else {
+                            topRated.sellers = getTopNum(topSellers, 5, 'avgRating');
+
+                            return res.json({success: true, msg: topRated});
+                        }
+                    });
+                }
+            });
+
         }
     });
 });

@@ -127,7 +127,8 @@ router.post('/', (req, res, next) => {
                             customer: customer,
                             seller: service.seller,
                             review: req.body.review,
-                            rating: req.body.rating
+                            rating: req.body.rating,
+                            timestamp: Date.now().toString()
                         });
 
                         Review.addReview(newReview, (error, review) => {

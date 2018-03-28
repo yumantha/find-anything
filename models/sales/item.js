@@ -156,3 +156,10 @@ module.exports.mostBuys = function(callback) {
         ]
         , callback)
 };
+
+module.exports.getTopRated = function(callback) {
+    Item.find(callback).select({
+        'name': 1,
+        'avgRating': 1
+    });
+};

@@ -170,3 +170,10 @@ module.exports.mostBuys = function(callback) {
         ]
         , callback)
 };
+
+module.exports.getTopRated = function(callback) {
+    Service.find(callback).select({
+        'name': 1,
+        'avgRating': 1
+    });
+};

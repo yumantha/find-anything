@@ -22,6 +22,11 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(data => {
         console.log(data)
       });
+
+    this.adminService.getTopRated()
+      .subscribe(data => {
+        console.log(data)
+      })
   }
 
 }

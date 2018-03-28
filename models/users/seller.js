@@ -138,3 +138,10 @@ module.exports.updateUserAcc = function(userId, updatedUser, callback) {
 module.exports.deleteUser = function(userId, callback) {
     Seller.findByIdAndRemove(userId, callback);
 };
+
+module.exports.getTopRated = function(callback) {
+    Seller.find(callback).select({
+        'name': 1,
+        'avgRating': 1
+    });
+};
