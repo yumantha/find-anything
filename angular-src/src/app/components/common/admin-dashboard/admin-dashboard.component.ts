@@ -36,7 +36,12 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService.getNumbers()
       .subscribe(data => {
         console.log(data);
-      })
+      });
+
+    this.adminService.getSellerStats()
+      .subscribe(data => {
+        console.log(data)
+      });
   }
 
 }

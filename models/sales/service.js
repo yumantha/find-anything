@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const config = require('../../config/database');
 
 //user schema
 const ServiceSchema = mongoose.Schema({
@@ -141,6 +140,22 @@ module.exports.mostFavs = function(callback) {
         , callback)
 };
 
+module.exports.mostFavsWithSeller = function(callback) {
+    Service.aggregate(
+        [
+            {
+                $project: {
+                    name: 1,
+                    seller: 1,
+                    favs: {
+                        $size: "$favBy"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
 module.exports.mostReqs = function(callback) {
     Service.aggregate(
         [
@@ -156,12 +171,44 @@ module.exports.mostReqs = function(callback) {
         , callback)
 };
 
+module.exports.mostReqsWithSeller = function(callback) {
+    Service.aggregate(
+        [
+            {
+                $project: {
+                    name: 1,
+                    seller: 1,
+                    reqs: {
+                        $size: "$requestedBy"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
 module.exports.mostBuys = function(callback) {
     Service.aggregate(
         [
             {
                 $project: {
                     name: 1,
+                    buys: {
+                        $size: "$boughtBy"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
+module.exports.mostBuysWithSeller = function(callback) {
+    Service.aggregate(
+        [
+            {
+                $project: {
+                    name: 1,
+                    seller: 1,
                     buys: {
                         $size: "$boughtBy"
                     }

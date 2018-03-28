@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const config = require('../../config/database');
 
 const Review = require('../others/review');
 
@@ -127,6 +126,22 @@ module.exports.mostFavs = function(callback) {
     , callback)
 };
 
+module.exports.mostFavsWithSeller = function(callback) {
+    Item.aggregate(
+        [
+            {
+                $project: {
+                    name: 1,
+                    seller: 1,
+                    favs: {
+                        $size: "$favBy"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
 module.exports.mostReqs = function(callback) {
     Item.aggregate(
         [
@@ -142,12 +157,44 @@ module.exports.mostReqs = function(callback) {
         , callback)
 };
 
+module.exports.mostReqsWithSeller = function(callback) {
+    Item.aggregate(
+        [
+            {
+                $project: {
+                    name: 1,
+                    seller: 1,
+                    reqs: {
+                        $size: "$requestedBy"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
 module.exports.mostBuys = function(callback) {
     Item.aggregate(
         [
             {
                 $project: {
                     name: 1,
+                    buys: {
+                        $size: "$boughtBy"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
+module.exports.mostBuysWithSeller = function(callback) {
+    Item.aggregate(
+        [
+            {
+                $project: {
+                    name: 1,
+                    seller: 1,
                     buys: {
                         $size: "$boughtBy"
                     }

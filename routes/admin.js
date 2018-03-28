@@ -25,6 +25,9 @@ function getTopNum(array, num, key) {
         .filter((el) => {
             return el[key] !== undefined
         })
+        .filter((el) => {
+            return el[key] !== null
+        })
         .slice(0, num);
 }
 
@@ -38,7 +41,7 @@ function getDate(timestamp) {
     date.month = dateArray[0];
     date.date = dateArray[1];
 
-    return date
+    return date;
 }
 
 //get item statistics
@@ -97,6 +100,208 @@ router.get('/getstats/services', (req, res, next) => {
                     })
                 }
             })
+        }
+    });
+});
+
+//get seller statistics
+router.get('/getstats/sellers', (req, res, next) => {
+    const sellerStats = {};
+
+    Seller.getItemNum((error, itemNum) => {
+        const selling = {};
+        if(error) {
+            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+        } else {
+            selling.sItems = getTopNum(itemNum, 5, 'totItems');
+
+            Seller.getServiceNum((error, serviceNum) => {
+                if(error) {
+                    return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+                } else {
+                    selling.sServices = getTopNum(serviceNum, 5, 'totServices');
+                    sellerStats.selling = selling;
+
+                    Item.mostFavsWithSeller((error, itemFavs) => {
+                        const favs = {};
+
+                        if(error) {
+                            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+                        } else {
+                            let fItems = [];
+
+                            sortByKey(itemFavs, 'seller');
+
+                            fItems.push({
+                                seller: itemFavs[0].seller,
+                                favs: itemFavs[0].favs
+                            });
+
+                            for(let i=1; i<itemFavs.length; i++) {
+                                if(itemFavs[i].seller.toString() === itemFavs[i-1].seller.toString()) {
+                                    fItems[fItems.length-1].favs += itemFavs[i].favs
+                                } else {
+                                    fItems.push({
+                                        seller: itemFavs[i].seller,
+                                        favs: itemFavs[i].favs
+                                    });
+                                }
+                            }
+
+                            favs.items = getTopNum(fItems, 5, 'favs');
+
+                            Service.mostFavsWithSeller((error, serviceFavs) => {
+                                if(error) {
+                                    return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+                                } else {
+                                    let fServices = [];
+
+                                    sortByKey(serviceFavs, 'seller');
+
+                                    fServices.push({
+                                        seller: serviceFavs[0].seller,
+                                        favs: serviceFavs[0].favs
+                                    });
+
+                                    for(let i=1; i<serviceFavs.length; i++) {
+                                        if(serviceFavs[i].seller.toString() === serviceFavs[i-1].seller.toString()) {
+                                            fServices[fServices.length-1].favs += serviceFavs[i].favs
+                                        } else {
+                                            fServices.push({
+                                                seller: serviceFavs[i].seller,
+                                                favs: serviceFavs[i].favs
+                                            });
+                                        }
+                                    }
+
+                                    favs.services = getTopNum(fServices, 5, 'favs');
+                                    sellerStats.favs = favs;
+
+                                    Item.mostReqsWithSeller((error, itemReqs) => {
+                                        const reqs = {};
+
+                                        if(error) {
+                                            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+                                        } else {
+                                            let rItems = [];
+
+                                            sortByKey(itemReqs, 'seller');
+
+                                            rItems.push({
+                                                seller: itemReqs[0].seller,
+                                                reqs: itemReqs[0].reqs
+                                            });
+
+                                            for(let i=1; i<itemReqs.length; i++) {
+                                                if(itemReqs[i].seller.toString() === itemReqs[i-1].seller.toString()) {
+                                                    rItems[rItems.length-1].reqs += itemReqs[i].reqs
+                                                } else {
+                                                    rItems.push({
+                                                        seller: itemReqs[i].seller,
+                                                        reqs: itemReqs[i].reqs
+                                                    });
+                                                }
+                                            }
+
+                                            reqs.items = getTopNum(rItems, 5, 'reqs');
+
+                                            Service.mostReqsWithSeller((error, serviceReqs) => {
+                                                if(error) {
+                                                    return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+                                                } else {
+                                                    let rServices = [];
+
+                                                    sortByKey(serviceReqs, 'seller');
+
+                                                    rServices.push({
+                                                        seller: serviceReqs[0].seller,
+                                                        reqs: serviceReqs[0].reqs
+                                                    });
+
+                                                    for(let i=1; i<serviceReqs.length; i++) {
+                                                        if(serviceReqs[i].seller.toString() === serviceReqs[i-1].seller.toString()) {
+                                                            rServices[rServices.length-1].reqs += serviceReqs[i].reqs
+                                                        } else {
+                                                            rServices.push({
+                                                                seller: serviceReqs[i].seller,
+                                                                reqs: serviceReqs[i].reqs
+                                                            });
+                                                        }
+                                                    }
+
+                                                    reqs.services = getTopNum(rServices, 5, 'reqs');
+                                                    sellerStats.reqs = reqs;
+
+                                                    Item.mostBuysWithSeller((error, itemBuys) => {
+                                                        const buys = {};
+
+                                                        if(error) {
+                                                            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+                                                        } else {
+                                                            let bItems = [];
+
+                                                            sortByKey(itemBuys, 'seller');
+
+                                                            bItems.push({
+                                                                seller: itemBuys[0].seller,
+                                                                buys: itemBuys[0].buys
+                                                            });
+
+                                                            for(let i=1; i<itemBuys.length; i++) {
+                                                                if(itemBuys[i].seller.toString() === itemBuys[i-1].seller.toString()) {
+                                                                    bItems[bItems.length-1].buys += itemBuys[i].buys
+                                                                } else {
+                                                                    bItems.push({
+                                                                        seller: itemBuys[i].seller,
+                                                                        buys: itemBuys[i].buys
+                                                                    });
+                                                                }
+                                                            }
+
+                                                            buys.items = getTopNum(bItems, 5, 'buys');
+
+                                                            Service.mostBuysWithSeller((error, serviceReqs) => {
+                                                                if(error) {
+                                                                    return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
+                                                                } else {
+                                                                    let bServices = [];
+
+                                                                    sortByKey(serviceReqs, 'seller');
+
+                                                                    bServices.push({
+                                                                        seller: serviceReqs[0].seller,
+                                                                        buys: serviceReqs[0].buys
+                                                                    });
+
+                                                                    for(let i=1; i<serviceReqs.length; i++) {
+                                                                        if(serviceReqs[i].seller.toString() === serviceReqs[i-1].seller.toString()) {
+                                                                            bServices[bServices.length-1].buys += serviceReqs[i].buys
+                                                                        } else {
+                                                                            bServices.push({
+                                                                                seller: serviceReqs[i].seller,
+                                                                                buys: serviceReqs[i].buys
+                                                                            });
+                                                                        }
+                                                                    }
+
+                                                                    buys.services = getTopNum(bServices, 5, 'buys');
+                                                                    sellerStats.buys = buys;
+
+                                                                    return res.json({success: true, stats: sellerStats});
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
         }
     });
 });

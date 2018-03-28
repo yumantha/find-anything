@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const config = require('../../config/database');
 
 //user schema
 const SellerSchema = mongoose.Schema({
@@ -155,4 +154,41 @@ module.exports.getTimes = function(callback) {
 
 module.exports.getNumber = function(callback) {
     Seller.count(callback);
+};
+
+module.exports.getItemNum = function(callback) {
+    Seller.aggregate(
+        [
+            {
+                $project: {
+                    username: 1,
+                    totItems: {
+                        $size: "$sellingItems"
+                    }
+                }
+            }
+        ]
+    , callback)
+};
+
+module.exports.getServiceNum = function(callback) {
+    Seller.aggregate(
+        [
+            {
+                $project: {
+                    username: 1,
+                    totServices: {
+                        $size: "$sellingServices"
+                    }
+                }
+            }
+        ]
+        , callback)
+};
+
+module.exports.getItems = function(callback) {
+    Seller.find(callback).select({
+        'username': 1,
+        'sellingItems': 1
+    })
 };
