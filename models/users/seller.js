@@ -145,3 +145,10 @@ module.exports.getTopRated = function(callback) {
         'avgRating': 1
     });
 };
+
+module.exports.getTimes = function(callback) {
+    Seller.find(callback).select({
+        '_id': 0,
+        'timestamp': 1
+    })
+};

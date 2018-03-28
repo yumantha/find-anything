@@ -34,4 +34,12 @@ export class AdminService {
       .map(res => res.json());
   }
 
+  //get sign up and item/service adding times
+  getTimes() {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.get(this.server + 'admin/getstats/times', {headers: headers})
+      .map(res => res.json());
+  }
+
 }

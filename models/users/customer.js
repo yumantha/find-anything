@@ -165,3 +165,10 @@ module.exports.updateUserAcc = function(userId, updatedUser, callback) {
 module.exports.deleteUser = function(userId, callback) {
     Customer.findByIdAndRemove(userId, callback);
 };
+
+module.exports.getTimes = function(callback) {
+    Customer.find(callback).select({
+        '_id': 0,
+        'timestamp': 1
+    })
+};

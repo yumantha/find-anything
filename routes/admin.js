@@ -28,6 +28,19 @@ function getTopNum(array, num, key) {
         .slice(0, num);
 }
 
+function getDate(timestamp) {
+    let date = {};
+
+    let dateToFormat = new Date(parseInt(timestamp.replace(timestamp.substring(10), '000')));
+    let dateArray = (dateToFormat.toString().split(" ").slice(1, 4));
+
+    date.year = dateArray[2];
+    date.month = dateArray[0];
+    date.date = dateArray[1];
+
+    return date
+}
+
 //get item statistics
 router.get('/getstats/items', (req, res, next) => {
     const itemStats = {};
@@ -110,7 +123,7 @@ router.get('/getstats/toprated', (req, res, next) => {
                         } else {
                             topRated.sellers = getTopNum(topSellers, 5, 'avgRating');
 
-                            return res.json({success: true, msg: topRated});
+                            return res.json({success: true, stats: topRated});
                         }
                     });
                 }
@@ -119,5 +132,67 @@ router.get('/getstats/toprated', (req, res, next) => {
         }
     });
 });
+
+//sign up and item adding times
+router.get('/getstats/times', (req, res, next) => {
+    const timeStats = {};
+
+    Item.getTimes((error, itemTimes) => {
+        const sales = {};
+
+        if(error) {
+            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+        } else {
+            itemTimes.forEach((time, index, array) => {
+                array[index] = getDate(time.timestamp);
+            });
+
+            sales.items = itemTimes;
+
+            Service.getTimes((error, serviceTimes) => {
+                if(error) {
+                    return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                } else {
+                    serviceTimes.forEach((time, index, array) => {
+                        array[index] = getDate(time.timestamp);
+                    });
+
+                    sales.services = serviceTimes;
+                    timeStats.sales = sales;
+
+                    Seller.getTimes((error, sellerTimes) => {
+                        const users = {};
+
+                        if(error) {
+                            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                        } else {
+                            sellerTimes.forEach((time, index, array) => {
+                                array[index] = getDate(time.timestamp);
+                            });
+
+                            users.sellers = sellerTimes;
+
+                            Customer.getTimes((error, customerTimes) => {
+                                if(error) {
+                                    return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                                } else {
+                                    customerTimes.forEach((time, index, array) => {
+                                        array[index] = getDate(time.timestamp);
+                                    });
+
+                                    users.customers = customerTimes;
+                                    timeStats.users = users;
+
+                                    return res.json({success: true, stats: timeStats});
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+});
+
 
 module.exports = router;

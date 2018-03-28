@@ -163,3 +163,10 @@ module.exports.getTopRated = function(callback) {
         'avgRating': 1
     });
 };
+
+module.exports.getTimes = function(callback) {
+    Item.find(callback).select({
+        '_id': 0,
+        'timestamp': 1
+    })
+};
