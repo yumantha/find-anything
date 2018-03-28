@@ -47,19 +47,19 @@ router.get('/getstats/items', (req, res, next) => {
 
     Item.mostFavs((error, favItems) => {
         if(error) {
-            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
         } else {
             itemStats.mostFavs = getTopNum(favItems, 5, 'favs');
 
             Item.mostReqs((error, reqItems) => {
                 if(error) {
-                    return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                    return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                 } else {
                     itemStats.mostReqs = getTopNum(reqItems, 5, 'reqs');
 
                     Item.mostBuys((error, boughtItems) => {
                         if(error) {
-                            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                         } else {
                             itemStats.mostBuys = getTopNum(boughtItems, 5, 'buys');
                             return res.json({success: true, stats: itemStats});
@@ -77,19 +77,19 @@ router.get('/getstats/services', (req, res, next) => {
 
     Service.mostFavs((error, favServices) => {
         if(error) {
-            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
         } else {
             serviceStats.mostFavs = getTopNum(favServices, 5, 'favs');
 
             Service.mostReqs((error, reqServices) => {
                 if(error) {
-                    return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                    return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                 } else {
                     serviceStats.mostReqs = getTopNum(reqServices, 5, 'reqs');
 
                     Service.mostBuys((error, boughtServices) => {
                         if(error) {
-                            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                         } else {
                             serviceStats.mostBuys = getTopNum(boughtServices, 5, 'buys');
                             return res.json({success: true, stats: serviceStats});
@@ -107,19 +107,19 @@ router.get('/getstats/toprated', (req, res, next) => {
 
     Item.getTopRated((error, topItems) => {
         if(error) {
-            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
         } else {
             topRated.items = getTopNum(topItems, 5, 'avgRating');
 
             Service.getTopRated((error, topServices) => {
                 if(error) {
-                    return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                    return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                 } else {
                     topRated.services = getTopNum(topServices, 5, 'avgRating');
 
                     Seller.getTopRated((error, topSellers) => {
                         if(error) {
-                            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                         } else {
                             topRated.sellers = getTopNum(topSellers, 5, 'avgRating');
 
@@ -141,7 +141,7 @@ router.get('/getstats/times', (req, res, next) => {
         const sales = {};
 
         if(error) {
-            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
         } else {
             itemTimes.forEach((time, index, array) => {
                 array[index] = getDate(time.timestamp);
@@ -151,7 +151,7 @@ router.get('/getstats/times', (req, res, next) => {
 
             Service.getTimes((error, serviceTimes) => {
                 if(error) {
-                    return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                    return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                 } else {
                     serviceTimes.forEach((time, index, array) => {
                         array[index] = getDate(time.timestamp);
@@ -164,7 +164,7 @@ router.get('/getstats/times', (req, res, next) => {
                         const users = {};
 
                         if(error) {
-                            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                            return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                         } else {
                             sellerTimes.forEach((time, index, array) => {
                                 array[index] = getDate(time.timestamp);
@@ -174,7 +174,7 @@ router.get('/getstats/times', (req, res, next) => {
 
                             Customer.getTimes((error, customerTimes) => {
                                 if(error) {
-                                    return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                                    return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                                 } else {
                                     customerTimes.forEach((time, index, array) => {
                                         array[index] = getDate(time.timestamp);
@@ -194,5 +194,43 @@ router.get('/getstats/times', (req, res, next) => {
     });
 });
 
+//get numbers
+router.get('/getstats/numbers', (req, res, next) => {
+    const numbers = {};
+
+    Item.getNumber((error, itemNum) => {
+        if(error) {
+            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+        } else {
+            numbers.items = itemNum;
+
+            Service.getNumber((error, serviceNum) => {
+                if(error) {
+                    return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                } else {
+                    numbers.services = serviceNum;
+
+                    Seller.getNumber((error, sellerNum) => {
+                        if(error) {
+                            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                        } else {
+                            numbers.sellers = sellerNum;
+
+                            Customer.getNumber((error, customerNum) => {
+                                if(error) {
+                                    return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+                                } else {
+                                    numbers.customers = customerNum;
+
+                                    return res.json({success: true, stats: numbers});
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        }
+    })
+});
 
 module.exports = router;

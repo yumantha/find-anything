@@ -152,3 +152,7 @@ module.exports.getTimes = function(callback) {
         'timestamp': 1
     })
 };
+
+module.exports.getNumber = function(callback) {
+    Seller.count(callback);
+};

@@ -31,6 +31,11 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService.getTimes()
       .subscribe(data => {
         console.log(data);
+      });
+
+    this.adminService.getNumbers()
+      .subscribe(data => {
+        console.log(data);
       })
   }
 

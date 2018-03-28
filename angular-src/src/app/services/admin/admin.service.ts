@@ -42,4 +42,12 @@ export class AdminService {
       .map(res => res.json());
   }
 
+  //get numbers
+  getNumbers() {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.get(this.server + 'admin/getstats/numbers', {headers: headers})
+      .map(res => res.json());
+  }
+
 }
