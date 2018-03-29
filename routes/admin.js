@@ -113,13 +113,13 @@ router.get('/getstats/sellers', (req, res, next) => {
         if(error) {
             return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
         } else {
-            selling.sItems = getTopNum(itemNum, 5, 'totItems');
+            selling.items = getTopNum(itemNum, 5, 'totItems');
 
             Seller.getServiceNum((error, serviceNum) => {
                 if(error) {
                     return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                 } else {
-                    selling.sServices = getTopNum(serviceNum, 5, 'totServices');
+                    selling.services = getTopNum(serviceNum, 5, 'totServices');
                     sellerStats.selling = selling;
 
                     Item.mostFavsWithSeller((error, itemFavs) => {
@@ -132,8 +132,10 @@ router.get('/getstats/sellers', (req, res, next) => {
 
                             sortByKey(itemFavs, 'seller');
 
+
+
                             fItems.push({
-                                seller: itemFavs[0].seller,
+                                _id: itemFavs[0].seller,
                                 favs: itemFavs[0].favs
                             });
 
@@ -142,7 +144,7 @@ router.get('/getstats/sellers', (req, res, next) => {
                                     fItems[fItems.length-1].favs += itemFavs[i].favs
                                 } else {
                                     fItems.push({
-                                        seller: itemFavs[i].seller,
+                                        _id: itemFavs[i].seller,
                                         favs: itemFavs[i].favs
                                     });
                                 }
@@ -159,7 +161,7 @@ router.get('/getstats/sellers', (req, res, next) => {
                                     sortByKey(serviceFavs, 'seller');
 
                                     fServices.push({
-                                        seller: serviceFavs[0].seller,
+                                        _id: serviceFavs[0].seller,
                                         favs: serviceFavs[0].favs
                                     });
 
@@ -168,7 +170,7 @@ router.get('/getstats/sellers', (req, res, next) => {
                                             fServices[fServices.length-1].favs += serviceFavs[i].favs
                                         } else {
                                             fServices.push({
-                                                seller: serviceFavs[i].seller,
+                                                _id: serviceFavs[i].seller,
                                                 favs: serviceFavs[i].favs
                                             });
                                         }
@@ -188,7 +190,7 @@ router.get('/getstats/sellers', (req, res, next) => {
                                             sortByKey(itemReqs, 'seller');
 
                                             rItems.push({
-                                                seller: itemReqs[0].seller,
+                                                _id: itemReqs[0].seller,
                                                 reqs: itemReqs[0].reqs
                                             });
 
@@ -197,7 +199,7 @@ router.get('/getstats/sellers', (req, res, next) => {
                                                     rItems[rItems.length-1].reqs += itemReqs[i].reqs
                                                 } else {
                                                     rItems.push({
-                                                        seller: itemReqs[i].seller,
+                                                        _id: itemReqs[i].seller,
                                                         reqs: itemReqs[i].reqs
                                                     });
                                                 }
@@ -214,7 +216,7 @@ router.get('/getstats/sellers', (req, res, next) => {
                                                     sortByKey(serviceReqs, 'seller');
 
                                                     rServices.push({
-                                                        seller: serviceReqs[0].seller,
+                                                        _id: serviceReqs[0].seller,
                                                         reqs: serviceReqs[0].reqs
                                                     });
 
@@ -223,7 +225,7 @@ router.get('/getstats/sellers', (req, res, next) => {
                                                             rServices[rServices.length-1].reqs += serviceReqs[i].reqs
                                                         } else {
                                                             rServices.push({
-                                                                seller: serviceReqs[i].seller,
+                                                                _id: serviceReqs[i].seller,
                                                                 reqs: serviceReqs[i].reqs
                                                             });
                                                         }
@@ -243,7 +245,7 @@ router.get('/getstats/sellers', (req, res, next) => {
                                                             sortByKey(itemBuys, 'seller');
 
                                                             bItems.push({
-                                                                seller: itemBuys[0].seller,
+                                                                _id: itemBuys[0].seller,
                                                                 buys: itemBuys[0].buys
                                                             });
 
@@ -252,7 +254,7 @@ router.get('/getstats/sellers', (req, res, next) => {
                                                                     bItems[bItems.length-1].buys += itemBuys[i].buys
                                                                 } else {
                                                                     bItems.push({
-                                                                        seller: itemBuys[i].seller,
+                                                                        _id: itemBuys[i].seller,
                                                                         buys: itemBuys[i].buys
                                                                     });
                                                                 }
@@ -260,26 +262,26 @@ router.get('/getstats/sellers', (req, res, next) => {
 
                                                             buys.items = getTopNum(bItems, 5, 'buys');
 
-                                                            Service.mostBuysWithSeller((error, serviceReqs) => {
+                                                            Service.mostBuysWithSeller((error, serviceBuys) => {
                                                                 if(error) {
                                                                     return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                                                                 } else {
                                                                     let bServices = [];
 
-                                                                    sortByKey(serviceReqs, 'seller');
+                                                                    sortByKey(serviceBuys, 'seller');
 
                                                                     bServices.push({
-                                                                        seller: serviceReqs[0].seller,
-                                                                        buys: serviceReqs[0].buys
+                                                                        _id: serviceBuys[0].seller,
+                                                                        buys: serviceBuys[0].buys
                                                                     });
 
-                                                                    for(let i=1; i<serviceReqs.length; i++) {
-                                                                        if(serviceReqs[i].seller.toString() === serviceReqs[i-1].seller.toString()) {
-                                                                            bServices[bServices.length-1].buys += serviceReqs[i].buys
+                                                                    for(let i=1; i<serviceBuys.length; i++) {
+                                                                        if(serviceBuys[i].seller.toString() === serviceBuys[i-1].seller.toString()) {
+                                                                            bServices[bServices.length-1].buys += serviceBuys[i].buys
                                                                         } else {
                                                                             bServices.push({
-                                                                                seller: serviceReqs[i].seller,
-                                                                                buys: serviceReqs[i].buys
+                                                                                _id: serviceBuys[i].seller,
+                                                                                buys: serviceBuys[i].buys
                                                                             });
                                                                         }
                                                                     }
@@ -500,6 +502,23 @@ router.get('/getstats/numbers', (req, res, next) => {
             })
         }
     })
+});
+
+//get seller username
+router.get('/getstats/seller/:id', (req, res, next) => {
+    const sellerId = req.params.id;
+
+    Seller.getUserById(sellerId, (error, seller) => {
+        if(error) {
+            return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
+        }
+
+        if(!seller) {
+            return res.json({success: false, msg: 'Seller not found'});
+        } else {
+            return res.json({success: true, username: seller.username});
+        }
+    });
 });
 
 module.exports = router;

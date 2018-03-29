@@ -66,4 +66,12 @@ export class AdminService {
       .map(res => res.json());
   }
 
+  //get seller username
+  getSellerUsername(sellerId) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.get(this.server + 'admin/getstats/seller/' + sellerId, {headers: headers})
+      .map(res => res.json());
+  }
+
 }
