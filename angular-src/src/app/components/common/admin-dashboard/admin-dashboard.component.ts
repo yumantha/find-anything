@@ -26,6 +26,7 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.numbers = data.stats;
+          // console.log(this.numbers);
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
@@ -35,6 +36,7 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.times = data.stats;
+          // console.log(this.times);
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
@@ -44,6 +46,7 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.topRated = data.stats;
+          // console.log(this.topRated)
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
@@ -53,6 +56,7 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.customerStats = data.stats;
+          // console.log(this.customerStats)
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
@@ -62,6 +66,7 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.itemStats = data.stats;
+          // console.log(this.itemStats)
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
@@ -71,6 +76,7 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.serviceStats = data.stats;
+          // console.log(this.serviceStats)
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
@@ -96,6 +102,7 @@ export class AdminDashboardComponent implements OnInit {
               }
             }
           }
+          // console.log(this.sellerStats)
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
