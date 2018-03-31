@@ -140,7 +140,7 @@ module.exports.deleteUser = function(userId, callback) {
 
 module.exports.getTopRated = function(callback) {
     Seller.find(callback).select({
-        'name': 1,
+        'username': 1,
         'avgRating': 1
     });
 };

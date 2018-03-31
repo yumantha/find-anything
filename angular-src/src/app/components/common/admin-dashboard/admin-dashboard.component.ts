@@ -16,6 +16,8 @@ export class AdminDashboardComponent implements OnInit {
   itemStats: any;
   serviceStats: any;
 
+  loaded: Boolean = false;
+
   constructor(
     private adminService: AdminService,
     private flashMessagesService: FlashMessagesService
@@ -27,6 +29,7 @@ export class AdminDashboardComponent implements OnInit {
         if(data.success) {
           this.numbers = data.stats;
           // console.log(this.numbers);
+          this.dataLoded();
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
@@ -37,6 +40,7 @@ export class AdminDashboardComponent implements OnInit {
         if(data.success) {
           this.times = data.stats;
           // console.log(this.times);
+          this.dataLoded();
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
@@ -46,7 +50,8 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.topRated = data.stats;
-          // console.log(this.topRated)
+          // console.log(this.topRated);
+          this.dataLoded();
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
@@ -56,7 +61,8 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.customerStats = data.stats;
-          // console.log(this.customerStats)
+          // console.log(this.customerStats);
+          this.dataLoded();
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
@@ -66,7 +72,8 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.itemStats = data.stats;
-          // console.log(this.itemStats)
+          // console.log(this.itemStats);
+          this.dataLoded();
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
@@ -76,7 +83,8 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.serviceStats = data.stats;
-          // console.log(this.serviceStats)
+          // console.log(this.serviceStats);
+          this.dataLoded();
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
@@ -102,10 +110,26 @@ export class AdminDashboardComponent implements OnInit {
               }
             }
           }
-          // console.log(this.sellerStats)
+          // console.log(this.sellerStats);
+          this.dataLoded();
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
       });
+  }
+
+  dataLoded() {
+    if(
+      this.numbers &&
+      this.times &&
+      this.topRated &&
+      this.sellerStats &&
+      this.customerStats &&
+      this.itemStats &&
+      this.serviceStats
+    ) {
+      this.loaded = true
+    }
+
   }
 }
