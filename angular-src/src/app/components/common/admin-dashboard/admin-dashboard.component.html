@@ -1,76 +1,350 @@
-<div>
-  <canvas id="canvas">{{sellerChart}}</canvas>
-</div>
-
 <div class="container">
   <div *ngIf="!loaded" style="margin: 20px auto">
     <mat-progress-spinner color="primary" mode="indeterminate" style="margin:0 auto;"></mat-progress-spinner>
   </div>
 
-  <div *ngIf="loaded">
-  <!--<div>-->
+  <div>
+
     <mat-card style="margin: 10px 0">
-      <mat-card style="margin-bottom: 20px">
-        <mat-grid-list cols="4" rowHeight="150px">
-          <mat-grid-tile>
-            <div style="height: 100%; width: 100%; margin-right: 10px; text-align: center; padding: 0 10px">
-              <mat-card style="margin: 10px 0">
-                <div style="width: 100%; height: 100%">
-                  <p>
-                    <span style="font-size: 40px;"><strong>{{numbers.items}}</strong></span>
-                    <br/>
-                    <span style="float: right; color: grey">Items</span>
-                  </p>
+      <div *ngIf="loaded">
+        <mat-card style="margin-bottom: 20px">
+          <mat-grid-list cols="4" rowHeight="150px">
+            <mat-grid-tile>
+              <div style="height: 100%; width: 100%; margin-right: 10px; text-align: center; padding: 0 10px">
+                <mat-card style="margin: 10px 0">
+                  <div style="width: 100%; height: 100%">
+                    <p>
+                      <span style="font-size: 40px;"><strong>{{numbers.items}}</strong></span>
+                      <br/>
+                      <span style="float: right; color: grey">Items</span>
+                    </p>
+                  </div>
+                </mat-card>
+              </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <div style="height: 100%; width: 100%; margin-right: 10px; margin-left: 10px; text-align: center; padding: 0 10px">
+                <mat-card style="margin: 10px 0">
+                  <div style="width: 100%; height: 100%">
+                    <p>
+                      <span style="font-size: 40px;"><strong>{{numbers.services}}</strong></span>
+                      <br/>
+                      <span style="float: right; color: grey">Services</span>
+                    </p>
+                  </div>
+                </mat-card>
+              </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <div style="height: 100%; width: 100%; margin-right: 10px; margin-left: 10px; text-align: center; padding: 0 10px">
+                <mat-card style="margin: 10px 0">
+                  <div style="width: 100%; height: 100%">
+                    <p>
+                      <span style="font-size: 40px;"><strong>{{numbers.sellers}}</strong></span>
+                      <br/>
+                      <span style="float: right; color: grey">Sellers</span>
+                    </p>
+                  </div>
+                </mat-card>
+              </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <div style="height: 100%; width: 100%; margin-left: 10px; text-align: center; padding: 0 10px">
+                <mat-card style="margin: 10px 0">
+                  <div style="width: 100%; height: 100%">
+                    <p>
+                      <span style="font-size: 40px;"><strong>{{numbers.customers}}</strong></span>
+                      <br/>
+                      <span style="float: right; color: grey">Customers</span>
+                    </p>
+                  </div>
+                </mat-card>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-card>
+
+        <mat-card style="margin-bottom: 20px">
+          <mat-card-title>
+            Top Rated
+          </mat-card-title>
+
+          <mat-card-content>
+            <mat-tab-group>
+              <mat-tab label="Sellers">
+                <div style="margin: 20px;" *ngFor="let seller of topRated.sellers; let i = index">
+                  <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
+                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rating: {{seller.avgRating}}</p>
+                  <hr>
                 </div>
+              </mat-tab>
+
+              <mat-tab label="Items">
+                <div style="margin: 20px;" *ngFor="let item of topRated.items; let i = index">
+                  <h5>{{i+1}}. <a [routerLink]="['/items/' + item._id]"><strong>{{item.name}}</strong></a></h5>
+                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rating: {{item.avgRating}}</p>
+                  <hr>
+                </div>
+              </mat-tab>
+
+              <mat-tab label="Services">
+                <div style="margin: 20px;" *ngFor="let service of topRated.services; let i = index">
+                  <h5>{{i+1}}. <a [routerLink]="['/services/' + service._id]"><strong>{{service.name}}</strong></a></h5>
+                  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rating: {{service.avgRating}}</p>
+                  <hr>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card style="margin-bottom: 20px">
+          <mat-card-title>
+            Top Users
+          </mat-card-title>
+
+          <mat-card-content>
+            <div style="width: 100%; height: 100%">
+              <mat-card style="margin-bottom: 20px">
+                <h5>
+                  Top Sellers
+                </h5>
+
+                <mat-tab-group>
+                  <mat-tab label="Selling">
+                    <mat-tab-group>
+                      <mat-tab label="Items">
+                        <div style="margin: 20px;" *ngFor="let seller of sellerStats.selling.items; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Items for sale: {{seller.totItems}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+
+                      <mat-tab label="Services">
+                        <div style="margin: 20px;" *ngFor="let seller of sellerStats.selling.items; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Services for sale: {{seller.totItems}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+                    </mat-tab-group>
+                  </mat-tab>
+
+                  <mat-tab label="Sold">
+                    <mat-tab-group>
+                      <mat-tab label="Items">
+                        <div style="margin: 20px;" *ngFor="let seller of sellerStats.buys.items; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Items sold: {{seller.buys}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+
+                      <mat-tab label="Services">
+                        <div style="margin: 20px;" *ngFor="let seller of sellerStats.buys.services; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Services sold: {{seller.buys}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+                    </mat-tab-group>
+                  </mat-tab>
+
+                  <mat-tab label="Requests">
+                    <mat-tab-group>
+                      <mat-tab label="Items">
+                        <div style="margin: 20px;" *ngFor="let seller of sellerStats.reqs.items; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pending requests for items: {{seller.reqs}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+
+                      <mat-tab label="Services">
+                        <div style="margin: 20px;" *ngFor="let seller of sellerStats.reqs.services; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pending requests for services: {{seller.reqs}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+                    </mat-tab-group>
+                  </mat-tab>
+
+                  <mat-tab label="Favorites">
+                    <mat-tab-group>
+                      <mat-tab label="Items">
+                        <div style="margin: 20px;" *ngFor="let seller of sellerStats.favs.items; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Favorited items: {{seller.favs}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+
+                      <mat-tab label="Services">
+                        <div style="margin: 20px;" *ngFor="let seller of sellerStats.favs.services; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Favorited services: {{seller.favs}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+                    </mat-tab-group>
+                  </mat-tab>
+                </mat-tab-group>
               </mat-card>
             </div>
-          </mat-grid-tile>
 
-          <mat-grid-tile>
-            <div style="height: 100%; width: 100%; margin-right: 10px; margin-left: 10px; text-align: center; padding: 0 10px">
-              <mat-card style="margin: 10px 0">
-                <div style="width: 100%; height: 100%">
-                  <p>
-                    <span style="font-size: 40px;"><strong>{{numbers.services}}</strong></span>
-                    <br/>
-                    <span style="float: right; color: grey">Services</span>
-                  </p>
-                </div>
+            <div style="width: 100%; height: 100%">
+              <mat-card>
+                <h5>
+                  Top Customers
+                </h5>
+
+                <mat-tab-group>
+                  <mat-tab label="Buys">
+                    <mat-tab-group>
+                      <mat-tab label="Items">
+                        <div style="margin: 20px;" *ngFor="let customer of customerStats.bought.items; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/customer/' + customer._id]"><strong>{{customer.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Items bought: {{customer.boughtItems}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+
+                      <mat-tab label="Services">
+                        <div style="margin: 20px;" *ngFor="let customer of customerStats.bought.services; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/customer/' + customer._id]"><strong>{{customer.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Services bought: {{customer.boughtServices}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+                    </mat-tab-group>
+                  </mat-tab>
+
+                  <mat-tab label="Requests">
+                    <mat-tab-group>
+                      <mat-tab label="Items">
+                        <div style="margin: 20px;" *ngFor="let customer of customerStats.req.items; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/customer/' + customer._id]"><strong>{{customer.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pending requests for items: {{customer.reqItems}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+
+                      <mat-tab label="Services">
+                        <div style="margin: 20px;" *ngFor="let customer of customerStats.req.services; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/customer/' + customer._id]"><strong>{{customer.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pending requests for services: {{customer.reqServices}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+                    </mat-tab-group>
+                  </mat-tab>
+
+                  <mat-tab label="Favorites">
+                    <mat-tab-group>
+                      <mat-tab label="Items">
+                        <div style="margin: 20px;" *ngFor="let customer of customerStats.fav.items; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/customer/' + customer._id]"><strong>{{customer.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Favorited items: {{customer.favItems}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+
+                      <mat-tab label="Services">
+                        <div style="margin: 20px;" *ngFor="let customer of customerStats.fav.services; let i = index">
+                          <h5>{{i+1}}. <a [routerLink]="['/users/customer/' + customer._id]"><strong>{{customer.username}}</strong></a></h5>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Favorited services: {{customer.favServices}}</p>
+                          <hr>
+                        </div>
+                      </mat-tab>
+                    </mat-tab-group>
+                  </mat-tab>
+                </mat-tab-group>
               </mat-card>
             </div>
-          </mat-grid-tile>
+          </mat-card-content>
+        </mat-card>
 
-          <mat-grid-tile>
-            <div style="height: 100%; width: 100%; margin-right: 10px; margin-left: 10px; text-align: center; padding: 0 10px">
-              <mat-card style="margin: 10px 0">
-                <div style="width: 100%; height: 100%">
-                  <p>
-                    <span style="font-size: 40px;"><strong>{{numbers.sellers}}</strong></span>
-                    <br/>
-                    <span style="float: right; color: grey">Sellers</span>
-                  </p>
-                </div>
+        <mat-card style="margin-bottom: 20px">
+          <mat-card-title>
+            Top Sales
+          </mat-card-title>
+
+          <mat-card-content>
+            <div style="width: 100%; height: 100%">
+              <mat-card style="margin-bottom: 20px">
+                <h5>
+                  Top Items
+                </h5>
+
+                <mat-tab-group>
+                  <mat-tab label="Bought">
+                    <div style="margin: 20px;" *ngFor="let item of itemStats.mostBuys; let i = index">
+                      <h5>{{i+1}}. <a [routerLink]="['/items/' + item._id]"><strong>{{item.name}}</strong></a></h5>
+                      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of buys: {{item.buys}}</p>
+                      <hr>
+                    </div>
+                  </mat-tab>
+
+                  <mat-tab label="Favorited">
+                    <div style="margin: 20px;" *ngFor="let item of itemStats.mostFavs; let i = index">
+                      <h5>{{i+1}}. <a [routerLink]="['/items/' + item._id]"><strong>{{item.name}}</strong></a></h5>
+                      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of favorites: {{item.favs}}</p>
+                      <hr>
+                    </div>
+                  </mat-tab>
+
+                  <mat-tab label="Requested">
+                    <div style="margin: 20px;" *ngFor="let item of itemStats.mostReqs; let i = index">
+                      <h5>{{i+1}}. <a [routerLink]="['/items/' + item._id]"><strong>{{item.name}}</strong></a></h5>
+                      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of pending requests: {{item.reqs}}</p>
+                      <hr>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
               </mat-card>
             </div>
-          </mat-grid-tile>
 
-          <mat-grid-tile>
-            <div style="height: 100%; width: 100%; margin-left: 10px; text-align: center; padding: 0 10px">
-              <mat-card style="margin: 10px 0">
-                <div style="width: 100%; height: 100%">
-                  <p>
-                    <span style="font-size: 40px;"><strong>{{numbers.customers}}</strong></span>
-                    <br/>
-                    <span style="float: right; color: grey">Customers</span>
-                  </p>
-                </div>
+            <div style="width: 100%; height: 100%">
+              <mat-card style="margin-bottom: 20px">
+                <h5>
+                  Top Services
+                </h5>
+
+                <mat-tab-group>
+                  <mat-tab label="Bought">
+                    <div style="margin: 20px;" *ngFor="let service of serviceStats.mostBuys; let i = index">
+                      <h5>{{i+1}}. <a [routerLink]="['/services/' + service._id]"><strong>{{service.name}}</strong></a></h5>
+                      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of buys: {{service.buys}}</p>
+                      <hr>
+                    </div>
+                  </mat-tab>
+
+                  <mat-tab label="Favorited">
+                    <div style="margin: 20px;" *ngFor="let service of serviceStats.mostFavs; let i = index">
+                      <h5>{{i+1}}. <a [routerLink]="['/services/' + service._id]"><strong>{{service.name}}</strong></a></h5>
+                      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of favorites: {{service.favs}}</p>
+                      <hr>
+                    </div>
+                  </mat-tab>
+
+                  <mat-tab label="Requested">
+                    <div style="margin: 20px;" *ngFor="let service of serviceStats.mostReqs; let i = index">
+                      <h5>{{i+1}}. <a [routerLink]="['/services/' + service._id]"><strong>{{service.name}}</strong></a></h5>
+                      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of pending requests: {{service.reqs}}</p>
+                      <hr>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
               </mat-card>
             </div>
-          </mat-grid-tile>
-        </mat-grid-list>
-      </mat-card>
-
-
+          </mat-card-content>
+        </mat-card>
+      </div>
 
       <mat-card style="margin-bottom: 20px">
         <mat-card-title>
@@ -78,309 +352,67 @@
         </mat-card-title>
 
         <mat-card-content>
-          <mat-tab-group>
-            <mat-tab label="Sellers">
-              chart
-            </mat-tab>
-
-            <mat-tab label="Customers">
-              <div>
-                chart
-              </div>
-            </mat-tab>
-
-            <mat-tab label="Items">
-              <div>
-                chart
-              </div>
-            </mat-tab>
-
-            <mat-tab label="Services">
-              <div>
-                chart
-              </div>
-            </mat-tab>
-          </mat-tab-group>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card style="margin-bottom: 20px">
-        <mat-card-title>
-          Top Rated
-        </mat-card-title>
-
-        <mat-card-content>
-          <mat-tab-group>
-            <mat-tab label="Sellers">
-              <div style="margin: 20px;" *ngFor="let seller of topRated.sellers; let i = index">
-                <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
-                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rating: {{seller.avgRating}}</p>
-                <hr>
-              </div>
-            </mat-tab>
-
-            <mat-tab label="Items">
-              <div style="margin: 20px;" *ngFor="let item of topRated.items; let i = index">
-                <h5>{{i+1}}. <a [routerLink]="['/items/' + item._id]"><strong>{{item.name}}</strong></a></h5>
-                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rating: {{item.avgRating}}</p>
-                <hr>
-              </div>
-            </mat-tab>
-
-            <mat-tab label="Services">
-              <div style="margin: 20px;" *ngFor="let service of topRated.services; let i = index">
-                <h5>{{i+1}}. <a [routerLink]="['/services/' + service._id]"><strong>{{service.name}}</strong></a></h5>
-                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rating: {{service.avgRating}}</p>
-                <hr>
-              </div>
-            </mat-tab>
-          </mat-tab-group>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card style="margin-bottom: 20px">
-        <mat-card-title>
-          Top Users
-        </mat-card-title>
-
-        <mat-card-content>
-          <div style="width: 100%; height: 100%">
-            <mat-card style="margin-bottom: 20px">
-              <h5>
-                Top Sellers
-              </h5>
-
-              <mat-tab-group>
-                <mat-tab label="Selling">
-                  <mat-tab-group>
-                    <mat-tab label="Items">
-                      <div style="margin: 20px;" *ngFor="let seller of sellerStats.selling.items; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Items for sale: {{seller.totItems}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-
-                    <mat-tab label="Services">
-                      <div style="margin: 20px;" *ngFor="let seller of sellerStats.selling.items; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Services for sale: {{seller.totItems}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-                  </mat-tab-group>
-                </mat-tab>
-
-                <mat-tab label="Sold">
-                  <mat-tab-group>
-                    <mat-tab label="Items">
-                      <div style="margin: 20px;" *ngFor="let seller of sellerStats.buys.items; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Items sold: {{seller.buys}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-
-                    <mat-tab label="Services">
-                      <div style="margin: 20px;" *ngFor="let seller of sellerStats.buys.services; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Services sold: {{seller.buys}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-                  </mat-tab-group>
-                </mat-tab>
-
-                <mat-tab label="Requests">
-                  <mat-tab-group>
-                    <mat-tab label="Items">
-                      <div style="margin: 20px;" *ngFor="let seller of sellerStats.reqs.items; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pending requests for items: {{seller.reqs}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-
-                    <mat-tab label="Services">
-                      <div style="margin: 20px;" *ngFor="let seller of sellerStats.reqs.services; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pending requests for services: {{seller.reqs}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-                  </mat-tab-group>
-                </mat-tab>
-
-                <mat-tab label="Favorites">
-                  <mat-tab-group>
-                    <mat-tab label="Items">
-                      <div style="margin: 20px;" *ngFor="let seller of sellerStats.favs.items; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Favorited items: {{seller.favs}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-
-                    <mat-tab label="Services">
-                      <div style="margin: 20px;" *ngFor="let seller of sellerStats.favs.services; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/seller/' + seller._id]"><strong>{{seller.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Favorited services: {{seller.favs}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-                  </mat-tab-group>
-                </mat-tab>
-              </mat-tab-group>
-            </mat-card>
-          </div>
-
-          <div style="width: 100%; height: 100%">
-            <mat-card>
-              <h5>
-                Top Customers
-              </h5>
-
-              <mat-tab-group>
-                <mat-tab label="Buys">
-                  <mat-tab-group>
-                    <mat-tab label="Items">
-                      <div style="margin: 20px;" *ngFor="let customer of customerStats.bought.items; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/customer/' + customer._id]"><strong>{{customer.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Items bought: {{customer.boughtItems}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-
-                    <mat-tab label="Services">
-                      <div style="margin: 20px;" *ngFor="let customer of customerStats.bought.services; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/customer/' + customer._id]"><strong>{{customer.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Services bought: {{customer.boughtServices}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-                  </mat-tab-group>
-                </mat-tab>
-
-                <mat-tab label="Requests">
-                  <mat-tab-group>
-                    <mat-tab label="Items">
-                      <div style="margin: 20px;" *ngFor="let customer of customerStats.req.items; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/customer/' + customer._id]"><strong>{{customer.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pending requests for items: {{customer.reqItems}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-
-                    <mat-tab label="Services">
-                      <div style="margin: 20px;" *ngFor="let customer of customerStats.req.services; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/customer/' + customer._id]"><strong>{{customer.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pending requests for services: {{customer.reqServices}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-                  </mat-tab-group>
-                </mat-tab>
-
-                <mat-tab label="Favorites">
-                  <mat-tab-group>
-                    <mat-tab label="Items">
-                      <div style="margin: 20px;" *ngFor="let customer of customerStats.fav.items; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/customer/' + customer._id]"><strong>{{customer.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Favorited items: {{customer.favItems}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-
-                    <mat-tab label="Services">
-                      <div style="margin: 20px;" *ngFor="let customer of customerStats.fav.services; let i = index">
-                        <h5>{{i+1}}. <a [routerLink]="['/users/customer/' + customer._id]"><strong>{{customer.username}}</strong></a></h5>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Favorited services: {{customer.favServices}}</p>
-                        <hr>
-                      </div>
-                    </mat-tab>
-                  </mat-tab-group>
-                </mat-tab>
-              </mat-tab-group>
-            </mat-card>
-          </div>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card>
-        <mat-card-title>
-          Top Sales
-        </mat-card-title>
-
-        <mat-card-content>
-          <div style="width: 100%; height: 100%">
-            <mat-card style="margin-bottom: 20px">
-              <h5>
-                Top Items
-              </h5>
-
-              <mat-tab-group>
-                <mat-tab label="Bought">
-                  <div style="margin: 20px;" *ngFor="let item of itemStats.mostBuys; let i = index">
-                    <h5>{{i+1}}. <a [routerLink]="['/items/' + item._id]"><strong>{{item.name}}</strong></a></h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of buys: {{item.buys}}</p>
-                    <hr>
+          <mat-grid-list cols="1" rowHeight="500px">
+            <mat-grid-tile>
+              <div style="width: 100%; height: 100%;">
+                <mat-card style="margin: 10px">
+                  <div>
+                    <canvas id="sellerCanvas">{{sellerChart}}</canvas>
                   </div>
-                </mat-tab>
 
-                <mat-tab label="Favorited">
-                  <div style="margin: 20px;" *ngFor="let item of itemStats.mostFavs; let i = index">
-                    <h5>{{i+1}}. <a [routerLink]="['/items/' + item._id]"><strong>{{item.name}}</strong></a></h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of favorites: {{item.favs}}</p>
-                    <hr>
+                  <div style="width: 100%; text-align: center; margin-top: 10px">
+                    <strong>Seller Registrations</strong>
                   </div>
-                </mat-tab>
+                </mat-card>
+              </div>
+            </mat-grid-tile>
 
-                <mat-tab label="Requested">
-                  <div style="margin: 20px;" *ngFor="let item of itemStats.mostReqs; let i = index">
-                    <h5>{{i+1}}. <a [routerLink]="['/items/' + item._id]"><strong>{{item.name}}</strong></a></h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of pending requests: {{item.reqs}}</p>
-                    <hr>
+            <mat-grid-tile>
+              <div style="width: 100%; height: 100%;">
+                <mat-card style="margin: 10px">
+                  <div>
+                    <canvas id="customerCanvas">{{customerChart}}</canvas>
                   </div>
-                </mat-tab>
-              </mat-tab-group>
-            </mat-card>
-          </div>
 
-          <div style="width: 100%; height: 100%">
-            <mat-card style="margin-bottom: 20px">
-              <h5>
-                Top Services
-              </h5>
-
-              <mat-tab-group>
-                <mat-tab label="Bought">
-                  <div style="margin: 20px;" *ngFor="let service of serviceStats.mostBuys; let i = index">
-                    <h5>{{i+1}}. <a [routerLink]="['/services/' + service._id]"><strong>{{service.name}}</strong></a></h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of buys: {{service.buys}}</p>
-                    <hr>
+                  <div style="width: 100%; text-align: center; margin-top: 10px">
+                    <strong>Customer Registrations</strong>
                   </div>
-                </mat-tab>
+                </mat-card>
+              </div>
+            </mat-grid-tile>
 
-                <mat-tab label="Favorited">
-                  <div style="margin: 20px;" *ngFor="let service of serviceStats.mostFavs; let i = index">
-                    <h5>{{i+1}}. <a [routerLink]="['/services/' + service._id]"><strong>{{service.name}}</strong></a></h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of favorites: {{service.favs}}</p>
-                    <hr>
+            <mat-grid-tile>
+              <div style="width: 100%; height: 100%;">
+                <mat-card style="margin: 10px">
+                  <div>
+                    <canvas id="itemCanvas">{{itemChart}}</canvas>
                   </div>
-                </mat-tab>
 
-                <mat-tab label="Requested">
-                  <div style="margin: 20px;" *ngFor="let service of serviceStats.mostReqs; let i = index">
-                    <h5>{{i+1}}. <a [routerLink]="['/services/' + service._id]"><strong>{{service.name}}</strong></a></h5>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of pending requests: {{service.reqs}}</p>
-                    <hr>
+                  <div style="width: 100%; text-align: center; margin-top: 10px">
+                    <strong>Item Additions</strong>
                   </div>
-                </mat-tab>
-              </mat-tab-group>
-            </mat-card>
-          </div>
+                </mat-card>
+              </div>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <div style="width: 100%; height: 100%;">
+                <mat-card style="margin: 10px">
+                  <div>
+                    <canvas id="serviceCanvas">{{serviceChart}}</canvas>
+                  </div>
+
+                  <div style="width: 100%; text-align: center; margin-top: 10px">
+                    <strong>Service Additions</strong>
+                  </div>
+                </mat-card>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
         </mat-card-content>
       </mat-card>
     </mat-card>
   </div>
 </div>
+
+

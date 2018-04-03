@@ -31,7 +31,6 @@ function getTopNum(array, num, key) {
 
 function getDate(timestamp) {
     let date = {};
-
     let dateToFormat = new Date(parseInt(timestamp.replace(timestamp.substring(10), '000')));
     let dateArray = (dateToFormat.toString().split(" ").slice(1, 4));
 

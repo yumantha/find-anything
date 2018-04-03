@@ -24,6 +24,28 @@ export class AdminDashboardComponent implements OnInit {
   itemChart: any;
   serviceChart: any;
 
+  monthList: Array<String> = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+  startYear: String = "2018";
+  sellerDateCount: Array<any> = [];
+  customerDateCount: Array<any> = [];
+  itemDateCount: Array<any> = [];
+  serviceDateCount: Array<any> = [];
+  currentYear: String = (new Date(Date.now())).toString().split(" ")[3];
+  currentMonth: String = (new Date(Date.now())).toString().split(" ")[1];
+
   constructor(
     private adminService: AdminService,
     private flashMessagesService: FlashMessagesService
@@ -45,7 +67,13 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(data => {
         if(data.success) {
           this.times = data.stats;
+          this.createDates(this.sellerDateCount);
+          this.createDates(this.customerDateCount);
+          this.createDates(this.itemDateCount);
+          this.createDates(this.serviceDateCount);
+          // console.log(this.times);
           this.times = this.prepareTime();
+          // console.log(this.times);
           this.dataLoaded();
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
@@ -127,11 +155,11 @@ export class AdminDashboardComponent implements OnInit {
   dataLoaded() {
     if(this.numbers && this.times && this.topRated && this.sellerStats && this.customerStats && this.itemStats && this.serviceStats) {
       this.loaded = true;
-      this.sellerChart = this.drawChart();
 
-      console.log(this.sellerChart);
-
-      this.enterChartData(this.sellerChart, this.times.sellers, 'Sellers');
+      this.sellerChart = this.drawChart('sellerCanvas', this.times.sellers, 'Seller');
+      this.customerChart = this.drawChart('customerCanvas', this.times.customers, 'Customer');
+      this.itemChart = this.drawChart('itemCanvas', this.times.items, 'Items');
+      this.serviceChart = this.drawChart('serviceCanvas', this.times.services, 'Services');
     }
   }
 
@@ -143,95 +171,55 @@ export class AdminDashboardComponent implements OnInit {
       services: []
     };
 
-    let sellers = [];
-    let customers = [];
-    let items = [];
-    let services = [];
+    let sellers = this.sellerDateCount;
+    let customers = this.customerDateCount;
+    let items = this.itemDateCount;
+    let services = this.serviceDateCount;
 
     if(this.times.users.sellers.length > 0) {
-      sellers = [
-        {
-          date: this.times.users.sellers[0].year + ' ' + this.times.users.sellers[0].month,
-          count: 1
-        }
-      ];
+      for(let i=0; i<this.times.users.sellers.length; i++) {
+        let dateToCompare = this.times.users.sellers[i].year + " " + this.times.users.sellers[i].month;
 
-      for(let i=1; i<this.times.users.sellers.length; i++) {
-        const dateMonth = this.times.users.sellers[i].year + ' ' + this.times.users.sellers[i].month;
-
-        if((this.times.users.sellers[i].year === this.times.users.sellers[i-1].year) && (this.times.users.sellers[i].month) === this.times.users.sellers[i-1].month) {
-          sellers[sellers.length-1].count++;
-        } else {
-          sellers.push({
-            date: dateMonth,
-            count: 1
-          })
+        for(let j=0; j<sellers.length; j++) {
+          if(dateToCompare === sellers[j].date) {
+            sellers[j].count++;
+          }
         }
       }
     }
 
     if(this.times.users.customers.length > 0) {
-      customers = [
-        {
-          date: this.times.users.customers[0].year + ' ' + this.times.users.customers[0].month,
-          count: 1
-        }
-      ];
+      for(let i=0; i<this.times.users.customers.length; i++) {
+        let dateToCompare = this.times.users.customers[i].year + " " + this.times.users.customers[i].month;
 
-      for(let i=1; i<this.times.users.customers.length; i++) {
-        const dateMonth = this.times.users.customers[i].year + ' ' + this.times.users.customers[i].month;
-
-        if((this.times.users.customers[i].year === this.times.users.customers[i-1].year) && (this.times.users.customers[i].month) === this.times.users.customers[i-1].month) {
-          customers[customers.length-1].count++;
-        } else {
-          customers.push({
-            date: dateMonth,
-            count: 1
-          })
+        for(let j=0; j<customers.length; j++) {
+          if(dateToCompare === customers[j].date) {
+            customers[j].count++;
+          }
         }
       }
     }
 
     if(this.times.sales.items.length > 0) {
-      items = [
-        {
-          date: this.times.sales.items[0].year + ' ' + this.times.sales.items[0].month,
-          count: 1
-        }
-      ];
+      for(let i=0; i<this.times.sales.items.length; i++) {
+        let dateToCompare = this.times.sales.items[i].year + " " + this.times.sales.items[i].month;
 
-      for(let i=1; i<this.times.sales.items.length; i++) {
-        const dateMonth = this.times.sales.items[i].year + ' ' + this.times.sales.items[i].month;
-
-        if((this.times.sales.items[i].year === this.times.sales.items[i-1].year) && (this.times.sales.items[i].month) === this.times.sales.items[i-1].month) {
-          items[items.length-1].count++;
-        } else {
-          items.push({
-            date: dateMonth,
-            count: 1
-          })
+        for(let j=0; j<items.length; j++) {
+          if(dateToCompare === items[j].date) {
+            items[j].count++;
+          }
         }
       }
     }
 
     if(this.times.sales.services.length > 0) {
-      services = [
-        {
-          date: this.times.sales.services[0].year + ' ' + this.times.sales.services[0].month,
-          count: 1
-        }
-      ];
+      for(let i=0; i<this.times.sales.services.length; i++) {
+        let dateToCompare = this.times.sales.services[i].year + " " + this.times.sales.services[i].month;
 
-      for(let i=1; i<this.times.sales.services.length; i++) {
-        const dateMonth = this.times.sales.services[i].year + ' ' + this.times.sales.services[i].month;
-
-        if((this.times.sales.services[i].year === this.times.sales.services[i-1].year) && (this.times.sales.services[i].month) === this.times.sales.services[i-1].month) {
-          services[services.length-1].count++;
-        } else {
-          services.push({
-            date: dateMonth,
-            count: 1
-          })
+        for(let j=0; j<services.length; j++) {
+          if(dateToCompare === services[j].date) {
+            services[j].count++;
+          }
         }
       }
     }
@@ -244,13 +232,36 @@ export class AdminDashboardComponent implements OnInit {
     return returnObj;
   }
 
-  drawChart() {
-    return new Chart('canvas', {
+  createDates(array) {
+    let i = 0;
+    let year = this.startYear;
+
+    while(true) {
+      array.push({
+        date: year + " " + this.monthList[i],
+        count: 0
+      });
+
+      if((this.currentYear === year) && (this.currentMonth) === this.monthList[i]) {
+        break;
+      }
+
+      i++;
+
+      if(i === 12) {
+        i = 0;
+        year = (parseInt(year.toString()) + 1).toString();
+      }
+    }
+  }
+
+  drawChart(ctx, data, name) {
+    let chart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: [],
         datasets: [{
-          label: '',
+          // label: '',
           data: [],
           backgroundColor: [
             'rgba(255, 255, 255, 0)'
@@ -262,6 +273,9 @@ export class AdminDashboardComponent implements OnInit {
         }]
       },
       options: {
+        legend: {
+          display: false
+        },
         scales: {
           yAxes: [{
             ticks: {
@@ -271,6 +285,10 @@ export class AdminDashboardComponent implements OnInit {
         }
       }
     });
+
+    this.enterChartData(chart, data, name);
+
+    return chart;
   }
 
   enterChartData(chart, data, name) {
@@ -279,6 +297,8 @@ export class AdminDashboardComponent implements OnInit {
     data.forEach((element) => {
       chart.data.labels.push(element.date);
       chart.data.datasets[0].data.push(element.count);
-    })
+    });
+
+    chart.update();
   }
 }
