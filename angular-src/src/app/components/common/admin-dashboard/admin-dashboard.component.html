@@ -1,9 +1,14 @@
+<div>
+  <canvas id="canvas">{{sellerChart}}</canvas>
+</div>
+
 <div class="container">
   <div *ngIf="!loaded" style="margin: 20px auto">
     <mat-progress-spinner color="primary" mode="indeterminate" style="margin:0 auto;"></mat-progress-spinner>
   </div>
 
   <div *ngIf="loaded">
+  <!--<div>-->
     <mat-card style="margin: 10px 0">
       <mat-card style="margin-bottom: 20px">
         <mat-grid-list cols="4" rowHeight="150px">
@@ -66,6 +71,7 @@
       </mat-card>
 
 
+
       <mat-card style="margin-bottom: 20px">
         <mat-card-title>
           Statistics on New Additions
@@ -73,6 +79,16 @@
 
         <mat-card-content>
           <mat-tab-group>
+            <mat-tab label="Sellers">
+              chart
+            </mat-tab>
+
+            <mat-tab label="Customers">
+              <div>
+                chart
+              </div>
+            </mat-tab>
+
             <mat-tab label="Items">
               <div>
                 chart
@@ -80,18 +96,6 @@
             </mat-tab>
 
             <mat-tab label="Services">
-              <div>
-                chart
-              </div>
-            </mat-tab>
-
-            <mat-tab label="Sellers">
-              <div>
-                chart
-              </div>
-            </mat-tab>
-
-            <mat-tab label="Customers">
               <div>
                 chart
               </div>

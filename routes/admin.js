@@ -5,8 +5,6 @@ const Seller = require('../models/users/seller');
 const Customer = require('../models/users/customer');
 const Item = require('../models/sales/item');
 const Service = require('../models/sales/service');
-const Review = require('../models/others/review');
-const Request = require('../models/others/request');
 
 function sortByKey(array, key) {
     return array.sort(function(a, b) {
@@ -414,6 +412,8 @@ router.get('/getstats/times', (req, res, next) => {
         if(error) {
             return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
         } else {
+            sortByKey(itemTimes, 'timestamp');
+
             itemTimes.forEach((time, index, array) => {
                 array[index] = getDate(time.timestamp);
             });
@@ -424,6 +424,8 @@ router.get('/getstats/times', (req, res, next) => {
                 if(error) {
                     return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                 } else {
+                    sortByKey(serviceTimes, 'timestamp');
+
                     serviceTimes.forEach((time, index, array) => {
                         array[index] = getDate(time.timestamp);
                     });
@@ -437,6 +439,8 @@ router.get('/getstats/times', (req, res, next) => {
                         if(error) {
                             return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                         } else {
+                            sortByKey(sellerTimes, 'timestamp');
+
                             sellerTimes.forEach((time, index, array) => {
                                 array[index] = getDate(time.timestamp);
                             });
@@ -447,6 +451,8 @@ router.get('/getstats/times', (req, res, next) => {
                                 if(error) {
                                     return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
                                 } else {
+                                    sortByKey(customerTimes, 'timestamp');
+
                                     customerTimes.forEach((time, index, array) => {
                                         array[index] = getDate(time.timestamp);
                                     });
