@@ -49,6 +49,7 @@ import {RequestService} from './services/requests/request.service';
 import {AdminService} from './services/admin/admin.service';
 
 import {AuthGuard} from "./guards/auth.guard";
+import { ImageService } from './services/image/image.service';
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
@@ -131,7 +132,8 @@ const appRoutes = [
     ReviewService,
     NotificationsService,
     RequestService,
-    AdminService
+    AdminService,
+    ImageService
   ],
   bootstrap: [
     AppComponent

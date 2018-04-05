@@ -1,3 +1,30 @@
-<p>
-  home works!
-</p>
+<!--<p>-->
+  <!--home works!-->
+<!--</p>-->
+
+<div class="container" style="text-align: center">
+  <div class="custom-file" id="customFile" lang="es" style="margin: 25px; width: 50%" >
+
+
+    <form (submit)="submitFile()" enctype="multipart/form-data">
+      <input
+        ngModel
+        (change)="getFile($event)"
+        type="file"
+        name="file"
+        id="file"
+        accept="image/jpeg, image/png"
+        class="custom-file-input"
+      >
+      <label class="custom-file-label" for="file">
+        Select file...
+      </label>
+      <button mat-raised-button color="primary">Submit</button>
+    </form>
+
+
+
+
+
+  </div>
+</div>
