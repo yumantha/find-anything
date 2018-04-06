@@ -25,6 +25,12 @@ export class ProfileComponent implements OnInit {
   reqServicesList: any[] = [];
   reviews: any[] = [];
 
+  imageId: String;
+  imageUrl: String = 'http://localhost:3000/images/' + this.imageId;
+  showImageButtons: Boolean = false;
+  fileSelec: Boolean = false;
+  files : FileList;
+
   constructor(
     private authService: AuthService,
     private itemService: ItemService,
@@ -158,5 +164,29 @@ export class ProfileComponent implements OnInit {
           }
         }
       });
+  }
+
+  mouseenter() {
+    this.showImageButtons = true;
+  }
+
+  mouseleave() {
+    this.showImageButtons = false;
+  }
+
+  getFiles(event){
+    this.files = event.target.files;
+  }
+
+  addImage() {
+    console.log('add');
+  }
+
+  editImage() {
+    console.log('edit');
+  }
+
+  deleteImage() {
+    console.log('delete');
   }
 }

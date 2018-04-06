@@ -1,8 +1,31 @@
 <div class="container">
   <div *ngIf="user">
-    <mat-grid-list cols="8">
-      <mat-grid-tile colspan="1">
-        <img src="https://www.bighandi.com/img/profile-demo.png" id="profPic">
+    <mat-grid-list cols="8" rowHeight="175px">
+      <mat-grid-tile colspan="1" (mouseenter)="mouseenter()" (mouseleave)="mouseleave()">
+        <div *ngIf="!user.image" style="width: 100%; height: 100%;">
+          <img src="https://www.bighandi.com/img/profile-demo.png" class="profPic">
+
+          <div style="width: 100%; text-align: center; margin-bottom: 0" [hidden]="!showImageButtons">
+              <span matTooltip="Add a profile pic" matTooltipPosition="below">
+                <button mat-icon-button color="primary"><mat-icon>add_circle_outline</mat-icon></button>
+              </span>
+          </div>
+        </div>
+
+        <div *ngIf="user.image">
+          <img [src]="imageUrl" class="profPic">
+          <!--<img src="https://www.bighandi.com/img/profile-demo.png" class="profPic">-->
+
+          <div style="width: 100%; text-align: center; margin-bottom: 0" [hidden]="!showImageButtons">
+            <span matTooltip="Edit profile pic" matTooltipPosition="below">
+              <button mat-icon-button color="primary" (click)="editImage()"><mat-icon>edit</mat-icon></button>
+            </span>
+
+            <span matTooltip="Delete profile pic" matTooltipPosition="below">
+              <button mat-icon-button color="warn" (click)="deleteImage()"><mat-icon>delete</mat-icon></button>
+            </span>
+          </div>
+        </div>
       </mat-grid-tile>
 
       <mat-grid-tile colspan="6">

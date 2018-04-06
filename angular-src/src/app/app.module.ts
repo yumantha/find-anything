@@ -8,6 +8,7 @@ import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {RouterModule} from "@angular/router";
 import {FlashMessagesModule} from "angular2-flash-messages";
+import {HttpClientModule} from "@angular/common/http";
 
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './components/common/header/header.component';
@@ -47,9 +48,9 @@ import {ReviewService} from './services/reviews/review.service';
 import {NotificationsService} from './services/notifications/notifications.service';
 import {RequestService} from './services/requests/request.service';
 import {AdminService} from './services/admin/admin.service';
+import {ImageService} from './services/image/image.service';
 
 import {AuthGuard} from "./guards/auth.guard";
-import { ImageService } from './services/image/image.service';
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
@@ -110,6 +111,7 @@ const appRoutes = [
     FlexLayoutModule,
     FormsModule,
     HttpModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes, {onSameUrlNavigation: 'reload'}),
     FlashMessagesModule.forRoot()
   ],

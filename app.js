@@ -6,17 +6,6 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 
-
-
-const crypto = require('crypto');
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
-
-
-
-
-
 // connect to database
 mongoose.connect(config.database);
 
@@ -31,35 +20,6 @@ mongoose.connection.on('error', (err)=>{
 });
 
 const app = express();
-
-//initialize gfs
-let gfs;
-mongoose.connection.once('open', () => {
-    gfs = Grid(mongoose.connection.db, mongoose.mongo);
-    gfs.collection('images');
-});
-
-// //create storage engine
-// const storage = new GridFsStorage({
-//     url: config.database,
-//     file: (req, file) => {
-//         return new Promise((resolve, reject) => {
-//             crypto.randomBytes(16, (error, buff) => {
-//                 if(error) {
-//                     return reject(error);
-//                 }
-//                 const filename = buff.toString('hex') + path.extname(file.originalname);
-//                 const fileInfo = {
-//                     filename: filename,
-//                     bucketName: 'images'
-//                 };
-//                 resolve(fileInfo);
-//             });
-//         });
-//     }
-// });
-//
-// const upload = multer({storage});
 
 const users = require('./routes/users');
 const items = require('./routes/items');

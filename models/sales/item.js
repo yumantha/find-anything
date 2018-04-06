@@ -60,6 +60,9 @@ const ItemSchema = mongoose.Schema({
     timestamp: {
         type: String,
         required: true
+    },
+    image: {
+        type: mongoose.Schema.Types.ObjectId
     }
 });
 

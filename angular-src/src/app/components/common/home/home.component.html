@@ -4,12 +4,10 @@
 
 <div class="container" style="text-align: center">
   <div class="custom-file" id="customFile" lang="es" style="margin: 25px; width: 50%" >
-
-
-    <form (submit)="submitFile()" enctype="multipart/form-data">
+    <form #form (submit)="submitFile()" enctype="multipart/form-data">
       <input
         ngModel
-        (change)="getFile($event)"
+        (change)="getFiles($event)"
         type="file"
         name="file"
         id="file"
@@ -17,14 +15,17 @@
         class="custom-file-input"
       >
       <label class="custom-file-label" for="file">
-        Select file...
+        <mat-icon>add</mat-icon>
       </label>
-      <button mat-raised-button color="primary">Submit</button>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
     </form>
 
+    <form (submit)="getFile()">
+      <button mat-raised-button color="primary" type="submit">Get</button>
+    </form>
 
-
-
-
+    <div>
+      <img [src]="imageUrl" alt="">
+    </div>
   </div>
 </div>
