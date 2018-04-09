@@ -61,7 +61,8 @@ router.get('/:query', (req, res, next)=>{
                     price: item.price,
                     district: item.district,
                     id: item._id,
-                    avgRating: item.avgRating
+                    avgRating: item.avgRating,
+                    image: item.image
                 });
             });
         }
@@ -80,7 +81,8 @@ router.get('/:query', (req, res, next)=>{
                         price: service.price,
                         district: service.district,
                         id: service._id,
-                        avgRating: service.avgRating
+                        avgRating: service.avgRating,
+                        image: service.image
                     });
                 });
             }

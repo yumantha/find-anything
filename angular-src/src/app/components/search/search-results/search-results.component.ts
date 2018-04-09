@@ -88,6 +88,7 @@ export class SearchResultsComponent implements OnInit {
             this.resultsAvailable = true;
             data.results.forEach((result) => {
               this.resultsArray.push(result);
+              console.log(result);
             });
           }
         } else {

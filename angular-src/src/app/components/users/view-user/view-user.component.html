@@ -2,7 +2,8 @@
   <div *ngIf="user">
     <mat-grid-list cols="8">
       <mat-grid-tile colspan="1">
-        <img src="https://www.bighandi.com/img/profile-demo.png" id="profPic">
+        <img *ngIf="!user.image" src="https://www.bighandi.com/img/profile-demo.png" class="profPic">
+        <img *ngIf="user.image" [src]="'http://localhost:3000/images/' + user.image" class="profPic">
       </mat-grid-tile>
 
       <mat-grid-tile colspan="6">
@@ -111,7 +112,13 @@
           <mat-grid-list cols="4" rowHeight="450px">
             <mat-grid-tile *ngFor="let item of this.sellingItemsList">
               <mat-card style="margin: 10px; text-align: center">
-                <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" style="padding: 5px">
+                <div *ngIf="!item.image">
+                  <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" style="padding: 5px">
+                </div>
+
+                <div *ngIf="item.image">
+                  <img mat-card-image [src]="'http://localhost:3000/images/' + item.image" style="padding: 5px">
+                </div>
                 <mat-card-header>
                   <div style="width: 100%; margin-left: -15px">
                     <mat-card-title><strong>{{item.name}}</strong></mat-card-title>
@@ -134,7 +141,13 @@
           <mat-grid-list cols="4" rowHeight="400px">
             <mat-grid-tile *ngFor="let service of this.sellingServicesList">
               <mat-card style="margin: 10px; text-align: center">
-                <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px">
+                <div *ngIf="!service.image">
+                  <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px">
+                </div>
+
+                <div *ngIf="service.image">
+                  <img mat-card-image [src]="'http://localhost:3000/images/' + service.image" style="padding: 5px">
+                </div>
                 <mat-card-header>
                   <div style="width: 100%; margin-left: -15px">
                     <mat-card-title><strong>{{service.name}}</strong></mat-card-title>

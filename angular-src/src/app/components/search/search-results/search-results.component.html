@@ -107,11 +107,20 @@
     <mat-card style="width: 100%; margin-bottom: 5px" *ngFor="let result of resultsArray">
       <mat-grid-list cols="8" rowHeight="40px">
         <mat-grid-tile colspan="2" rowspan="4">
-          <div style="width: 100%; height: 100%;" *ngIf="result.type==='item'">
-            <img src="http://myarenaonline.com/screen/demos/demo_item.png" style="width: 100%">
+          <div *ngIf="!result.image">
+            <div style="width: 100%; height: 100%;" *ngIf="result.type==='item'">
+              <img src="http://myarenaonline.com/screen/demos/demo_item.png" style="width: 100%">
+            </div>
+
+            <div style="width: 100%; height: 100%" *ngIf="result.type==='service'">
+              <img src="https://valuebound.com/sites/default/files/2016-04/how-to-define-your-own-services-drupal-8.jpeg">
+            </div>
           </div>
-          <div style="width: 100%; height: 100%" *ngIf="result.type==='service'">
-            <img src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx">
+
+          <div *ngIf="result.image">
+            <div style="width: 100%; height: 100%">
+              <img mat-card-image [src]="'http://localhost:3000/images/' + result.image" style="width: 100%">
+            </div>
           </div>
         </mat-grid-tile>
 
