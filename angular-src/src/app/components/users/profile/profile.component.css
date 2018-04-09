@@ -37,3 +37,7 @@ button {
 mat-grid-tile {
   overflow: visible;
 }
+
+.custom-file-input ~ .custom-file-label::after {
+  content: "Browse";
+}

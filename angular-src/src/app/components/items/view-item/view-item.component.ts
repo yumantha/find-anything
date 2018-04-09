@@ -10,6 +10,7 @@ import {AddReviewDialog} from "./add-review/add-review.component";
 import {AuthService} from "../../../services/authenticate/auth.service";
 import {ReviewService} from "../../../services/reviews/review.service";
 import {RequestService} from "../../../services/requests/request.service";
+import {ImageService} from "../../../services/image/image.service";
 
 @Component({
   selector: 'app-view-item',
@@ -28,16 +29,23 @@ export class ViewItemComponent implements OnInit {
   isOwner: Boolean = false;
   isFav: Boolean = false;
   isReq: Boolean = false;
+
   reviewsAvailable: Boolean = false;
   reviewAdded: Boolean = false;
-
   reviews: any[] = [];
+
+  imageUrl: String;
+  showImageButtons: Boolean = false;
+  files : FileList;
+  showUploadForm: Boolean = false;
+  showEditForm: Boolean = false;
 
   constructor(
     private itemService: ItemService,
     private authService: AuthService,
     private reviewService: ReviewService,
     private requestService: RequestService,
+    private imageService: ImageService,
     private router: Router,
     private flashMessagesService: FlashMessagesService,
     private dialog: MatDialog
@@ -51,6 +59,10 @@ export class ViewItemComponent implements OnInit {
           this.seller = data.seller;
           this.dataAvailable = true;
           this.sellerProfile = '/users/seller/' + data.item.seller;
+
+          if(this.item.image) {
+            this.imageUrl = 'http://localhost:3000/images/' + this.item.image;
+          }
 
           if(data.item.seller == localStorage.getItem('user_id')) {
             this.isOwner = true;
@@ -292,5 +304,130 @@ export class ViewItemComponent implements OnInit {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         }
       })
+  }
+
+  mouseenter() {
+    if(this.isOwner) {
+      this.showImageButtons = true;
+    }
+  }
+
+  mouseleave() {
+    if(this.isOwner) {
+      this.showImageButtons = false;
+    }
+  }
+
+  getFiles(event){
+    this.files = event.target.files;
+  }
+
+  toggleUploadForm() {
+    if(this.isOwner) {
+      this.showUploadForm = !this.showUploadForm;
+    }
+  }
+
+  toggleEditForm() {
+    if(this.isOwner) {
+      this.showEditForm = !this.showEditForm;
+    }
+  }
+
+  addImage() {
+    if(!this.isOwner) {
+      return this.flashMessagesService.show("You do not own this item", {cssClass: 'alert-danger', timeout: 5000});
+    }
+
+    if(!this.files) {
+      this.flashMessagesService.show("Please select an image to upload", {cssClass: 'alert-danger', timeout: 5000});
+      return false;
+    } else {
+      if(this.files.length !== 1) {
+        this.flashMessagesService.show("Please select a single image to upload", {cssClass: 'alert-danger', timeout: 5000});
+        return false;
+      } else {
+        this.imageService.uploadImage(this.files[0])
+          .subscribe(data => {
+            if(data.success) {
+              this.imageService.updateInfo('item', this.item._id)
+                .subscribe(data2 => {
+                  if(data2.success) {
+                    this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
+                    window.location.reload();
+                    return true;
+                  } else {
+                    this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+                    return false;
+                  }
+                });
+            } else {
+              this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+              return false;
+            }
+          })
+      }
+    }
+  }
+
+  editImage() {
+    if(!this.isOwner) {
+      return this.flashMessagesService.show("You do not own this item", {cssClass: 'alert-danger', timeout: 5000});
+    }
+
+    if(!this.files) {
+      this.flashMessagesService.show("Please select an image to upload", {cssClass: 'alert-danger', timeout: 5000});
+      return false;
+    } else {
+      if(this.files.length !== 1) {
+        this.flashMessagesService.show("Please select a single image to upload", {cssClass: 'alert-danger', timeout: 5000});
+        return false;
+      } else {
+        this.imageService.deleteImage(this.item.image, 'item', this.item._id)
+          .subscribe(data => {
+            if(data.success) {
+              this.imageService.uploadImage(this.files[0])
+                .subscribe(data => {
+                  if(data.success) {
+                    this.imageService.updateInfo('item', this.item._id)
+                      .subscribe(data2 => {
+                        if(data2.success) {
+                          this.flashMessagesService.show("Image successfully updated", {cssClass: 'alert-success', timeout: 5000});
+                          window.location.reload();
+                          return true;
+                        } else {
+                          this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+                          return false;
+                        }
+                      });
+                  } else {
+                    this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+                    return false;
+                  }
+                })
+            } else {
+              this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+              return false;
+            }
+          });
+      }}
+  }
+
+  deleteImage() {
+    if(!this.isOwner) {
+      return this.flashMessagesService.show("You do not own this item", {cssClass: 'alert-danger', timeout: 5000});
+    }
+
+    this.imageService.deleteImage(this.item.image, 'item', this.item._id)
+      .subscribe(data => {
+        if(data.success) {
+          this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
+          window.location.reload();
+          return true;
+        } else {
+          this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          return false;
+        }
+      });
   }
 }

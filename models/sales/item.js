@@ -62,7 +62,7 @@ const ItemSchema = mongoose.Schema({
         required: true
     },
     image: {
-        type: mongoose.Schema.Types.ObjectId
+        type: String
     }
 });
 
@@ -223,4 +223,24 @@ module.exports.getTimes = function(callback) {
 
 module.exports.getNumber = function(callback) {
     Item.count(callback);
+};
+
+module.exports.changeImage = function(id, image, callback) {
+    Item.findByIdAndUpdate(id,
+        {
+            $set: {
+                image: image
+            }
+        },
+        callback);
+};
+
+module.exports.deleteImage = function(id, callback) {
+    Item.findByIdAndUpdate(id,
+        {
+            $unset: {
+                image: 1
+            }
+        },
+        callback);
 };

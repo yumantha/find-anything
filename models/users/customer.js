@@ -83,7 +83,7 @@ const CustomerSchema = mongoose.Schema({
         required: true
     },
     image: {
-        type: mongoose.Schema.Types.ObjectId
+        type: String
     }
 });
 
@@ -267,4 +267,24 @@ module.exports.boughtServiceNum = function(callback) {
             }
         ]
         , callback)
+};
+
+module.exports.changeImage = function(id, image, callback) {
+    Customer.findByIdAndUpdate(id,
+        {
+            $set: {
+                image: image
+            }
+        },
+        callback);
+};
+
+module.exports.deleteImage = function(id, callback) {
+    Customer.findByIdAndUpdate(id,
+        {
+            $unset: {
+                image: 1
+            }
+        },
+        callback);
 };

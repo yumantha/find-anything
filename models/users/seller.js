@@ -56,7 +56,7 @@ const SellerSchema = mongoose.Schema({
         required: true
     },
     image: {
-        type: mongoose.Schema.Types.ObjectId
+        type: String
     }
 });
 
@@ -194,4 +194,25 @@ module.exports.getItems = function(callback) {
         'username': 1,
         'sellingItems': 1
     })
+};
+
+module.exports.changeImage = function(id, image, callback) {
+    Seller.findByIdAndUpdate(id,
+        {
+            $set: {
+                image: image
+            }
+        },
+        callback);
+};
+
+module.exports.deleteImage = function(id, callback) {
+
+    Seller.findByIdAndUpdate(id,
+        {
+            $unset: {
+                image: 1
+            }
+        },
+        callback);
 };

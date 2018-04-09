@@ -2,33 +2,57 @@
   <mat-card style="margin-top: 75px; margin-bottom: 10px">
     <div *ngIf="dataAvailable">
       <h1>{{item.name}}</h1>
-      <mat-grid-list cols="2" rowHeight="200px" style="margin-top: 25px">
-        <mat-grid-tile colspan="1" rowspan="2">
-          <div class="grid-item">
-            <img src="https://cdn.takas.lk/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/a/samsung_50_4.jpeg">
+      <mat-grid-list cols="2" rowHeight="100px" style="margin-top: 25px">
+        <mat-grid-tile colspan="1" rowspan="5" (mouseenter)="mouseenter()" (mouseleave)="mouseleave()">
+          <div style="width: 100%; height: 100%">
+            <div class="grid-item" *ngIf="!item.image">
+              <img src="https://www.jainsusa.com/images/store/landscape/not-available.jpg" style="height: 75%; width: auto">
+
+              <div style="width: 100%; text-align: center; margin-bottom: 0" [hidden]="!showImageButtons">
+              <span matTooltip="Add a photo" matTooltipPosition="below">
+                <button mat-icon-button color="primary" (click)="toggleUploadForm()"><mat-icon>add_circle_outline</mat-icon></button>
+              </span>
+              </div>
+            </div>
+
+            <div class="grid-item" *ngIf="item.image">
+              <img [src]="imageUrl">
+
+              <div style="width: 100%; text-align: center; margin-bottom: 0" [hidden]="!showImageButtons">
+                <span matTooltip="Edit photo" matTooltipPosition="below">
+                  <button mat-icon-button color="primary" (click)="toggleEditForm()"><mat-icon>edit</mat-icon></button>
+                </span>
+
+                <span matTooltip="Delete photo" matTooltipPosition="below">
+                  <button mat-icon-button color="warn" (click)="deleteImage()"><mat-icon>delete</mat-icon></button>
+                </span>
+              </div>
+            </div>
           </div>
         </mat-grid-tile>
 
-        <mat-grid-tile colspan="1" rowspan="2">
+        <mat-grid-tile colspan="1" rowspan="5">
           <div class="grid-item">
-            <div>
-              <p>Rating: <strong>{{item.avgRating}}</strong>/5</p>
+            <div *ngIf="item.rating">
+              <div *ngIf="item.rating > 0">
+                <p><strong>Rating</strong>: <strong>{{item.avgRating}}</strong>/5</p>
+              </div>
             </div>
 
             <div *ngIf="item.category">
-              <p>Category: {{item.category}}</p>
+              <p><strong>Category</strong>: {{item.category}}</p>
             </div>
 
             <div>
-              <p>Price: Rs. {{item.price}}.00</p>
+              <p><strong>Price</strong>: Rs. {{item.price}}.00</p>
             </div>
 
             <div *ngIf="item.location">
-              <p>Location: {{item.location}}</p>
+              <p><strong>Location</strong>: {{item.location}}</p>
             </div>
 
             <div>
-              <p>Sold by: <a [href]="sellerProfile">{{seller}}</a></p>
+              <p><strong>Sold by</strong>: <a [href]="sellerProfile">{{seller}}</a></p>
             </div>
 
             <div>
@@ -54,13 +78,60 @@
                 <button mat-mini-fab color="warn" (click)="unfavItem()"><mat-icon>favorite</mat-icon></button>
               </span>
 
-              <button mat-raised-button color="primary" (click)="requestItem()" style="float: right" *ngIf="!isReq">Request Item</button>
-              <button mat-raised-button color="warn" (click)="cancelRequest()" style="float: right" *ngIf="isReq">Cancel Request</button>
+              <button mat-raised-button color="primary" (click)="requestItem()" style="float: right" *ngIf="!isReq">
+                Request Item
+              </button>
+              <button mat-raised-button color="warn" (click)="cancelRequest()" style="float: right" *ngIf="isReq">Cancel
+                Request
+              </button>
             </div>
           </div>
         </mat-grid-tile>
 
-        <mat-grid-tile colspan="2">
+        <mat-grid-tile colspan="1">
+          <div style="width: 100%; height: 100%">
+            <div class="custom-file" id="customFile" lang="es" style="margin: 25px; width: 100%" *ngIf="showUploadForm">
+              <form #form (submit)="addImage()" enctype="multipart/form-data">
+                <input
+                  ngModel
+                  (change)="getFiles($event)"
+                  type="file"
+                  name="file"
+                  id="file"
+                  accept="image/jpeg, image/png"
+                  class="custom-file-input"
+                  style="width: 20%"
+                >
+                <label class="custom-file-label" for="file" style="width: 60%">
+                  Select File...
+                </label>
+                <button mat-raised-button type="submit" style="float: right; margin-right: 40px;">Upload</button>
+              </form>
+            </div>
+
+            <div class="custom-file" id="customFileEdit" lang="es" style="margin: 25px; width: 100%"
+                 *ngIf="showEditForm">
+              <form #form (submit)="editImage()" enctype="multipart/form-data">
+                <input
+                  ngModel
+                  (change)="getFiles($event)"
+                  type="file"
+                  name="fileEdit"
+                  id="fileEdit"
+                  accept="image/jpeg, image/png"
+                  class="custom-file-input"
+                  style="width: 20%"
+                >
+                <label class="custom-file-label" for="fileEdit" style="width: 60%">
+                  Select File...
+                </label>
+                <button mat-raised-button type="submit" style="float: right; margin-right: 40px;">Upload</button>
+              </form>
+            </div>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="2" rowspan="3">
           <div class="grid-item">
             <br/>
             <p><strong>Description</strong></p>
@@ -94,7 +165,8 @@
       </div>
     </div>
 
-    <span matTooltip="Add Review" matTooltipPosition="after" *ngIf="!reviewAdded && isCustomer" style="position:absolute; bottom: 10px; right: 10px">
+    <span matTooltip="Add Review" matTooltipPosition="after" *ngIf="!reviewAdded && isCustomer"
+          style="position:absolute; bottom: 10px; right: 10px">
       <button mat-mini-fab color="primary" (click)="addReview()"><mat-icon>add</mat-icon></button>
     </span>
   </mat-card>

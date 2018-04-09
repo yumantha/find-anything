@@ -10,6 +10,7 @@ export class ImageService {
     private http: Http
   ) { }
 
+  //uploading the image to the database
   uploadImage(image) {
     const formData = new FormData();
     formData.append('image', image, image.name);
@@ -17,8 +18,22 @@ export class ImageService {
       .map(res => res.json());
   }
 
-  getImage(id) {
-    return this.http.get(this.server + 'images/' + id)
-      .map(res => res);
+  //update the user/item
+  updateInfo(type, id) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    // console.log(item);
+    return this.http.post(this.server + 'images/info', {type: type, id: id}, {headers: headers})
+      .map(res => res.json());
+  }
+
+  //deleting an image from the database
+  deleteImage(filename, type, id) {
+    const query = filename + "|" + type + "|" + id;
+
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.delete(this.server + 'images/' + query, {headers: headers})
+      .map(res => res.json());
   }
 }

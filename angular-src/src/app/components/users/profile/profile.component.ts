@@ -7,6 +7,7 @@ import {MatDialog} from "@angular/material";
 import {ConfirmReviewDeleteDialog} from "./confirm-review-delete/confirm-review-delete.component";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {EditReviewDialog} from "./edit-review/edit-review.component";
+import {ImageService} from "../../../services/image/image.service";
 
 @Component({
   selector: 'app-profile',
@@ -25,16 +26,17 @@ export class ProfileComponent implements OnInit {
   reqServicesList: any[] = [];
   reviews: any[] = [];
 
-  imageId: String;
-  imageUrl: String = 'http://localhost:3000/images/' + this.imageId;
+  imageUrl: String;
   showImageButtons: Boolean = false;
-  fileSelec: Boolean = false;
   files : FileList;
+  showUploadForm: Boolean = false;
+  showEditForm: Boolean = false;
 
   constructor(
     private authService: AuthService,
     private itemService: ItemService,
     private reviewService: ReviewService,
+    private imageService: ImageService,
     private flashMessagesService: FlashMessagesService,
     private router: Router,
     private dialog: MatDialog
@@ -44,6 +46,10 @@ export class ProfileComponent implements OnInit {
     this.authService.getProfile()
       .subscribe(profile => {
         this.user = profile.user;
+
+        if(this.user.image) {
+          this.imageUrl = 'http://localhost:3000/images/' + this.user.image;
+        }
 
         if(this.user.userType === 'seller') {
           this.user.sellingItems.forEach((item) => {
@@ -179,14 +185,95 @@ export class ProfileComponent implements OnInit {
   }
 
   addImage() {
-    console.log('add');
+    if(!this.files) {
+      this.flashMessagesService.show("Please select an image to upload", {cssClass: 'alert-danger', timeout: 5000});
+      return false;
+    } else {
+      if(this.files.length !== 1) {
+        this.flashMessagesService.show("Please select a single image to upload", {cssClass: 'alert-danger', timeout: 5000});
+        return false;
+      } else {
+        this.imageService.uploadImage(this.files[0])
+          .subscribe(data => {
+            if(data.success) {
+              this.imageService.updateInfo(this.user.userType, this.user._id)
+                .subscribe(data2 => {
+                  if(data2.success) {
+                    this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
+                    window.location.reload();
+                    return true;
+                  } else {
+                    this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+                    return false;
+                  }
+                });
+            } else {
+              this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+              return false;
+            }
+          })
+      }
+    }
   }
 
   editImage() {
-    console.log('edit');
+    if(!this.files) {
+      this.flashMessagesService.show("Please select an image to upload", {cssClass: 'alert-danger', timeout: 5000});
+      return false;
+    } else {
+      if(this.files.length !== 1) {
+        this.flashMessagesService.show("Please select a single image to upload", {cssClass: 'alert-danger', timeout: 5000});
+        return false;
+      } else {
+        this.imageService.deleteImage(this.user.image, this.user.userType, this.user._id)
+          .subscribe(data => {
+            if(data.success) {
+              this.imageService.uploadImage(this.files[0])
+                .subscribe(data => {
+                  if(data.success) {
+                    this.imageService.updateInfo(this.user.userType, this.user._id)
+                      .subscribe(data2 => {
+                        if(data2.success) {
+                          this.flashMessagesService.show("Image successfully updated", {cssClass: 'alert-success', timeout: 5000});
+                          window.location.reload();
+                          return true;
+                        } else {
+                          this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+                          return false;
+                        }
+                      });
+                  } else {
+                    this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+                    return false;
+                  }
+                })
+            } else {
+              this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+              return false;
+            }
+          });
+      }}
   }
 
   deleteImage() {
-    console.log('delete');
+    this.imageService.deleteImage(this.user.image, this.user.userType, this.user._id)
+      .subscribe(data => {
+        if(data.success) {
+          this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
+          window.location.reload();
+          return true;
+        } else {
+          this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
+          return false;
+        }
+      });
+  }
+
+  toggleUploadForm() {
+    this.showUploadForm = !this.showUploadForm;
+  }
+
+  toggleEditForm() {
+    this.showEditForm = !this.showEditForm;
   }
 }

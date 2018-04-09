@@ -11,3 +11,7 @@ img {
 .buttons {
   float: right;
 }
+
+.custom-file-input ~ .custom-file-label::after {
+  content: "Browse";
+}

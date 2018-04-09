@@ -70,7 +70,7 @@ const ServiceSchema = mongoose.Schema({
         required: true
     },
     image: {
-        type: mongoose.Schema.Types.ObjectId
+        type: String
     }
 });
 
@@ -237,4 +237,24 @@ module.exports.getTimes = function(callback) {
 
 module.exports.getNumber = function(callback) {
     Service.count(callback);
+};
+
+module.exports.changeImage = function(id, image, callback) {
+    Service.findByIdAndUpdate(id,
+        {
+            $set: {
+                image: image
+            }
+        },
+        callback);
+};
+
+module.exports.deleteImage = function(id, callback) {
+    Service.findByIdAndUpdate(id,
+        {
+            $unset: {
+                image: 1
+            }
+        },
+        callback);
 };
