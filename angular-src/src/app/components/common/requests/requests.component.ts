@@ -101,7 +101,7 @@ export class RequestsComponent implements OnInit {
         }
       });
 
-    this.requests = this.sortByKey(this.requests, 'timestamp').reverse()
+    this.requests = this.sortByKey(this.requests, 'timestamp').reverse();
   }
 
   sortByKey(array, key) {
