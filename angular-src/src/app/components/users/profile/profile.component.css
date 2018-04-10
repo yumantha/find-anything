@@ -41,3 +41,13 @@ mat-grid-tile {
 .custom-file-input ~ .custom-file-label::after {
   content: "Browse";
 }
+
+.notification-bar{
+  width: 100vw;
+  position: relative;
+  margin-left: -50vw;
+  height: 50px;
+  left: 50%;
+  background: lightblue;
+  padding: 10px 0 10px 20px;
+}

@@ -8,6 +8,7 @@ import {ConfirmReviewDeleteDialog} from "./confirm-review-delete/confirm-review-
 import {FlashMessagesService} from "angular2-flash-messages";
 import {EditReviewDialog} from "./edit-review/edit-review.component";
 import {ImageService} from "../../../services/image/image.service";
+import {NotificationsService} from "../../../services/notifications/notifications.service";
 
 @Component({
   selector: 'app-profile',
@@ -32,11 +33,15 @@ export class ProfileComponent implements OnInit {
   showUploadForm: Boolean = false;
   showEditForm: Boolean = false;
 
+  newNotifications: Boolean = false;
+  newNotNum: Number = 0;
+
   constructor(
     private authService: AuthService,
     private itemService: ItemService,
     private reviewService: ReviewService,
     private imageService: ImageService,
+    private notificationsService: NotificationsService,
     private flashMessagesService: FlashMessagesService,
     private router: Router,
     private dialog: MatDialog
@@ -46,6 +51,18 @@ export class ProfileComponent implements OnInit {
     this.authService.getProfile()
       .subscribe(profile => {
         this.user = profile.user;
+
+        this.notificationsService.getUnreadNum(localStorage.getItem('user_id'))
+          .subscribe(data => {
+            if(data.success) {
+              if(data.num > 0) {
+                this.newNotifications = true;
+                this.newNotNum = data.num;
+              }
+            } else {
+              this.flashMessagesService.show('Unable to retrieve notifications. ' + data.msg, {cssClass: 'alert-danger', timeout: 5000});
+            }
+          });
 
         if(this.user.image) {
           this.imageUrl = 'http://localhost:3000/images/' + this.user.image;

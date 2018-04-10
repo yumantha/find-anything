@@ -20,6 +20,20 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
+//get the number of unread notifications
+router.get('/unread/:id', (req, res, next) => {
+    const userId = req.params.id;
+
+    Notification.getUnreadNots(userId, (error, notNum) => {
+        if(error) {
+            console.log(error);
+            return res.json({success: false, msg: "An error occurred. Error: " + error})
+        } else {
+            return res.json({success: true, num: notNum})
+        }
+    })
+});
+
 //check notification
 router.post('/:id/check', (req, res, next) => {
     const notId = req.params.id;

@@ -12,7 +12,6 @@ import {HttpClientModule} from "@angular/common/http";
 
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './components/common/header/header.component';
-import {HomeComponent} from './components/common/home/home.component';
 import {WelcomeComponent} from './components/common/welcome/welcome.component';
 import {SearchResultsComponent} from './components/search/search-results/search-results.component';
 import {RegisterComponent} from './components/users/register/register.component';
@@ -54,7 +53,6 @@ import {AuthGuard} from "./guards/auth.guard";
 
 const appRoutes = [
   {path: '', component: WelcomeComponent},
-  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'search/:query', component: SearchResultsComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
@@ -77,7 +75,6 @@ const appRoutes = [
   declarations: [
     AppComponent,
     HeaderComponent,
-    HomeComponent,
     WelcomeComponent,
     SearchResultsComponent,
     RegisterComponent,

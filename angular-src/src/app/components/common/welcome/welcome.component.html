@@ -1,10 +1,56 @@
 <div class="background">
   <div class="welcome">
-    <h1>Find Anything</h1>
+    <h1>Find-Anything</h1>
     <h3>A website to find everything you need!</h3>
-    <button mat-raised-button [routerLink]="['/login']">Login</button>
-    <button mat-raised-button [routerLink]="['/register']" color="primary">Register</button>
+
+    <div *ngIf="!loggedIn">
+      <button mat-raised-button [routerLink]="['/login']">Login</button>
+      <button mat-raised-button [routerLink]="['/register']" color="primary">Register</button>
+    </div>
+
+    <div *ngIf="loggedIn">
+      <button mat-raised-button [routerLink]="['/profile']" color="primary">Profile</button>
+      <button mat-raised-button (click)="onLogoutClick()" color="warn">Logout</button>
+    </div>
   </div>
 </div>
 
-<div class="footer"><strong>2018</strong><mat-icon>copyright</mat-icon></div>
+<div class="footer">
+  <div class="row">
+    <div class="col-md-5">
+      <div style="width: 100%; height: 100%; text-align: justify;">
+        <h6>About</h6>
+        <hr>
+        <p>Find anything is a website designed for people all over Sri Lanka who are willing to buy and sell items and services. You can register as a seller and publish your items and services for sale or register as a customer and buy the items and services published.</p>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+
+    </div>
+
+    <div class="col-md-4">
+      <div style="width: 100%; height: 100%; text-align: left">
+        <h6>Website designed by <strong>Yumantha De Silva</strong></h6>
+        <hr>
+        <p><mat-icon>phone</mat-icon>&nbsp;&nbsp; +94777169774</p>
+        <p><mat-icon>email</mat-icon>&nbsp;&nbsp; yumantha.15@cse.mrt.ac.lk</p>
+      </div>
+    </div>
+  </div>
+  <!--<mat-grid-list cols="8" rowHeight="150px">-->
+    <!--<mat-grid-tile colspan="3">-->
+
+    <!--</mat-grid-tile>-->
+
+    <!--<mat-grid-tile colspan="3">-->
+      <!--<div style="width: 100%; height: 100%">-->
+
+      <!--</div>-->
+    <!--</mat-grid-tile>-->
+
+    <!--<mat-grid-tile colspan="2">-->
+
+    <!--</mat-grid-tile>-->
+  <!--</mat-grid-list>-->
+</div>

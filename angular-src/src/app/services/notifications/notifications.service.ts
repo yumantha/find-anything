@@ -18,6 +18,13 @@ export class NotificationsService {
       .map(res => res.json());
   }
 
+  getUnreadNum(userId) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http.get(this.server + 'notifications/unread/' + userId, {headers: headers})
+      .map(res => res.json());
+  }
+
   //check notification
   checkNotification(notId) {
     let headers = new Headers();

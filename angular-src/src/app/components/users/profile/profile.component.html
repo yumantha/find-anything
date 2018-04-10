@@ -1,5 +1,14 @@
 <div class="container">
+  <div *ngIf="!user" style="margin: 20px auto">
+    <mat-progress-spinner color="primary" mode="indeterminate" style="margin:0 auto;"></mat-progress-spinner>
+  </div>
+
   <div *ngIf="user">
+    <div class="notification-bar" *ngIf="newNotifications">
+      <p>You have <strong>{{newNotNum}}</strong> new <a [routerLink]="['/notifications']">notifications</a></p>
+    </div>
+
+
     <mat-grid-list cols="8" rowHeight="175px">
       <mat-grid-tile colspan="1" (mouseenter)="mouseenter()" (mouseleave)="mouseleave()">
         <div *ngIf="!user.image" style="width: 100%; height: 100%;">

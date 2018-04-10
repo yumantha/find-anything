@@ -98,6 +98,10 @@
     </mat-accordion>
   </div>
 
+  <div *ngIf="!resultsAvailable" style="margin: 20px auto">
+    <mat-progress-spinner color="primary" mode="indeterminate" style="margin:0 auto;"></mat-progress-spinner>
+  </div>
+
   <div *ngIf="!resultsAvailable" style="margin-top: 100px; text-align: center; width: 100%">
     <p><mat-icon>report_problem</mat-icon></p>
     <h3>Sorry! No results were found for your search</h3>

@@ -86,6 +86,15 @@ module.exports.getNotByUser = function(userId, callback) {
     Notification.find(query, callback);
 };
 
+module.exports.getUnreadNots = function(userId, callback) {
+    const query = {
+        to: userId,
+        checked: false
+    };
+
+    Notification.count(query, callback);
+};
+
 module.exports.checkNot = function(notId, callback) {
     Notification.findByIdAndUpdate(notId, {
         $set: {

@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/authenticate/auth.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-welcome',
@@ -8,16 +7,20 @@ import {Router} from "@angular/router";
   styleUrls: ['./welcome.component.css']
 })
 export class WelcomeComponent implements OnInit {
+  loggedIn: Boolean;
 
   constructor(
     private authService: AuthService,
-    private router: Router
   ) { }
 
   ngOnInit() {
-    if(this.authService.loggedIn()) {
-      this.router.navigate(['/home']);
-    }
+    this.loggedIn = this.authService.loggedIn();
+  }
+
+  onLogoutClick() {
+    this.authService.logout();
+    this.loggedIn = false;
+    return false;
   }
 
 }
