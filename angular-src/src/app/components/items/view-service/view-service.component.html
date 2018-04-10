@@ -44,7 +44,7 @@
             </div>
 
             <div>
-              <p><strong>Sold by: </strong><a [href]="sellerProfile">{{seller}}</a></p>
+              <p><strong>Sold by: </strong><a [routerLink]="['/users/seller/' + service.seller]">{{seller}}</a></p>
             </div>
 
             <div *ngIf="service.availableDays || service.startTime || service.endTime">
@@ -172,7 +172,7 @@
     <div *ngIf="reviewsAvailable">
       <div *ngFor="let review of this.reviews">
         <mat-card style="margin-bottom: 5px">
-          <h3><strong><a href="/users/customer/{{review.customer.id}}">{{review.customer.username}}</a></strong></h3>
+          <h3><strong><a [routerLink]="['/users/customer/' + review.customer.id]">{{review.customer.username}}</a></strong></h3>
 
           <p>Rating: <strong>{{review.rating}}</strong>/5</p>
           <p>{{review.review}}</p>

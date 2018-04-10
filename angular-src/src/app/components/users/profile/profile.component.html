@@ -36,7 +36,7 @@
         </div>
       </mat-grid-tile>
 
-      <mat-grid-tile colspan="6">
+      <mat-grid-tile colspan="5">
         <div id="profInfo">
           <h1>{{user.name}}</h1>
           <mat-divider></mat-divider>
@@ -45,11 +45,12 @@
         </div>
       </mat-grid-tile>
 
-      <mat-grid-tile colspan="1">
+      <mat-grid-tile colspan="2">
         <div id="addItem" *ngIf="this.user.userType === 'seller'">
           <p>Rating: <span style="font-weight: bolder">{{user.avgRating}}</span>/5</p>
-          <button mat-raised-button color="primary" [routerLink]="['/items/new']"><mat-icon>add_circle_outline</mat-icon> Add Item for Sale</button>
-          <button mat-raised-button color="primary" [routerLink]="['/services/new']"><mat-icon>add_circle_outline</mat-icon> Add Service for Sale</button>
+          <button style="width: 185px" mat-raised-button color="primary" [routerLink]="['/items/new']"><mat-icon>add_circle_outline</mat-icon> Add Item for Sale</button>
+          <button style="width: 185px" mat-raised-button color="primary" [routerLink]="['/services/new']"><mat-icon>add_circle_outline</mat-icon> Add Service for Sale</button>
+          <button style="width: 185px" mat-raised-button color="basic" [routerLink]="['/requests']">Requests</button>
         </div>
       </mat-grid-tile>
 

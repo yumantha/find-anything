@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AdminService} from "../../../services/admin/admin.service";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {Chart} from 'chart.js';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -48,10 +49,17 @@ export class AdminDashboardComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private flashMessagesService: FlashMessagesService
+    private flashMessagesService: FlashMessagesService,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    if(localStorage.getItem('user_type') !== 'admin') {
+      this.flashMessagesService.show("You must be an admin to access this page", {cssClass: 'alert-danger', timeout: 5000});
+      this.router.navigate(['/profile']);
+      return false;
+    }
+
     this.adminService.getNumbers()
       .subscribe(data => {
         if(data.success) {

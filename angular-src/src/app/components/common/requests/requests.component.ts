@@ -23,6 +23,12 @@ export class RequestsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if(localStorage.getItem('user_type') !== 'seller') {
+      this.flashMessagesService.show('You much be logged in as a seller to access that page', {cssClass: 'alert-danger', timeout: 5000});
+      this.router.navigate(['/profile']);
+      return false;
+    }
+
     if(!this.authService.loggedIn()) {
       this.flashMessagesService.show('You much be logged in to access that page', {cssClass: 'alert-danger', timeout: 5000});
       return this.router.navigate(['/login']);

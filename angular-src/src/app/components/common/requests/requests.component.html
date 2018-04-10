@@ -2,8 +2,10 @@
   <div style="width: 100%; text-align: center"><h2>Purchase Requests</h2></div>
 
   <div *ngIf="!reqsAvailable" style="margin-top: 100px; text-align: center; width: 100%">
-    <p><mat-icon>report_problem</mat-icon></p>
-    <h3>You have no purchase requests</h3>
+    <mat-card>
+      <p><mat-icon>report_problem</mat-icon></p>
+      <h3>You have no purchase requests</h3>
+    </mat-card>
   </div>
 
   <div *ngIf="reqsAvailable">
@@ -11,16 +13,20 @@
       <mat-grid-list cols="16" rowHeight="20px">
         <mat-grid-tile colspan="2" rowspan="4">
           <div style="width: 100%; height: 100%;" *ngIf="request.itemType==='item'">
-            <img src="http://myarenaonline.com/screen/demos/demo_item.png" style="width: 100%">
-          </div>
-          <div style="width: 100%; height: 100%" *ngIf="request.itemType==='service'">
-            <img src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx">
+            <div *ngIf="!request.item.image">
+              <img src="https://www.jainsusa.com/images/store/landscape/not-available.jpg" style="width: 100%">
+            </div>
+
+            <div *ngIf="request.item.image">
+              <img [src]="'http://localhost:3000/images/' + request.item.image" style="width: 100%">
+            </div>
           </div>
         </mat-grid-tile>
 
         <mat-grid-tile colspan="3" rowspan="2">
           <div style="width: 100%; height: 100%; padding-left: 25px">
-            <p>Item/Service: </p>
+            <p *ngIf="request.itemType==='item'">Item: </p>
+            <p *ngIf="request.itemType==='service'">Service: </p>
           </div>
         </mat-grid-tile>
 

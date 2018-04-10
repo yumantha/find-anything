@@ -12,7 +12,6 @@ import {Router} from "@angular/router";
 export class NotificationsComponent implements OnInit, OnDestroy {
   userId: String = localStorage.getItem('user_id');
   notsAvailable: Boolean = false;
-  newNots: Boolean = false;
   notifications: Array<any> = [];
 
   constructor(
