@@ -29,6 +29,19 @@ import {EditServiceComponent} from './components/items/edit-service/edit-service
 import {NotificationsComponent} from './components/common/notifications/notifications.component';
 import {RequestsComponent} from './components/common/requests/requests.component';
 import {AdminDashboardComponent} from './components/common/admin-dashboard/admin-dashboard.component';
+import {HelpComponent} from './components/common/help/help.component';
+import {HelpReglogComponent} from './components/common/help/help-reglog/help-reglog.component';
+import {HelpProfComponent} from './components/common/help/help-prof/help-prof.component';
+import {HelpHomeComponent} from './components/common/help/help-home/help-home.component';
+import {HelpNavbarComponent} from './components/common/help/help-navbar/help-navbar.component';
+import {HelpEditprofComponent} from './components/common/help/help-editprof/help-editprof.component';
+import {HelpAddsaleComponent} from './components/common/help/help-addsale/help-addsale.component';
+import {HelpEditsaleComponent} from './components/common/help/help-editsale/help-editsale.component';
+import {HelpFavreqsaleComponent} from './components/common/help/help-favreqsale/help-favreqsale.component';
+import {HelpReviewsaleComponent} from './components/common/help/help-reviewsale/help-reviewsale.component';
+import {HelpNotificationsComponent} from './components/common/help/help-notifications/help-notifications.component';
+import {HelpSearchComponent} from './components/common/help/help-search/help-search.component';
+import {HelpRequestsComponent} from './components/common/help/help-requests/help-requests.component';
 
 import {EnterPassDialog} from './components/users/edit-profile/enter-pass/enter-pass.component';
 import {ConfirmDeleteDialog} from "./components/items/view-item/confirm-delete/confirm-delete.component";
@@ -68,7 +81,20 @@ const appRoutes = [
   {path: 'services/new', component: AddServiceComponent, canActivate: [AuthGuard]},
   {path: 'services/:id', component: ViewServiceComponent},
   {path: 'services/:id/edit', component: EditServiceComponent, canActivate: [AuthGuard]},
-  {path: 'dashboard', component: AdminDashboardComponent}
+  {path: 'dashboard', component: AdminDashboardComponent},
+  {path: 'help', component: HelpComponent},
+  {path: 'help/helpreglog', component: HelpReglogComponent},
+  {path: 'help/helpprofile', component: HelpProfComponent},
+  {path: 'help/helphome', component: HelpHomeComponent},
+  {path: 'help/helpnavbar', component: HelpNavbarComponent},
+  {path: 'help/helpeditprof', component: HelpEditprofComponent},
+  {path: 'help/helpaddsale', component: HelpAddsaleComponent},
+  {path: 'help/helpeditsale', component: HelpEditsaleComponent},
+  {path: 'help/helpfavreq', component: HelpFavreqsaleComponent},
+  {path: 'help/helprev', component: HelpReviewsaleComponent},
+  {path: 'help/helpnotifications', component: HelpNotificationsComponent},
+  {path: 'help/helpsearch', component: HelpSearchComponent},
+  {path: 'help/helprequests', component: HelpRequestsComponent}
 ];
 
 @NgModule({
@@ -100,6 +126,19 @@ const appRoutes = [
     ConfirmReviewDeleteDialog,
     EditReviewDialog,
     ConfirmDeleteAccountDialog,
+    HelpComponent,
+    HelpProfComponent,
+    HelpHomeComponent,
+    HelpNavbarComponent,
+    HelpEditprofComponent,
+    HelpAddsaleComponent,
+    HelpEditsaleComponent,
+    HelpFavreqsaleComponent,
+    HelpReviewsaleComponent,
+    HelpNotificationsComponent,
+    HelpSearchComponent,
+    HelpRequestsComponent,
+    HelpReglogComponent,
   ],
   imports: [
     BrowserModule,
