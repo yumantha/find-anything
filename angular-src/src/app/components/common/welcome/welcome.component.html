@@ -4,8 +4,8 @@
     <h3>A website to find everything you need!</h3>
 
     <div *ngIf="!loggedIn">
-      <button mat-raised-button [routerLink]="['/login']">Login</button>
       <button mat-raised-button [routerLink]="['/register']" color="primary">Register</button>
+      <button mat-raised-button [routerLink]="['/login']">Login</button>
     </div>
 
     <div *ngIf="loggedIn">

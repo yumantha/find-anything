@@ -9,6 +9,14 @@ const Service = require('../models/sales/service');
 const Customer = require('../models/users/customer');
 const Seller = require('../models/users/seller');
 
+function sortByKey(array, key) {
+    return array.sort(function(a, b) {
+        const x = a[key];
+        const y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+}
+
 //new request
 router.post('/', (req, res, next) => {
     let newReq = new Request({
@@ -209,6 +217,8 @@ router.get('/seller/:id', (req, res, next) => {
         if(!reqs) {
             return res.json({success: false, msg: 'Requests not found'});
         } else {
+            reqs = sortByKey(reqs, 'timestamp');
+            reqs = reqs.reverse();
             return res.json({success: true, reqs: reqs});
         }
     })

@@ -25,8 +25,7 @@ export class RequestsComponent implements OnInit {
   ngOnInit() {
     if(localStorage.getItem('user_type') !== 'seller') {
       this.flashMessagesService.show('You much be logged in as a seller to access that page', {cssClass: 'alert-danger', timeout: 5000});
-      this.router.navigate(['/profile']);
-      return false;
+      return this.router.navigate(['/profile']);
     }
 
     if(!this.authService.loggedIn()) {
@@ -100,16 +99,6 @@ export class RequestsComponent implements OnInit {
           });
         }
       });
-
-    this.requests = this.sortByKey(this.requests, 'timestamp').reverse();
-  }
-
-  sortByKey(array, key) {
-    return array.sort(function(a, b) {
-      const x = a[key];
-      const y = b[key];
-      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-    });
   }
 
   acceptReq(reqId) {

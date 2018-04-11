@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-card style="margin-top: 75px; margin-bottom: 10px">
+  <mat-card style="margin-top: 25px; margin-bottom: 10px">
     <div *ngIf="!dataAvailable" style="margin: 20px auto">
       <mat-progress-spinner color="primary" mode="indeterminate" style="margin:0 auto;"></mat-progress-spinner>
     </div>
@@ -21,8 +21,8 @@
 
         <mat-grid-tile colspan="1" rowspan="5">
           <div class="grid-item">
-            <div *ngIf="service.rating">
-              <div *ngIf="service.rating > 0">
+            <div *ngIf="service.avgRating">
+              <div *ngIf="service.avgRating > 0">
                 <p>Rating: <strong>{{service.avgRating}}</strong>/5</p>
               </div>
             </div>
