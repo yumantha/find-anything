@@ -52,6 +52,11 @@ export class ProfileComponent implements OnInit {
       .subscribe(profile => {
         this.user = profile.user;
 
+        if(this.user.avgRating) {
+          this.user.avgRating = (Math.round(this.user.avgRating * 100))/100;
+        }
+
+
         this.notificationsService.getUnreadNum(localStorage.getItem('user_id'))
           .subscribe(data => {
             if(data.success) {

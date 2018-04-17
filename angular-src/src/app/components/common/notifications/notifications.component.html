@@ -9,7 +9,7 @@
       <p *ngIf="!notification.checked" style="padding: 10px; background: lightblue">
 
         <span *ngIf="notification.type === 'review'">
-          <span><mat-icon>rate_review</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">rate_review</mat-icon> &nbsp;&nbsp;</span>
 
           <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
 
@@ -19,7 +19,7 @@
         </span>
 
         <span *ngIf="notification.type === 'favorite'">
-          <span><mat-icon>favorite</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">favorite</mat-icon> &nbsp;&nbsp;</span>
 
           <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
 
@@ -29,7 +29,7 @@
         </span>
 
         <span *ngIf="notification.type === 'updateFav'">
-          <span><mat-icon>edit</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">edit</mat-icon> &nbsp;&nbsp;</span>
 
           <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
 
@@ -39,7 +39,7 @@
         </span>
 
         <span *ngIf="notification.type === 'deleteFav'">
-          <span><mat-icon>delete</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">delete</mat-icon> &nbsp;&nbsp;</span>
 
           <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
 
@@ -49,7 +49,7 @@
         </span>
 
         <span *ngIf="notification.type === 'request'">
-          <span><mat-icon>info</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">info</mat-icon> &nbsp;&nbsp;</span>
 
           <span>You have a new purchase </span>
 
@@ -57,7 +57,7 @@
         </span>
 
         <span *ngIf="notification.type === 'reqAccept'">
-          <span><mat-icon>done</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">done</mat-icon> &nbsp;&nbsp;</span>
 
           <span>The </span>
 
@@ -69,7 +69,7 @@
         </span>
 
         <span *ngIf="notification.type === 'reqDecline'">
-          <span><mat-icon>clear</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">clear</mat-icon> &nbsp;&nbsp;</span>
 
           <span>The </span>
 
@@ -86,7 +86,7 @@
       <p *ngIf="notification.checked" style="padding: 10px">
 
         <span *ngIf="notification.type === 'review'">
-          <span><mat-icon>rate_review</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">rate_review</mat-icon> &nbsp;&nbsp;</span>
 
           <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
 
@@ -96,7 +96,7 @@
         </span>
 
         <span *ngIf="notification.type === 'favorite'">
-          <span><mat-icon>favorite</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">favorite</mat-icon> &nbsp;&nbsp;</span>
 
           <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
 
@@ -106,7 +106,7 @@
         </span>
 
         <span *ngIf="notification.type === 'updateFav'">
-          <span><mat-icon>edit</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">edit</mat-icon> &nbsp;&nbsp;</span>
 
           <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
 
@@ -116,7 +116,7 @@
         </span>
 
         <span *ngIf="notification.type === 'deleteFav'">
-          <span><mat-icon>delete</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">delete</mat-icon> &nbsp;&nbsp;</span>
 
           <span><a [routerLink]="['/users/' + notification.fromType + '/' + notification.fromId]">{{notification.fromUsername}}</a></span>
 
@@ -126,7 +126,7 @@
         </span>
 
         <span *ngIf="notification.type === 'request'">
-          <span><mat-icon>info</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">info</mat-icon> &nbsp;&nbsp;</span>
 
           <span>You have a new purchase </span>
 
@@ -134,7 +134,7 @@
         </span>
 
         <span *ngIf="notification.type === 'reqAccept'">
-          <span><mat-icon>done</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">done</mat-icon> &nbsp;&nbsp;</span>
 
           <span>The </span>
 
@@ -146,7 +146,7 @@
         </span>
 
         <span *ngIf="notification.type === 'reqDecline'">
-          <span><mat-icon>clear</mat-icon> &nbsp;&nbsp;</span>
+          <span><mat-icon style="vertical-align: middle">clear</mat-icon> &nbsp;&nbsp;</span>
 
           <span>The </span>
 

@@ -37,6 +37,10 @@ export class ViewUserComponent implements OnInit {
           if(data.success) {
             this.user = data.user;
             if (this.userType === 'seller') {
+              if(this.user.avgRating) {
+                this.user.avgRating = (Math.round(this.user.avgRating * 100))/100;
+              }
+
               this.user.sellingItems.forEach((item) => {
                 this.itemService.getItem(item)
                   .subscribe(data => {

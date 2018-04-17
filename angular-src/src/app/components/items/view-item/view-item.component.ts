@@ -60,6 +60,10 @@ export class ViewItemComponent implements OnInit {
           this.dataAvailable = true;
           this.sellerProfile = '/users/seller/' + data.item.seller;
 
+          if(this.item.avgRating) {
+            this.item.avgRating = (Math.round(this.item.avgRating * 100))/100;
+          }
+
           if(this.item.image) {
             this.imageUrl = 'http://localhost:3000/images/' + this.item.image;
           }

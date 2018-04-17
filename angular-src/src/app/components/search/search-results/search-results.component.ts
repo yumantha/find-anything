@@ -87,6 +87,9 @@ export class SearchResultsComponent implements OnInit {
           if(data.results) {
             this.resultsAvailable = true;
             data.results.forEach((result) => {
+              if(result.avgRating) {
+                result.avgRating = (Math.round(result.avgRating * 100))/100;
+              }
               this.resultsArray.push(result);
             });
           }

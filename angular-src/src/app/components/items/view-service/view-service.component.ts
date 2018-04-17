@@ -60,6 +60,10 @@ export class ViewServiceComponent implements OnInit {
           this.dataAvailable = true;
           this.sellerProfile = '/users/seller/' + data.service.seller;
 
+          if(this.service.avgRating) {
+            this.service.avgRating = (Math.round(this.service.avgRating * 100))/100;
+          }
+
           if(this.service.image) {
             this.imageUrl = 'http://localhost:3000/images/' + this.service.image;
           }
