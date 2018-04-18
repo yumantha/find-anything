@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/authenticate/auth.service";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {Router} from "@angular/router";
-import {SearchService} from "../../../services/search/search.service";
 
 @Component({
   selector: 'app-header',

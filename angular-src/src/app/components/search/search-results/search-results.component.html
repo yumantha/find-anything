@@ -98,10 +98,6 @@
     </mat-accordion>
   </div>
 
-  <div *ngIf="!resultsAvailable" style="margin: 20px auto">
-    <mat-progress-spinner color="primary" mode="indeterminate" style="margin:0 auto;"></mat-progress-spinner>
-  </div>
-
   <div *ngIf="!resultsAvailable" style="margin-top: 100px; text-align: center; width: 100%">
     <p><mat-icon>report_problem</mat-icon></p>
     <h3>Sorry! No results were found for your search</h3>
@@ -113,11 +109,11 @@
         <mat-grid-tile colspan="2" rowspan="4">
           <div *ngIf="!result.image">
             <div style="width: 100%; height: 100%;" *ngIf="result.type==='item'">
-              <img src="http://myarenaonline.com/screen/demos/demo_item.png" style="width: 100%">
+              <img src="https://www.jainsusa.com/images/store/landscape/not-available.jpg" style="height: 100%">
             </div>
 
             <div style="width: 100%; height: 100%" *ngIf="result.type==='service'">
-              <img src="https://valuebound.com/sites/default/files/2016-04/how-to-define-your-own-services-drupal-8.jpeg">
+              <img src="https://www.jainsusa.com/images/store/landscape/not-available.jpg" style="height: 100%">
             </div>
           </div>
 

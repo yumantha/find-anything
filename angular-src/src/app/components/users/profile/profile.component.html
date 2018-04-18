@@ -188,66 +188,78 @@
 
         </mat-tab>
 
-        <div *ngIf="this.user.userType === 'customer'">
+        <div *ngIf="user.userType === 'customer'">
           <mat-tab label="Favourite">
             <mat-tab-group>
               <mat-tab label="Items">
-                <mat-grid-list cols="4" rowHeight="450px">
-                  <mat-grid-tile *ngFor="let item of this.favItemsList">
-                    <mat-card style="margin: 10px; text-align: center">
-                      <div *ngIf="!item.image">
-                        <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" style="padding: 5px">
-                      </div>
-
-                      <div *ngIf="item.image">
-                        <img mat-card-image [src]="'http://localhost:3000/images/' + item.image" style="padding: 5px">
-                      </div>
-
-                      <mat-card-header>
-                        <div style="width: 100%; margin-left: -15px">
-                          <mat-card-title><strong>{{item.name}}</strong></mat-card-title>
-                          <mat-card-subtitle>{{item.category}}</mat-card-subtitle>
+                <div *ngIf="favItemsList.length > 0">
+                  <mat-grid-list cols="4" rowHeight="450px">
+                    <mat-grid-tile *ngFor="let item of favItemsList">
+                      <mat-card style="margin: 10px; text-align: center">
+                        <div *ngIf="!item.image">
+                          <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" style="padding: 5px">
                         </div>
-                      </mat-card-header>
-                      <mat-divider></mat-divider>
-                      <mat-card-content style="margin-top: 10px">
-                        <p>Rs. {{item.price}}.00</p>
-                      </mat-card-content>
-                      <mat-card-actions>
-                        <button mat-button color="primary" style="width: 100%;" (click)="goToItem(item._id)">Details</button>
-                      </mat-card-actions>
-                    </mat-card>
-                  </mat-grid-tile>
-                </mat-grid-list>
+
+                        <div *ngIf="item.image">
+                          <img mat-card-image [src]="'http://localhost:3000/images/' + item.image" style="padding: 5px">
+                        </div>
+
+                        <mat-card-header>
+                          <div style="width: 100%; margin-left: -15px">
+                            <mat-card-title><strong>{{item.name}}</strong></mat-card-title>
+                            <mat-card-subtitle>{{item.category}}</mat-card-subtitle>
+                          </div>
+                        </mat-card-header>
+                        <mat-divider></mat-divider>
+                        <mat-card-content style="margin-top: 10px">
+                          <p>Rs. {{item.price}}.00</p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                          <button mat-button color="primary" style="width: 100%;" (click)="goToItem(item._id)">Details</button>
+                        </mat-card-actions>
+                      </mat-card>
+                    </mat-grid-tile>
+                  </mat-grid-list>
+                </div>
+
+                <div *ngIf="favItemsList.length === 0" style="width: 100%; text-align: center; margin: 50px 0;">
+                  <h4>You have no favorited items</h4>
+                </div>
               </mat-tab>
 
               <mat-tab label="Services">
-                <mat-grid-list cols="4" rowHeight="400px">
-                  <mat-grid-tile *ngFor="let service of this.favServicesList">
-                    <mat-card style="margin: 10px; text-align: center">
-                      <div *ngIf="!service.image">
-                        <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px">
-                      </div>
-
-                      <div *ngIf="service.image">
-                        <img mat-card-image [src]="'http://localhost:3000/images/' + service.image" style="padding: 5px">
-                      </div>
-                      <mat-card-header>
-                        <div style="width: 100%; margin-left: -15px">
-                          <mat-card-title><strong>{{service.name}}</strong></mat-card-title>
-                          <mat-card-subtitle>{{service.category}}</mat-card-subtitle>
+                <div *ngIf="favServicesList.length > 0">
+                  <mat-grid-list cols="4" rowHeight="400px">
+                    <mat-grid-tile *ngFor="let service of favServicesList">
+                      <mat-card style="margin: 10px; text-align: center">
+                        <div *ngIf="!service.image">
+                          <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px">
                         </div>
-                      </mat-card-header>
-                      <mat-divider></mat-divider>
-                      <mat-card-content style="margin-top: 10px">
-                        <p>Rs. {{service.price}}.00</p>
-                      </mat-card-content>
-                      <mat-card-actions>
-                        <button mat-button color="primary" style="width: 100%;" (click)="goToService(service._id)">Details</button>
-                      </mat-card-actions>
-                    </mat-card>
-                  </mat-grid-tile>
-                </mat-grid-list>
+
+                        <div *ngIf="service.image">
+                          <img mat-card-image [src]="'http://localhost:3000/images/' + service.image" style="padding: 5px">
+                        </div>
+                        <mat-card-header>
+                          <div style="width: 100%; margin-left: -15px">
+                            <mat-card-title><strong>{{service.name}}</strong></mat-card-title>
+                            <mat-card-subtitle>{{service.category}}</mat-card-subtitle>
+                          </div>
+                        </mat-card-header>
+                        <mat-divider></mat-divider>
+                        <mat-card-content style="margin-top: 10px">
+                          <p>Rs. {{service.price}}.00</p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                          <button mat-button color="primary" style="width: 100%;" (click)="goToService(service._id)">Details</button>
+                        </mat-card-actions>
+                      </mat-card>
+                    </mat-grid-tile>
+                  </mat-grid-list>
+                </div>
+
+                <div *ngIf="favServicesList.length === 0" style="width: 100%; text-align: center; margin: 50px 0;">
+                  <h4>You have no favorited services</h4>
+                </div>
               </mat-tab>
             </mat-tab-group>
           </mat-tab>
@@ -255,61 +267,73 @@
           <mat-tab label="Requested">
             <mat-tab-group>
               <mat-tab label="Items">
-                <mat-grid-list cols="4" rowHeight="450px">
-                  <mat-grid-tile *ngFor="let item of this.reqItemsList">
-                    <mat-card style="margin: 10px; text-align: center">
-                      <div *ngIf="!item.image">
-                        <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" style="padding: 5px">
-                      </div>
-
-                      <div *ngIf="item.image">
-                        <img mat-card-image [src]="'http://localhost:3000/images/' + item.image" style="padding: 5px">
-                      </div>
-                      <mat-card-header>
-                        <div style="width: 100%; margin-left: -15px">
-                          <mat-card-title><strong>{{item.name}}</strong></mat-card-title>
-                          <mat-card-subtitle>{{item.category}}</mat-card-subtitle>
+                <div *ngIf="reqItemsList.length > 0">
+                  <mat-grid-list cols="4" rowHeight="450px">
+                    <mat-grid-tile *ngFor="let item of reqItemsList">
+                      <mat-card style="margin: 10px; text-align: center">
+                        <div *ngIf="!item.image">
+                          <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" style="padding: 5px">
                         </div>
-                      </mat-card-header>
-                      <mat-divider></mat-divider>
-                      <mat-card-content style="margin-top: 10px">
-                        <p>Rs. {{item.price}}.00</p>
-                      </mat-card-content>
-                      <mat-card-actions>
-                        <button mat-button color="primary" style="width: 100%;" (click)="goToItem(item._id)">Details</button>
-                      </mat-card-actions>
-                    </mat-card>
-                  </mat-grid-tile>
-                </mat-grid-list>
+
+                        <div *ngIf="item.image">
+                          <img mat-card-image [src]="'http://localhost:3000/images/' + item.image" style="padding: 5px">
+                        </div>
+                        <mat-card-header>
+                          <div style="width: 100%; margin-left: -15px">
+                            <mat-card-title><strong>{{item.name}}</strong></mat-card-title>
+                            <mat-card-subtitle>{{item.category}}</mat-card-subtitle>
+                          </div>
+                        </mat-card-header>
+                        <mat-divider></mat-divider>
+                        <mat-card-content style="margin-top: 10px">
+                          <p>Rs. {{item.price}}.00</p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                          <button mat-button color="primary" style="width: 100%;" (click)="goToItem(item._id)">Details</button>
+                        </mat-card-actions>
+                      </mat-card>
+                    </mat-grid-tile>
+                  </mat-grid-list>
+                </div>
+
+                <div *ngIf="reqItemsList.length === 0" style="width: 100%; text-align: center; margin: 50px 0;">
+                  <h4>You have no requested items</h4>
+                </div>
               </mat-tab>
 
               <mat-tab label="Services">
-                <mat-grid-list cols="4" rowHeight="400px">
-                  <mat-grid-tile *ngFor="let service of this.reqServicesList">
-                    <mat-card style="margin: 10px; text-align: center">
-                      <div *ngIf="!service.image">
-                        <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px">
-                      </div>
-
-                      <div *ngIf="service.image">
-                        <img mat-card-image [src]="'http://localhost:3000/images/' + service.image" style="padding: 5px">
-                      </div>
-                      <mat-card-header>
-                        <div style="width: 100%; margin-left: -15px">
-                          <mat-card-title><strong>{{service.name}}</strong></mat-card-title>
-                          <mat-card-subtitle>{{service.category}}</mat-card-subtitle>
+                <div *ngIf="reqServicesList.length > 0">
+                  <mat-grid-list cols="4" rowHeight="400px">
+                    <mat-grid-tile *ngFor="let service of reqServicesList">
+                      <mat-card style="margin: 10px; text-align: center">
+                        <div *ngIf="!service.image">
+                          <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px">
                         </div>
-                      </mat-card-header>
-                      <mat-divider></mat-divider>
-                      <mat-card-content style="margin-top: 10px">
-                        <p>Rs. {{service.price}}.00</p>
-                      </mat-card-content>
-                      <mat-card-actions>
-                        <button mat-button color="primary" style="width: 100%;" (click)="goToService(service._id)">Details</button>
-                      </mat-card-actions>
-                    </mat-card>
-                  </mat-grid-tile>
-                </mat-grid-list>
+
+                        <div *ngIf="service.image">
+                          <img mat-card-image [src]="'http://localhost:3000/images/' + service.image" style="padding: 5px">
+                        </div>
+                        <mat-card-header>
+                          <div style="width: 100%; margin-left: -15px">
+                            <mat-card-title><strong>{{service.name}}</strong></mat-card-title>
+                            <mat-card-subtitle>{{service.category}}</mat-card-subtitle>
+                          </div>
+                        </mat-card-header>
+                        <mat-divider></mat-divider>
+                        <mat-card-content style="margin-top: 10px">
+                          <p>Rs. {{service.price}}.00</p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                          <button mat-button color="primary" style="width: 100%;" (click)="goToService(service._id)">Details</button>
+                        </mat-card-actions>
+                      </mat-card>
+                    </mat-grid-tile>
+                  </mat-grid-list>
+                </div>
+
+                <div *ngIf="reqServicesList.length === 0" style="width: 100%; text-align: center; margin: 50px 0;">
+                  <h4>You have no requested services</h4>
+                </div>
               </mat-tab>
             </mat-tab-group>
           </mat-tab>
@@ -317,145 +341,177 @@
           <mat-tab label="Bought">
             <mat-tab-group>
               <mat-tab label="Items">
-                <mat-grid-list cols="4" rowHeight="450px">
-                  <mat-grid-tile *ngFor="let item of this.boughtItemsList">
-                    <mat-card style="margin: 10px; text-align: center">
-                      <div *ngIf="!item.image">
-                        <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" style="padding: 5px">
-                      </div>
-
-                      <div *ngIf="item.image">
-                        <img mat-card-image [src]="'http://localhost:3000/images/' + item.image" style="padding: 5px">
-                      </div>
-                      <mat-card-header>
-                        <div style="width: 100%; margin-left: -15px">
-                          <mat-card-title><strong>{{item.name}}</strong></mat-card-title>
-                          <mat-card-subtitle>{{item.category}}</mat-card-subtitle>
+                <div *ngIf="boughtItemsList.length > 0">
+                  <mat-grid-list cols="4" rowHeight="450px">
+                    <mat-grid-tile *ngFor="let item of boughtItemsList">
+                      <mat-card style="margin: 10px; text-align: center">
+                        <div *ngIf="!item.image">
+                          <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" style="padding: 5px">
                         </div>
-                      </mat-card-header>
-                      <mat-divider></mat-divider>
-                      <mat-card-content style="margin-top: 10px">
-                        <p>Rs. {{item.price}}.00</p>
-                      </mat-card-content>
-                      <mat-card-actions>
-                        <button mat-button color="primary" style="width: 100%;" (click)="goToItem(item._id)">Details</button>
-                      </mat-card-actions>
-                    </mat-card>
-                  </mat-grid-tile>
-                </mat-grid-list>
+
+                        <div *ngIf="item.image">
+                          <img mat-card-image [src]="'http://localhost:3000/images/' + item.image" style="padding: 5px">
+                        </div>
+                        <mat-card-header>
+                          <div style="width: 100%; margin-left: -15px">
+                            <mat-card-title><strong>{{item.name}}</strong></mat-card-title>
+                            <mat-card-subtitle>{{item.category}}</mat-card-subtitle>
+                          </div>
+                        </mat-card-header>
+                        <mat-divider></mat-divider>
+                        <mat-card-content style="margin-top: 10px">
+                          <p>Rs. {{item.price}}.00</p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                          <button mat-button color="primary" style="width: 100%;" (click)="goToItem(item._id)">Details</button>
+                        </mat-card-actions>
+                      </mat-card>
+                    </mat-grid-tile>
+                  </mat-grid-list>
+                </div>
+
+                <div *ngIf="boughtItemsList.length === 0" style="width: 100%; text-align: center; margin: 50px 0;">
+                  <h4>You have no bought items</h4>
+                </div>
               </mat-tab>
 
               <mat-tab label="Services">
-                <mat-grid-list cols="4" rowHeight="400px">
-                  <mat-grid-tile *ngFor="let service of this.boughtServicesList">
-                    <mat-card style="margin: 10px; text-align: center">
-                      <div *ngIf="!service.image">
-                        <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px">
-                      </div>
-
-                      <div *ngIf="service.image">
-                        <img mat-card-image [src]="'http://localhost:3000/images/' + service.image" style="padding: 5px">
-                      </div>
-                      <mat-card-header>
-                        <div style="width: 100%; margin-left: -15px">
-                          <mat-card-title><strong>{{service.name}}</strong></mat-card-title>
-                          <mat-card-subtitle>{{service.category}}</mat-card-subtitle>
+                <div *ngIf="boughtItemsList.length > 0">
+                  <mat-grid-list cols="4" rowHeight="400px">
+                    <mat-grid-tile *ngFor="let service of this.boughtServicesList">
+                      <mat-card style="margin: 10px; text-align: center">
+                        <div *ngIf="!service.image">
+                          <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px">
                         </div>
-                      </mat-card-header>
-                      <mat-divider></mat-divider>
-                      <mat-card-content style="margin-top: 10px">
-                        <p>Rs. {{service.price}}.00</p>
-                      </mat-card-content>
-                      <mat-card-actions>
-                        <button mat-button color="primary" style="width: 100%;" (click)="goToService(service._id)">Details</button>
-                      </mat-card-actions>
-                    </mat-card>
-                  </mat-grid-tile>
-                </mat-grid-list>
+
+                        <div *ngIf="service.image">
+                          <img mat-card-image [src]="'http://localhost:3000/images/' + service.image" style="padding: 5px">
+                        </div>
+                        <mat-card-header>
+                          <div style="width: 100%; margin-left: -15px">
+                            <mat-card-title><strong>{{service.name}}</strong></mat-card-title>
+                            <mat-card-subtitle>{{service.category}}</mat-card-subtitle>
+                          </div>
+                        </mat-card-header>
+                        <mat-divider></mat-divider>
+                        <mat-card-content style="margin-top: 10px">
+                          <p>Rs. {{service.price}}.00</p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                          <button mat-button color="primary" style="width: 100%;" (click)="goToService(service._id)">Details</button>
+                        </mat-card-actions>
+                      </mat-card>
+                    </mat-grid-tile>
+                  </mat-grid-list>
+                </div>
+
+                <div *ngIf="boughtItemsList.length === 0" style="width: 100%; text-align: center; margin: 50px 0;">
+                  <h4>You have no bought services</h4>
+                </div>
               </mat-tab>
             </mat-tab-group>
           </mat-tab>
 
           <mat-tab label="Reviews">
-            <div *ngFor="let review of this.reviews">
-              <mat-card>
+            <div *ngIf="reviews.length > 0">
+              <div *ngFor="let review of reviews">
+                <mat-card>
+                  <mat-card-title *ngIf="review.item.type === 'item'"><a href="/items/{{review.item.id}}">{{review.item.name}}</a></mat-card-title>
+                  <mat-card-title *ngIf="review.item.type === 'service'"><a href="/services/{{review.item.id}}">{{review.item.name}}</a></mat-card-title>
 
-                <mat-card-title *ngIf="review.item.type === 'item'"><a href="/items/{{review.item.id}}">{{review.item.name}}</a></mat-card-title>
-                <mat-card-title *ngIf="review.item.type === 'service'"><a href="/services/{{review.item.id}}">{{review.item.name}}</a></mat-card-title>
+                  <mat-card-subtitle>{{review.customer.username}}</mat-card-subtitle>
+                  <mat-card-content>
+                    <p>Rating: <strong>{{review.rating}}</strong>/5</p>
 
-                <mat-card-subtitle>{{review.customer.username}}</mat-card-subtitle>
-                <mat-card-content>
-                  <p>Rating: <strong>{{review.rating}}</strong>/5</p>
+                    <mat-card style="margin-bottom: 15px">
+                      <h5><strong>Review</strong></h5>
+                      <hr>
+                      <p>{{review.review}}</p>
+                    </mat-card>
 
-                  <h5>Review</h5>
-                  <p>{{review.review}}</p>
+                    <button mat-raised-button color="primary" (click)="editReview(review)">Edit</button>
+                    <button mat-raised-button color="warn" (click)="deleteReview(review)">Delete</button>
+                  </mat-card-content>
+                </mat-card>
+                <mat-divider></mat-divider>
+              </div>
+            </div>
 
-                  <button mat-raised-button color="primary" (click)="editReview(review)">Edit</button>
-                  <button mat-raised-button color="warn" (click)="deleteReview(review)">Delete</button>
-                </mat-card-content>
-              </mat-card>
-              <mat-divider></mat-divider>
+            <div *ngIf="reviews.length === 0" style="width: 100%; text-align: center; margin: 50px 0;">
+              <h4>You haven't added any reviews yet</h4>
             </div>
           </mat-tab>
         </div>
 
-        <div *ngIf="this.user.userType === 'seller'">
+        <div *ngIf="user.userType === 'seller'">
           <mat-tab label="Selling Items">
-            <mat-grid-list cols="4" rowHeight="450px">
-              <mat-grid-tile *ngFor="let item of this.sellingItemsList">
-                <mat-card style="margin: 10px; text-align: center">
-                  <div *ngIf="!item.image">
-                    <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" style="padding: 5px">
-                  </div>
-
-                  <div *ngIf="item.image">
-                    <img mat-card-image [src]="'http://localhost:3000/images/' + item.image" style="padding: 5px">
-                  </div>
-                  <mat-card-header>
-                    <div style="width: 100%; margin-left: -15px">
-                      <mat-card-title><strong>{{item.name}}</strong></mat-card-title>
-                      <mat-card-subtitle>{{item.category}}</mat-card-subtitle>
+            <div *ngIf="sellingItemsList.length > 0">
+              <mat-grid-list cols="4" rowHeight="450px">
+                <mat-grid-tile *ngFor="let item of sellingItemsList">
+                  <mat-card style="margin: 10px; text-align: center">
+                    <div *ngIf="!item.image">
+                      <img mat-card-image src="http://myarenaonline.com/screen/demos/demo_item.png" style="padding: 5px">
                     </div>
-                  </mat-card-header>
-                  <mat-divider></mat-divider>
-                  <mat-card-content style="margin-top: 10px">
-                    <p>Rs. {{item.price}}.00</p>
-                  </mat-card-content>
-                  <mat-card-actions>
-                    <button mat-button color="primary" style="width: 100%;" (click)="goToItem(item._id)">Details</button>
-                  </mat-card-actions>
-                </mat-card>
-              </mat-grid-tile>
-            </mat-grid-list>
+
+                    <div *ngIf="item.image">
+                      <img mat-card-image [src]="'http://localhost:3000/images/' + item.image" style="padding: 5px">
+                    </div>
+                    <mat-card-header>
+                      <div style="width: 100%; margin-left: -15px">
+                        <mat-card-title><strong>{{item.name}}</strong></mat-card-title>
+                        <mat-card-subtitle>{{item.category}}</mat-card-subtitle>
+                      </div>
+                    </mat-card-header>
+                    <mat-divider></mat-divider>
+                    <mat-card-content style="margin-top: 10px">
+                      <p>Rs. {{item.price}}.00</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                      <button mat-button color="primary" style="width: 100%;" (click)="goToItem(item._id)">Details</button>
+                    </mat-card-actions>
+                  </mat-card>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </div>
+
+            <div *ngIf="sellingItemsList.length === 0" style="width: 100%; text-align: center; margin: 50px 0;">
+              <h4>You haven't added any items for sale yet</h4>
+            </div>
           </mat-tab>
 
           <mat-tab label="Selling Services">
-            <mat-grid-list cols="4" rowHeight="400px">
-              <mat-grid-tile *ngFor="let service of this.sellingServicesList">
-                <mat-card style="margin: 10px; text-align: center">
-                  <div *ngIf="!service.image">
-                    <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px">
-                  </div>
-
-                  <div *ngIf="service.image">
-                    <img mat-card-image [src]="'http://localhost:3000/images/' + service.image" style="padding: 5px">
-                  </div>
-                  <mat-card-header>
-                    <div style="width: 100%; margin-left: -15px">
-                      <mat-card-title><strong>{{service.name}}</strong></mat-card-title>
-                      <mat-card-subtitle>{{service.category}}</mat-card-subtitle>
+            <div *ngIf="sellingServicesList.length > 0">
+              <mat-grid-list cols="4" rowHeight="400px">
+                <mat-grid-tile *ngFor="let service of sellingServicesList">
+                  <mat-card style="margin: 10px; text-align: center">
+                    <div *ngIf="!service.image">
+                      <img mat-card-image src="https://www.canon.co.nz/-/media/images/icons/support-and-others/icon-service-repairs.ashx" style="padding: 5px">
                     </div>
-                  </mat-card-header>
-                  <mat-divider></mat-divider>
-                  <mat-card-content style="margin-top: 10px">
-                    <p>Rs. {{service.price}}.00</p>
-                  </mat-card-content>
-                  <mat-card-actions>
-                    <button mat-button color="primary" style="width: 100%;" (click)="goToService(service._id)">Details</button>
-                  </mat-card-actions>
-                </mat-card>
-              </mat-grid-tile>
-            </mat-grid-list>
+
+                    <div *ngIf="service.image">
+                      <img mat-card-image [src]="'http://localhost:3000/images/' + service.image" style="padding: 5px">
+                    </div>
+                    <mat-card-header>
+                      <div style="width: 100%; margin-left: -15px">
+                        <mat-card-title><strong>{{service.name}}</strong></mat-card-title>
+                        <mat-card-subtitle>{{service.category}}</mat-card-subtitle>
+                      </div>
+                    </mat-card-header>
+                    <mat-divider></mat-divider>
+                    <mat-card-content style="margin-top: 10px">
+                      <p>Rs. {{service.price}}.00</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                      <button mat-button color="primary" style="width: 100%;" (click)="goToService(service._id)">Details</button>
+                    </mat-card-actions>
+                  </mat-card>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </div>
+
+            <div *ngIf="sellingServicesList.length === 0" style="width: 100%; text-align: center; margin: 50px 0;">
+              <h4>You haven't added any services for sale yet</h4>
+            </div>
           </mat-tab>
         </div>
       </mat-tab-group>
