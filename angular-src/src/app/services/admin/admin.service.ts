@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map'
 @Injectable()
 export class AdminService {
   server: String = "http://localhost:3000/";
+  // server: String = "/";
 
   constructor(
     private http: Http

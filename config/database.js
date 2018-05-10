@@ -1,4 +1,4 @@
 module.exports = {
-    database: 'mongodb://localhost:27017/find-anything',
+    database: 'mongodb://yumantha:pass@ds119650.mlab.com:19650/find-anything',
     secret: 'secretpass'
 };

@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Seller = require('../models/users/seller');
 const Customer = require('../models/users/customer');
+const Admin = require('../models/users/admin');
 const Item = require('../models/sales/item');
 const Service = require('../models/sales/service');
 
@@ -40,6 +41,24 @@ function getDate(timestamp) {
 
     return date;
 }
+
+// //create admin
+// router.post('/newAdmin', (req, res, next) => {
+//     let newAdmin = new Admin({
+//         username: 'admin',
+//         password: 'adminpass',
+//         userType: 'admin'
+//
+//     });
+//
+//     Admin.newAdmin(newAdmin, (error, admin) => {
+//         if(error) {
+//             return res.json({success: false, msg: 'Failed to create admin. Error: ' + error})
+//         } else {
+//             return res.json({success: true, msg: 'Admin created'});
+//         }
+//     })
+// });
 
 //get item statistics
 router.get('/getstats/items', (req, res, next) => {
