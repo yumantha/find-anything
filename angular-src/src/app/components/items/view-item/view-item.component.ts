@@ -65,7 +65,8 @@ export class ViewItemComponent implements OnInit {
           }
 
           if(this.item.image) {
-            this.imageUrl = 'http://localhost:3000/images/' + this.item.image;
+            // this.imageUrl = 'http://localhost:3000/images/' + this.item.image;
+            this.imageUrl = 'images/' + this.item.image;
           }
 
           if(data.item.seller == localStorage.getItem('user_id')) {

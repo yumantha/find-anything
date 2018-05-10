@@ -4,7 +4,8 @@
       <mat-grid-list cols="8">
         <mat-grid-tile colspan="1">
           <img *ngIf="!user.image" src="https://www.bighandi.com/img/profile-demo.png" class="profPic">
-          <img *ngIf="user.image" [src]="'http://localhost:3000/images/' + user.image" class="profPic">
+          <!--<img *ngIf="user.image" [src]="'http://localhost:3000/images/' + user.image" class="profPic">-->
+          <img *ngIf="user.image" [src]="'images/' + user.image" class="profPic">
         </mat-grid-tile>
 
         <mat-grid-tile colspan="6">
@@ -118,7 +119,8 @@
                   </div>
 
                   <div *ngIf="item.image">
-                    <img mat-card-image [src]="'http://localhost:3000/images/' + item.image" style="padding: 5px">
+                    <!--<img mat-card-image [src]="'http://localhost:3000/images/' + item.image" style="padding: 5px">-->
+                    <img mat-card-image [src]="'images/' + item.image" style="padding: 5px">
                   </div>
                   <mat-card-header>
                     <div style="width: 100%; margin-left: -15px">
@@ -147,7 +149,8 @@
                   </div>
 
                   <div *ngIf="service.image">
-                    <img mat-card-image [src]="'http://localhost:3000/images/' + service.image" style="padding: 5px">
+                    <!--<img mat-card-image [src]="'http://localhost:3000/images/' + service.image" style="padding: 5px">-->
+                    <img mat-card-image [src]="'images/' + service.image" style="padding: 5px">
                   </div>
                   <mat-card-header>
                     <div style="width: 100%; margin-left: -15px">

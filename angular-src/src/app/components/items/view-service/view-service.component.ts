@@ -65,7 +65,8 @@ export class ViewServiceComponent implements OnInit {
           }
 
           if(this.service.image) {
-            this.imageUrl = 'http://localhost:3000/images/' + this.service.image;
+            // this.imageUrl = 'http://localhost:3000/images/' + this.service.image;
+            this.imageUrl = 'images/' + this.service.image;
           }
 
           if(data.service.seller == localStorage.getItem('user_id')) {

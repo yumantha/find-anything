@@ -4,8 +4,8 @@ import 'rxjs/add/operator/map'
 
 @Injectable()
 export class RequestService {
-  server: String = "http://localhost:3000/";
-  // server: String = "/";
+  // server: String = "http://localhost:3000/";
+  server: String = "";
 
   constructor(
     private http: Http

@@ -18,7 +18,8 @@
             </div>
 
             <div *ngIf="request.item.image">
-              <img [src]="'http://localhost:3000/images/' + request.item.image" style="width: 100%">
+              <!--<img [src]="'http://localhost:3000/images/' + request.item.image" style="width: 100%">-->
+              <img [src]="'images/' + request.item.image" style="width: 100%">
             </div>
           </div>
         </mat-grid-tile>
