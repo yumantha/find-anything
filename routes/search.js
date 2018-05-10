@@ -12,7 +12,7 @@ function sortByKey(array, key) {
     });
 }
 
-router.get('/:query', (req, res, next)=>{
+router.post('/:query', (req, res, next)=>{
     const query = req.params.query;
     const queryArray = query.split(";");
     queryArray.shift();
