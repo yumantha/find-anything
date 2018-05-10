@@ -70,7 +70,8 @@ export class ProfileComponent implements OnInit {
           });
 
         if(this.user.image) {
-          this.imageUrl = 'http://localhost:3000/images/' + this.user.image;
+          // this.imageUrl = 'http://localhost:3000/images/' + this.user.image;
+          this.imageUrl = 'images/' + this.user.image;
         }
 
         if(this.user.userType === 'seller') {

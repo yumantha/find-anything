@@ -4975,7 +4975,8 @@ var ProfileComponent = /** @class */ (function () {
                 }
             });
             if (_this.user.image) {
-                _this.imageUrl = 'http://localhost:3000/images/' + _this.user.image;
+                // this.imageUrl = 'http://localhost:3000/images/' + this.user.image;
+                _this.imageUrl = 'images/' + _this.user.image;
             }
             if (_this.user.userType === 'seller') {
                 _this.user.sellingItems.forEach(function (item) {
@@ -6244,7 +6245,7 @@ var SearchService = /** @class */ (function () {
     SearchService.prototype.search = function (query) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.get(this.server + 'search/' + query, { headers: headers })
+        return this.http.post(this.server + 'search/' + query, {}, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     SearchService = __decorate([
