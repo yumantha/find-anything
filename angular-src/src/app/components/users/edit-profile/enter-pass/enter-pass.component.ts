@@ -26,7 +26,6 @@ export class EnterPassDialog implements OnInit {
       password: this.password,
       userType: localStorage.getItem('user_type')
     };
-    // console.log(user);
 
     if(user.password) {
       this.authService.comparePasswords(user)
@@ -39,7 +38,6 @@ export class EnterPassDialog implements OnInit {
         msg: 'Please enter your current password'
       });
     }
-
   }
 
   onDialogCancel() {

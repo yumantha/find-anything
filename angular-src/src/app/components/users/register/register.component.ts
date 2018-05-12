@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ValidateService} from "../../../services/validate/validate.service";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {AuthService} from "../../../services/authenticate/auth.service";
@@ -23,14 +23,11 @@ export class RegisterComponent implements OnInit {
   address: String;
   userType: String;
 
-  // profPic: any;
-
   constructor(
     private validateService: ValidateService,
     private flashMessagesService: FlashMessagesService,
     private authService: AuthService,
     private router: Router
-    // private elementRef: ElementRef
   ) { }
 
   ngOnInit() {
@@ -38,9 +35,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegisterSubmit() {
-    // let files = this.elementRef.nativeElement.querySelector("#profPic").files;
-    // this.profPic = files[0];
-
     const user = {
       name: this.name,
       username: this.username,
@@ -51,7 +45,6 @@ export class RegisterComponent implements OnInit {
       mobile: this.mobile,
       address: this.address,
       userType: this.userType
-      // profPic: this.profPic
     };
 
     console.log(user);

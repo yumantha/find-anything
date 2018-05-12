@@ -221,7 +221,7 @@ var appRoutes = [
     { path: 'services/new', component: __WEBPACK_IMPORTED_MODULE_19__components_items_add_service_add_service_component__["a" /* AddServiceComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_59__guards_auth_guard__["a" /* AuthGuard */]] },
     { path: 'services/:id', component: __WEBPACK_IMPORTED_MODULE_21__components_items_view_service_view_service_component__["a" /* ViewServiceComponent */] },
     { path: 'services/:id/edit', component: __WEBPACK_IMPORTED_MODULE_25__components_items_edit_service_edit_service_component__["a" /* EditServiceComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_59__guards_auth_guard__["a" /* AuthGuard */]] },
-    { path: 'dashboard', component: __WEBPACK_IMPORTED_MODULE_28__components_common_admin_dashboard_admin_dashboard_component__["a" /* AdminDashboardComponent */] },
+    { path: 'dashboard', component: __WEBPACK_IMPORTED_MODULE_28__components_common_admin_dashboard_admin_dashboard_component__["a" /* AdminDashboardComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_59__guards_auth_guard__["a" /* AuthGuard */]] },
     { path: 'help', component: __WEBPACK_IMPORTED_MODULE_29__components_common_help_help_component__["a" /* HelpComponent */] },
     { path: 'help/helpreglog', component: __WEBPACK_IMPORTED_MODULE_30__components_common_help_help_reglog_help_reglog_component__["a" /* HelpReglogComponent */] },
     { path: 'help/helpprofile', component: __WEBPACK_IMPORTED_MODULE_31__components_common_help_help_prof_help_prof_component__["a" /* HelpProfComponent */] },
@@ -1985,14 +1985,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-// import {FormControl} from "@angular/forms";
-// import {Observable} from 'rxjs/Observable';
-// import {startWith} from 'rxjs/operators/startWith';
-// import {map} from 'rxjs/operators/map';
 var AddItemComponent = /** @class */ (function () {
-    // typeCtrl: FormControl;
-    // filteredTypes: Observable<any[]>;
-    // types: String[] = ['aaa', 'bbb', 'ccc', 'ddd', 'eee'];
     function AddItemComponent(validateService, flashMessagesService, itemService, router) {
         this.validateService = validateService;
         this.flashMessagesService = flashMessagesService;
@@ -2000,17 +1993,7 @@ var AddItemComponent = /** @class */ (function () {
         this.router = router;
         this.isAvailable = true;
         this.itemType = 'item';
-        // this.typeCtrl = new FormControl();
-        // this.filteredTypes = this.typeCtrl.valueChanges
-        //   .pipe(
-        //     startWith(''),
-        //     map(category => category ? this.filterTypes(category) : this.types.slice())
-        //   );
     }
-    // filterTypes(category: string) {
-    //   return this.types.filter(category =>
-    //     category.toLowerCase().indexOf(category.toLowerCase()) === 0);
-    // }
     AddItemComponent.prototype.ngOnInit = function () {
     };
     AddItemComponent.prototype.onAddItem = function () {
@@ -2088,7 +2071,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/items/add-service/add-service.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <mat-card>\n    <mat-card-title>Add New Service</mat-card-title>\n    <mat-card-content>\n      <form (submit)=\"onAddService()\">\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <input placeholder=\"Name\" matInput type=\"text\" [(ngModel)]=\"name\" name=\"name\" required>\n          </mat-form-field>\n        </div>\n\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <input placeholder=\"Category\" matInput type=\"text\" [(ngModel)]=\"category\" name=\"category\">\n          </mat-form-field>\n        </div>\n\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <input matInput placeholder=\"Price\" type=\"number\" [(ngModel)]=\"price\" name=\"price\" required id=\"price\">\n            <span matPrefix>Rs.&nbsp;</span>\n            <span matSuffix>.00</span>\n          </mat-form-field>\n        </div>\n\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <input placeholder=\"Location\" matInput type=\"text\" [(ngModel)]=\"location\" name=\"location\">\n          </mat-form-field>\n        </div>\n\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <mat-select placeholder=\"District\" [(ngModel)]=\"district\" name=\"district\">\n              <mat-option>None</mat-option>\n              <mat-option *ngFor=\"let dis of districts\" [value]=\"dis.value\">\n                {{dis.viewValue}}\n              </mat-option>\n            </mat-select>\n          </mat-form-field>\n        </div>\n\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <textarea matInput placeholder=\"Description\" [(ngModel)]=\"description\" name=\"description\"></textarea>\n          </mat-form-field>\n        </div>\n\n        <div>\n          <mat-grid-list cols=\"4\" rowHeight=\"50px\">\n            <mat-grid-tile colspan=\"2\">\n              <mat-form-field class=\"grid-option\">\n                <mat-select placeholder=\"Available Days\" [(value)]=\"availableDays\">\n                  <mat-option value=\"Everyday\">\n                    Everyday\n                  </mat-option>\n\n                  <mat-option value=\"Weekdays\">\n                    Weekdays\n                  </mat-option>\n\n                  <mat-option value=\"Weekdays and Saturday\">\n                    Weekdays + Saturday\n                  </mat-option>\n                </mat-select>\n              </mat-form-field>\n            </mat-grid-tile>\n\n            <mat-grid-tile colspan=\"1\">\n              <mat-form-field class=\"grid-option\">\n                <div matTooltip=\"Enter in 24hr format (HH:MM)\" matTooltipPosition=\"below\">\n                  <input placeholder=\"From\" matInput type=\"text\" [(ngModel)]=\"startTime\" name=\"startTime\">\n                </div>\n              </mat-form-field>\n            </mat-grid-tile>\n\n            <mat-grid-tile colspan=\"1\">\n              <mat-form-field  class=\"grid-option\">\n                <div matTooltip=\"Enter in 24hr format (HH:MM)\" matTooltipPosition=\"below\">\n                  <input placeholder=\"To\" matInput type=\"text\" [(ngModel)]=\"endTime\" name=\"endTime\">\n                </div>\n              </mat-form-field>\n            </mat-grid-tile>\n          </mat-grid-list>\n        </div>\n\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <textarea matInput placeholder=\"Extra notes\" [(ngModel)]=\"extraNotes\" name=\"extraNotes\"></textarea>\n          </mat-form-field>\n        </div>\n\n        <div>\n          <button mat-raised-button color=\"primary\" type=\"submit\" style=\"margin: 10px\">Submit</button>\n          <button mat-raised-button color=\"basic\" type=\"button\" [routerLink]=\"['/profile']\" style=\"margin: 10px\">Cancel</button>\n        </div>\n      </form>\n    </mat-card-content>\n  </mat-card>\n</div>\n"
+module.exports = "<div class=\"container\">\n  <mat-card>\n    <mat-card-title>Add New Service</mat-card-title>\n    <mat-card-content>\n      <form (submit)=\"onAddService()\">\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <input placeholder=\"Name\" matInput type=\"text\" [(ngModel)]=\"name\" name=\"name\" required>\n          </mat-form-field>\n        </div>\n\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <input placeholder=\"Category\" matInput type=\"text\" [(ngModel)]=\"category\" name=\"category\">\n          </mat-form-field>\n        </div>\n\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <input matInput placeholder=\"Price\" type=\"number\" [(ngModel)]=\"price\" name=\"price\" id=\"price\">\n            <span matPrefix>Rs.&nbsp;</span>\n            <span matSuffix>.00</span>\n          </mat-form-field>\n        </div>\n\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <input placeholder=\"Location\" matInput type=\"text\" [(ngModel)]=\"location\" name=\"location\">\n          </mat-form-field>\n        </div>\n\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <mat-select placeholder=\"District\" [(ngModel)]=\"district\" name=\"district\">\n              <mat-option>None</mat-option>\n              <mat-option *ngFor=\"let dis of districts\" [value]=\"dis.value\">\n                {{dis.viewValue}}\n              </mat-option>\n            </mat-select>\n          </mat-form-field>\n        </div>\n\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <textarea matInput placeholder=\"Description\" [(ngModel)]=\"description\" name=\"description\"></textarea>\n          </mat-form-field>\n        </div>\n\n        <div>\n          <mat-grid-list cols=\"4\" rowHeight=\"50px\">\n            <mat-grid-tile colspan=\"2\">\n              <mat-form-field class=\"grid-option\">\n                <mat-select placeholder=\"Available Days\" [(value)]=\"availableDays\">\n                  <mat-option value=\"Everyday\">\n                    Everyday\n                  </mat-option>\n\n                  <mat-option value=\"Weekdays\">\n                    Weekdays\n                  </mat-option>\n\n                  <mat-option value=\"Weekdays and Saturday\">\n                    Weekdays + Saturday\n                  </mat-option>\n                </mat-select>\n              </mat-form-field>\n            </mat-grid-tile>\n\n            <mat-grid-tile colspan=\"1\">\n              <mat-form-field class=\"grid-option\">\n                <div matTooltip=\"Enter in 24hr format (HH:MM)\" matTooltipPosition=\"below\">\n                  <input placeholder=\"From\" matInput type=\"text\" [(ngModel)]=\"startTime\" name=\"startTime\">\n                </div>\n              </mat-form-field>\n            </mat-grid-tile>\n\n            <mat-grid-tile colspan=\"1\">\n              <mat-form-field  class=\"grid-option\">\n                <div matTooltip=\"Enter in 24hr format (HH:MM)\" matTooltipPosition=\"below\">\n                  <input placeholder=\"To\" matInput type=\"text\" [(ngModel)]=\"endTime\" name=\"endTime\">\n                </div>\n              </mat-form-field>\n            </mat-grid-tile>\n          </mat-grid-list>\n        </div>\n\n        <div>\n          <mat-form-field class=\"add-service-field\">\n            <textarea matInput placeholder=\"Extra notes\" [(ngModel)]=\"extraNotes\" name=\"extraNotes\"></textarea>\n          </mat-form-field>\n        </div>\n\n        <div>\n          <button mat-raised-button color=\"primary\" type=\"submit\" style=\"margin: 10px\">Submit</button>\n          <button mat-raised-button color=\"basic\" type=\"button\" [routerLink]=\"['/profile']\" style=\"margin: 10px\">Cancel</button>\n        </div>\n      </form>\n    </mat-card-content>\n  </mat-card>\n</div>\n"
 
 /***/ }),
 
@@ -2372,7 +2355,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/items/edit-service/edit-service.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div *ngIf=\"dataAvailable\">\n    <mat-card>\n      <mat-card-title>Edit Service</mat-card-title>\n\n      <mat-card-content>\n        <form (submit)=\"onEditService()\">\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <input placeholder=\"Name\" matInput type=\"text\" [(ngModel)]=\"service.name\" name=\"name\" required>\n            </mat-form-field>\n          </div>\n\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <input placeholder=\"Category\" matInput type=\"text\" [(ngModel)]=\"service.category\" name=\"category\">\n            </mat-form-field>\n          </div>\n\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <input matInput placeholder=\"Price\" type=\"number\" [(ngModel)]=\"service.price\" name=\"price\" required id=\"price\">\n              <span matPrefix>Rs.&nbsp;</span>\n              <span matSuffix>.00</span>\n            </mat-form-field>\n          </div>\n\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <input placeholder=\"Location\" matInput type=\"text\" [(ngModel)]=\"service.location\" name=\"location\">\n            </mat-form-field>\n          </div>\n\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <mat-select placeholder=\"District\" [(ngModel)]=\"service.district\" name=\"district\">\n                <mat-option>None</mat-option>\n                <mat-option *ngFor=\"let dis of districts\" [value]=\"dis.value\">\n                  {{dis.viewValue}}\n                </mat-option>\n              </mat-select>\n            </mat-form-field>\n          </div>\n\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <textarea matInput placeholder=\"Description\" [(ngModel)]=\"service.description\" name=\"description\"></textarea>\n            </mat-form-field>\n          </div>\n\n          <div>\n            <mat-grid-list cols=\"4\" rowHeight=\"50px\">\n              <mat-grid-tile colspan=\"2\">\n                <mat-form-field class=\"grid-option\">\n                  <mat-select placeholder=\"Available Days\" [(value)]=\"service.availableDays\">\n                    <mat-option value=\"Everyday\">\n                      Everyday\n                    </mat-option>\n\n                    <mat-option value=\"Weekdays\">\n                      Weekdays\n                    </mat-option>\n\n                    <mat-option value=\"Weekdays and Saturday\">\n                      Weekdays + Saturday\n                    </mat-option>\n                  </mat-select>\n                </mat-form-field>\n              </mat-grid-tile>\n\n              <mat-grid-tile colspan=\"1\">\n                <mat-form-field class=\"grid-option\">\n                  <div matTooltip=\"Enter in 24hr format (HH:MM)\" matTooltipPosition=\"below\">\n                    <input placeholder=\"From\" matInput type=\"text\" [(ngModel)]=\"service.startTime\" name=\"startTime\">\n                  </div>\n                </mat-form-field>\n              </mat-grid-tile>\n\n              <mat-grid-tile colspan=\"1\">\n                <mat-form-field  class=\"grid-option\">\n                  <div matTooltip=\"Enter in 24hr format (HH:MM)\" matTooltipPosition=\"below\">\n                    <input placeholder=\"To\" matInput type=\"text\" [(ngModel)]=\"service.endTime\" name=\"endTime\">\n                  </div>\n                </mat-form-field>\n              </mat-grid-tile>\n            </mat-grid-list>\n          </div>\n\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <textarea matInput placeholder=\"Extra notes on avalability\" [(ngModel)]=\"service.extraNotes\" name=\"extraNotes\"></textarea>\n            </mat-form-field>\n          </div>\n\n          <div>\n            <button mat-raised-button color=\"primary\" type=\"submit\">Submit</button>\n            <button mat-raised-button type=\"button\" (click)=\"onCancel()\">Cancel</button>\n          </div>\n        </form>\n      </mat-card-content>\n    </mat-card>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\">\n  <div *ngIf=\"dataAvailable\">\n    <mat-card>\n      <mat-card-title>Edit Service</mat-card-title>\n\n      <mat-card-content>\n        <form (submit)=\"onEditService()\">\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <input placeholder=\"Name\" matInput type=\"text\" [(ngModel)]=\"service.name\" name=\"name\" required>\n            </mat-form-field>\n          </div>\n\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <input placeholder=\"Category\" matInput type=\"text\" [(ngModel)]=\"service.category\" name=\"category\">\n            </mat-form-field>\n          </div>\n\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <input matInput placeholder=\"Price\" type=\"number\" [(ngModel)]=\"service.price\" name=\"price\" id=\"price\">\n              <span matPrefix>Rs.&nbsp;</span>\n              <span matSuffix>.00</span>\n            </mat-form-field>\n          </div>\n\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <input placeholder=\"Location\" matInput type=\"text\" [(ngModel)]=\"service.location\" name=\"location\">\n            </mat-form-field>\n          </div>\n\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <mat-select placeholder=\"District\" [(ngModel)]=\"service.district\" name=\"district\">\n                <mat-option>None</mat-option>\n                <mat-option *ngFor=\"let dis of districts\" [value]=\"dis.value\">\n                  {{dis.viewValue}}\n                </mat-option>\n              </mat-select>\n            </mat-form-field>\n          </div>\n\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <textarea matInput placeholder=\"Description\" [(ngModel)]=\"service.description\" name=\"description\"></textarea>\n            </mat-form-field>\n          </div>\n\n          <div>\n            <mat-grid-list cols=\"4\" rowHeight=\"50px\">\n              <mat-grid-tile colspan=\"2\">\n                <mat-form-field class=\"grid-option\">\n                  <mat-select placeholder=\"Available Days\" [(value)]=\"service.availableDays\">\n                    <mat-option value=\"Everyday\">\n                      Everyday\n                    </mat-option>\n\n                    <mat-option value=\"Weekdays\">\n                      Weekdays\n                    </mat-option>\n\n                    <mat-option value=\"Weekdays and Saturday\">\n                      Weekdays + Saturday\n                    </mat-option>\n                  </mat-select>\n                </mat-form-field>\n              </mat-grid-tile>\n\n              <mat-grid-tile colspan=\"1\">\n                <mat-form-field class=\"grid-option\">\n                  <div matTooltip=\"Enter in 24hr format (HH:MM)\" matTooltipPosition=\"below\">\n                    <input placeholder=\"From\" matInput type=\"text\" [(ngModel)]=\"service.startTime\" name=\"startTime\">\n                  </div>\n                </mat-form-field>\n              </mat-grid-tile>\n\n              <mat-grid-tile colspan=\"1\">\n                <mat-form-field  class=\"grid-option\">\n                  <div matTooltip=\"Enter in 24hr format (HH:MM)\" matTooltipPosition=\"below\">\n                    <input placeholder=\"To\" matInput type=\"text\" [(ngModel)]=\"service.endTime\" name=\"endTime\">\n                  </div>\n                </mat-form-field>\n              </mat-grid-tile>\n            </mat-grid-list>\n          </div>\n\n          <div>\n            <mat-form-field class=\"add-service-field\">\n              <textarea matInput placeholder=\"Extra notes on avalability\" [(ngModel)]=\"service.extraNotes\" name=\"extraNotes\"></textarea>\n            </mat-form-field>\n          </div>\n\n          <div>\n            <button mat-raised-button color=\"primary\" type=\"submit\">Submit</button>\n            <button mat-raised-button type=\"button\" (click)=\"onCancel()\">Cancel</button>\n          </div>\n        </form>\n      </mat-card-content>\n    </mat-card>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -4423,7 +4406,6 @@ var EditProfileComponent = /** @class */ (function () {
         if (!this.user.address) {
             delete this.user.address;
         }
-        // console.log(this.user);
         this.authService.editUser(this.user)
             .subscribe(function (data) {
             if (data.success) {
@@ -4536,7 +4518,6 @@ var EnterPassDialog = /** @class */ (function () {
             password: this.password,
             userType: localStorage.getItem('user_type')
         };
-        // console.log(user);
         if (user.password) {
             this.authService.comparePasswords(user)
                 .subscribe(function (data) {
@@ -5273,10 +5254,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var RegisterComponent = /** @class */ (function () {
-    // profPic: any;
-    function RegisterComponent(validateService, flashMessagesService, authService, router
-        // private elementRef: ElementRef
-    ) {
+    function RegisterComponent(validateService, flashMessagesService, authService, router) {
         this.validateService = validateService;
         this.flashMessagesService = flashMessagesService;
         this.authService = authService;
@@ -5288,8 +5266,6 @@ var RegisterComponent = /** @class */ (function () {
         this.authService.logout();
     };
     RegisterComponent.prototype.onRegisterSubmit = function () {
-        // let files = this.elementRef.nativeElement.querySelector("#profPic").files;
-        // this.profPic = files[0];
         var _this = this;
         var user = {
             name: this.name,
@@ -5301,7 +5277,6 @@ var RegisterComponent = /** @class */ (function () {
             mobile: this.mobile,
             address: this.address,
             userType: this.userType
-            // profPic: this.profPic
         };
         console.log(user);
         if (!this.validateService.validateRegister(user)) {
@@ -5353,9 +5328,7 @@ var RegisterComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_validate_validate_service__["a" /* ValidateService */],
             __WEBPACK_IMPORTED_MODULE_2_angular2_flash_messages__["FlashMessagesService"],
             __WEBPACK_IMPORTED_MODULE_3__services_authenticate_auth_service__["a" /* AuthService */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* Router */]
-            // private elementRef: ElementRef
-        ])
+            __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* Router */]])
     ], RegisterComponent);
     return RegisterComponent;
 }());
@@ -6323,7 +6296,7 @@ var ValidateService = /** @class */ (function () {
         }
     };
     ValidateService.prototype.validateService = function (service) {
-        if (service.name == undefined || service.price == undefined) {
+        if (service.name == undefined) {
             return false;
         }
         else {

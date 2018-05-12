@@ -71,8 +71,6 @@ export class EditProfileComponent implements OnInit {
       delete this.user.address;
     }
 
-    // console.log(this.user);
-
     this.authService.editUser(this.user)
       .subscribe(data => {
         if(data.success) {

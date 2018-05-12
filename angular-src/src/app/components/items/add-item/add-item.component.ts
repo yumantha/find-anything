@@ -3,10 +3,6 @@ import {ValidateService} from "../../../services/validate/validate.service";
 import {FlashMessagesService} from "angular2-flash-messages";
 import {ItemService} from "../../../services/items/item.service";
 import {Router} from "@angular/router";
-// import {FormControl} from "@angular/forms";
-// import {Observable} from 'rxjs/Observable';
-// import {startWith} from 'rxjs/operators/startWith';
-// import {map} from 'rxjs/operators/map';
 
 @Component({
   selector: 'app-add-item',
@@ -25,29 +21,12 @@ export class AddItemComponent implements OnInit {
 
   itemType: String = 'item';
 
-  // typeCtrl: FormControl;
-  // filteredTypes: Observable<any[]>;
-
-  // types: String[] = ['aaa', 'bbb', 'ccc', 'ddd', 'eee'];
-
   constructor(
     private validateService: ValidateService,
     private flashMessagesService: FlashMessagesService,
     private itemService: ItemService,
     private router: Router
-  ) {
-    // this.typeCtrl = new FormControl();
-    // this.filteredTypes = this.typeCtrl.valueChanges
-    //   .pipe(
-    //     startWith(''),
-    //     map(category => category ? this.filterTypes(category) : this.types.slice())
-    //   );
-  }
-
-  // filterTypes(category: string) {
-  //   return this.types.filter(category =>
-  //     category.toLowerCase().indexOf(category.toLowerCase()) === 0);
-  // }
+  ) { }
 
   ngOnInit() {
   }

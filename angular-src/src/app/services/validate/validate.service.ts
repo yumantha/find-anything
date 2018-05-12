@@ -53,7 +53,7 @@ export class ValidateService {
   }
 
   validateService(service) {
-    if(service.name == undefined || service.price == undefined) {
+    if(service.name == undefined) {
       return false;
     } else {
       return true;

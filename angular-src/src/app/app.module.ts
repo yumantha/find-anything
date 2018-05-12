@@ -81,7 +81,7 @@ const appRoutes = [
   {path: 'services/new', component: AddServiceComponent, canActivate: [AuthGuard]},
   {path: 'services/:id', component: ViewServiceComponent},
   {path: 'services/:id/edit', component: EditServiceComponent, canActivate: [AuthGuard]},
-  {path: 'dashboard', component: AdminDashboardComponent},
+  {path: 'dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard]},
   {path: 'help', component: HelpComponent},
   {path: 'help/helpreglog', component: HelpReglogComponent},
   {path: 'help/helpprofile', component: HelpProfComponent},
