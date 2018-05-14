@@ -118,6 +118,7 @@ router.post('/info', (req, res, next) => {
     }
 });
 
+//get an image from the database
 router.get('/:filename', (req, res, next) => {
     const filename = req.params.filename;
 

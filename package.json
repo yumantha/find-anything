@@ -4,7 +4,7 @@
   "description": "A web app for sellers to sell and for customers to find products and services online",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha || true",
     "start": "node app"
   },
   "dependencies": {
@@ -24,5 +24,9 @@
     "passport-jwt": "*"
   },
   "author": "Yumantha De Silva",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.1.1"
+  }
 }

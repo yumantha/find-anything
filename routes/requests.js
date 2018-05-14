@@ -9,6 +9,7 @@ const Service = require('../models/sales/service');
 const Customer = require('../models/users/customer');
 const Seller = require('../models/users/seller');
 
+//to sort an array of objects from a specific key
 function sortByKey(array, key) {
     return array.sort(function(a, b) {
         const x = a[key];
@@ -474,4 +475,7 @@ router.post('/:id/decline', (req, res, next) => {
     });
 });
 
-module.exports = router;
+module.exports = {
+    router: router,
+    sortByKey: sortByKey
+};

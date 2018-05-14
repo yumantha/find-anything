@@ -52,11 +52,11 @@ require('./config/passport')(passport);
 app.use('/users', users);
 app.use('/items', items);
 app.use('/services', services);
-app.use('/search', search);
+app.use('/search', search.router);
 app.use('/:type/:itemId/reviews', reviews);
 app.use('/notifications', notifications);
-app.use('/requests', requests);
-app.use('/admin', admin);
+app.use('/requests', requests.router);
+app.use('/admin', admin.router);
 app.use('/images', images);
 
 //index route

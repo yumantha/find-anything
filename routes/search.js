@@ -4,6 +4,7 @@ const router = express.Router();
 const Item = require('../models/sales/item');
 const Service = require('../models/sales/service');
 
+//to sort an array of objects from a specific key
 function sortByKey(array, key) {
     return array.sort(function(a, b) {
         const x = a[key];
@@ -12,6 +13,7 @@ function sortByKey(array, key) {
     });
 }
 
+//search the database for a given query
 router.post('/:query', (req, res, next)=>{
     const query = req.params.query;
     const queryArray = query.split(";");
@@ -102,4 +104,7 @@ router.post('/:query', (req, res, next)=>{
     });
 });
 
-module.exports = router;
+module.exports = {
+    router: router,
+    sortByKey: sortByKey
+};

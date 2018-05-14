@@ -3,10 +3,10 @@ const router = express.Router();
 
 const Seller = require('../models/users/seller');
 const Customer = require('../models/users/customer');
-const Admin = require('../models/users/admin');
 const Item = require('../models/sales/item');
 const Service = require('../models/sales/service');
 
+//to sort an array of objects from a specific key
 function sortByKey(array, key) {
     return array.sort(function(a, b) {
         const x = a[key];
@@ -15,6 +15,7 @@ function sortByKey(array, key) {
     });
 }
 
+//given an array, a key and a number, get the top number of items when sorted by the given key
 function getTopNum(array, num, key) {
     return sortByKey(array, key)
         .reverse()
@@ -30,6 +31,7 @@ function getTopNum(array, num, key) {
         .slice(0, num);
 }
 
+//convert a give timestamp to the usual date format
 function getDate(timestamp) {
     let date = {};
     let dateToFormat = new Date(parseInt(timestamp.replace(timestamp.substring(10), '000')));
@@ -545,4 +547,11 @@ router.get('/getstats/seller/:id', (req, res, next) => {
     });
 });
 
-module.exports = router;
+module.exports = {
+    router: router,
+    sortByKey: sortByKey,
+    getTopNum: getTopNum,
+    getDate: getDate
+};
+
+// module.exports = router;
