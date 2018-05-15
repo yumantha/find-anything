@@ -44,7 +44,7 @@ router.post('/', (req, res, next) => {
 });
 
 //get an item from the database
-router.get('/:id', (req, res, next) => {
+router.post('/:id', (req, res, next) => {
     const id = req.params.id;
 
     Item.getItemById(id, (error, item) => {

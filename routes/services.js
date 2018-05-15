@@ -49,7 +49,7 @@ router.post('/', (req, res, next) => {
 });
 
 //get a service from the database
-router.get('/:id', (req, res, next) => {
+router.post('/:id', (req, res, next) => {
     const id = req.params.id;
 
     Service.getItemById(id, (error, service) => {

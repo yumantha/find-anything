@@ -342,7 +342,7 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res
 });
 
 //view profile of a user
-router.get('/:type/:id', (req, res, next) => {
+router.post('/:type/:id', (req, res, next) => {
     const userId = req.params.id;
     const userType = req.params.type;
 

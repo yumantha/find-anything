@@ -33,7 +33,7 @@ export class ItemService {
   getItem(itemId) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.get(this.server + 'items/' + itemId,{headers: headers})
+    return this.http.post(this.server + 'items/' + itemId, {},{headers: headers})
       .map(res => res.json());
   }
 
@@ -41,7 +41,7 @@ export class ItemService {
   getService(serviceId) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.get(this.server + 'services/' + serviceId,{headers: headers})
+    return this.http.post(this.server + 'services/' + serviceId, {},{headers: headers})
       .map(res => res.json());
   }
 

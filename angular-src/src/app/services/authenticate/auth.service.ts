@@ -72,7 +72,7 @@ export class AuthService {
   getUser(userId, userType) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.get(this.server + 'users/' + userType + '/' + userId, {headers: headers})
+    return this.http.post(this.server + 'users/' + userType + '/' + userId, {headers: headers})
       .map(res => res.json());
   }
 
