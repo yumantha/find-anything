@@ -10,13 +10,14 @@ export class SearchService {
 
   constructor(
     private http: Http
-  ) { }
+  ) {
+  }
 
   //quick search for an item
   search(query) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post(this.server + 'search/' + query, {},{headers: headers})
+    return this.http.post(this.server + 'search/' + query, {}, {headers: headers})
       .map(res => res.json());
   }
 }

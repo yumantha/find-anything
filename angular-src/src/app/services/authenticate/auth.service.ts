@@ -12,7 +12,8 @@ export class AuthService {
 
   constructor(
     private http: Http
-  ) { }
+  ) {
+  }
 
   //register user
   registerUser(user) {
@@ -64,7 +65,7 @@ export class AuthService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append("Content-Type", "application/json");
-    return this.http.get(this.server + 'users/profile',{headers: headers})
+    return this.http.get(this.server + 'users/profile', {headers: headers})
       .map(res => res.json());
   }
 

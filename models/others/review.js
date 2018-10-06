@@ -1,7 +1,7 @@
-const mongoose  = require('mongoose');
+const mongoose = require('mongoose');
 
 //review scema
-const ReviewSchema = mongoose.Schema( {
+const ReviewSchema = mongoose.Schema({
     item: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
@@ -36,33 +36,33 @@ const ReviewSchema = mongoose.Schema( {
 
 const Review = module.exports = mongoose.model('Review', ReviewSchema);
 
-module.exports.addReview = function(newReview, callback) {
+module.exports.addReview = function (newReview, callback) {
     newReview.save(callback);
 };
 
-module.exports.getReviewById = function(reviewId, callback) {
+module.exports.getReviewById = function (reviewId, callback) {
     Review.findById(reviewId, callback);
 };
 
-module.exports.getReviewsByItem = function(itemId, callback) {
+module.exports.getReviewsByItem = function (itemId, callback) {
     const query = {
         item: itemId
     };
     Review.find(query, callback);
 };
 
-module.exports.getReviewsByCustomer = function(userId, callback) {
+module.exports.getReviewsByCustomer = function (userId, callback) {
     const query = {
         customer: userId
     };
     Review.find(query, callback);
 };
 
-module.exports.deleteReview = function(reviewId, callback) {
+module.exports.deleteReview = function (reviewId, callback) {
     Review.findByIdAndRemove(reviewId, callback);
 };
 
-module.exports.updateReview = function(reviewId, editedReview, callback) {
+module.exports.updateReview = function (reviewId, editedReview, callback) {
     Review.findByIdAndUpdate(reviewId, {
         $set: {
             review: editedReview.review,
@@ -71,7 +71,7 @@ module.exports.updateReview = function(reviewId, editedReview, callback) {
     }, callback);
 };
 
-module.exports.getAvgByItem = function(itemId, callback) {
+module.exports.getAvgByItem = function (itemId, callback) {
     Review.aggregate([
         {
             $group: {
@@ -84,7 +84,7 @@ module.exports.getAvgByItem = function(itemId, callback) {
     ], callback)
 };
 
-module.exports.getAvgBySeller = function(sellerId, callback) {
+module.exports.getAvgBySeller = function (sellerId, callback) {
     Review.aggregate([
         {
             $group: {
@@ -97,7 +97,7 @@ module.exports.getAvgBySeller = function(sellerId, callback) {
     ], callback)
 };
 
-module.exports.deleteReviewByCustomer = function(userId, callback) {
+module.exports.deleteReviewByCustomer = function (userId, callback) {
     const query = {
         customer: userId
     };
@@ -105,7 +105,7 @@ module.exports.deleteReviewByCustomer = function(userId, callback) {
     Review.remove(query, callback);
 };
 
-module.exports.deleteReviewBySeller = function(userId, callback) {
+module.exports.deleteReviewBySeller = function (userId, callback) {
     const query = {
         seller: userId
     };

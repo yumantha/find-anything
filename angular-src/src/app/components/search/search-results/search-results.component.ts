@@ -25,7 +25,7 @@ export class SearchResultsComponent implements OnInit {
   rating: Number;
 
   searchObject: any = {};
-  types:any = {};
+  types: any = {};
   priceRange: any = {};
   sortBy: any = {};
 
@@ -76,19 +76,20 @@ export class SearchResultsComponent implements OnInit {
     private searchService: SearchService,
     private flashMessagesService: FlashMessagesService,
     private validateService: ValidateService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.getSearchObject();
     this.assignValues();
     this.searchService.search(this.query)
       .subscribe(data => {
-        if(data.success) {
-          if(data.results) {
+        if (data.success) {
+          if (data.results) {
             this.resultsAvailable = true;
             data.results.forEach((result) => {
-              if(result.avgRating) {
-                result.avgRating = (Math.round(result.avgRating * 100))/100;
+              if (result.avgRating) {
+                result.avgRating = (Math.round(result.avgRating * 100)) / 100;
               }
               this.resultsArray.push(result);
             });
@@ -108,25 +109,31 @@ export class SearchResultsComponent implements OnInit {
   }
 
   refineSearch() {
-    if(!this.name.trim()) {
-      return this.flashMessagesService.show('Please enter name to search for', {cssClass: 'alert-danger', timeout: 5000});
+    if (!this.name.trim()) {
+      return this.flashMessagesService.show('Please enter name to search for', {
+        cssClass: 'alert-danger',
+        timeout: 5000
+      });
     }
 
-    if(this.priceUpper) {
-      if(!this.validateService.validatePrice(this.priceUpper)) {
+    if (this.priceUpper) {
+      if (!this.validateService.validatePrice(this.priceUpper)) {
         return this.flashMessagesService.show('Please enter a valid price', {cssClass: 'alert-danger', timeout: 5000});
       }
     }
 
-    if(this.priceLower) {
-      if(!this.validateService.validatePrice(this.priceLower)) {
+    if (this.priceLower) {
+      if (!this.validateService.validatePrice(this.priceLower)) {
         return this.flashMessagesService.show('Please enter a valid price', {cssClass: 'alert-danger', timeout: 5000});
       }
     }
 
-    if(this.priceLower && this.priceUpper) {
-      if(!this.validateService.validatePriceRange(this.priceLower, this.priceUpper)) {
-        return this.flashMessagesService.show('Please enter a valid price range', {cssClass: 'alert-danger', timeout: 5000});
+    if (this.priceLower && this.priceUpper) {
+      if (!this.validateService.validatePriceRange(this.priceLower, this.priceUpper)) {
+        return this.flashMessagesService.show('Please enter a valid price range', {
+          cssClass: 'alert-danger',
+          timeout: 5000
+        });
       }
     }
 
@@ -154,34 +161,34 @@ export class SearchResultsComponent implements OnInit {
   }
 
   assignValues() {
-    if(this.searchObject.name) {
+    if (this.searchObject.name) {
       this.name = this.searchObject.name;
     }
 
-    if(this.searchObject.priceRange) {
-      if(this.searchObject.priceRange.priceUpper) {
+    if (this.searchObject.priceRange) {
+      if (this.searchObject.priceRange.priceUpper) {
         this.priceUpper = this.searchObject.priceRange.priceUpper
       }
 
-      if(this.searchObject.priceRange.priceLower) {
+      if (this.searchObject.priceRange.priceLower) {
         this.priceLower = this.searchObject.priceRange.priceLower
       }
     }
 
-    if(this.searchObject.types) {
+    if (this.searchObject.types) {
       this.itemCheck = this.searchObject.types.items;
       this.serviceCheck = this.searchObject.types.services;
     }
 
-    if(this.searchObject.district) {
+    if (this.searchObject.district) {
       this.district = this.searchObject.district;
     }
 
-    if(this.searchObject.category) {
+    if (this.searchObject.category) {
       this.category = this.searchObject.category;
     }
 
-    if(this.searchObject.sortBy) {
+    if (this.searchObject.sortBy) {
       this.sortBy.criteria = this.searchObject.sortBy.criteria;
       this.sortBy.way = this.searchObject.sortBy.way;
     }

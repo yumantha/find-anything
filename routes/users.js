@@ -14,8 +14,8 @@ const Request = require('../models/others/request');
 const Notification = require('../models/others/notification');
 
 //register user
-router.post('/register', (req, res, next)=>{
-    if(req.body.userType === 'seller') {
+router.post('/register', (req, res, next) => {
+    if (req.body.userType === 'seller') {
         let newUser = new Seller({
             name: req.body.name,
             email: req.body.email,
@@ -28,10 +28,13 @@ router.post('/register', (req, res, next)=>{
             timestamp: Date.now().toString()
         });
 
-        Seller.addUser(newUser, (error, user)=>{
-            if(error) {
-                if(error.code === 11000) {
-                    return res.json({success: false, msg: 'Failed to register user: the username or email you entered already exists'})
+        Seller.addUser(newUser, (error, user) => {
+            if (error) {
+                if (error.code === 11000) {
+                    return res.json({
+                        success: false,
+                        msg: 'Failed to register user: the username or email you entered already exists'
+                    })
                 } else {
                     return res.json({success: false, msg: 'Failed to register user. Error: ' + error})
                 }
@@ -39,7 +42,7 @@ router.post('/register', (req, res, next)=>{
                 return res.json({success: true, msg: 'User registered'});
             }
         });
-    } else if(req.body.userType === 'customer') {
+    } else if (req.body.userType === 'customer') {
         let newUser = new Customer({
             name: req.body.name,
             email: req.body.email,
@@ -52,10 +55,13 @@ router.post('/register', (req, res, next)=>{
             timestamp: Date.now().toString()
         });
 
-        Customer.addUser(newUser, (error, user)=>{
-            if(error) {
-                if(error.code === 11000) {
-                    return res.json({success: false, msg: 'Failed to register user: the username or email you entered already exists'})
+        Customer.addUser(newUser, (error, user) => {
+            if (error) {
+                if (error.code === 11000) {
+                    return res.json({
+                        success: false,
+                        msg: 'Failed to register user: the username or email you entered already exists'
+                    })
                 } else {
                     return res.json({success: false, msg: 'Failed to register user. Error: ' + error})
                 }
@@ -69,11 +75,11 @@ router.post('/register', (req, res, next)=>{
 });
 
 //edit user profile
-router.post('/editProf', (req, res, next)=>{
+router.post('/editProf', (req, res, next) => {
     const userId = req.body._id;
     const userType = req.body.userType;
 
-    if(userType === 'seller') {
+    if (userType === 'seller') {
         let editedUser = new Seller({
             name: req.body.name,
             username: req.body.username,
@@ -84,14 +90,14 @@ router.post('/editProf', (req, res, next)=>{
 
         // console.log(editedUser);
 
-        Seller.updateUserProf(userId, editedUser, (error, user)=>{
-            if(error) {
+        Seller.updateUserProf(userId, editedUser, (error, user) => {
+            if (error) {
                 return res.json({success: false, msg: 'Failed to update user. Error: ' + error});
             } else {
                 return res.json({success: true, msg: 'User updated'});
             }
         });
-    } else if(userType === 'customer') {
+    } else if (userType === 'customer') {
         let editedUser = new Customer({
             name: req.body.name,
             username: req.body.username,
@@ -102,8 +108,8 @@ router.post('/editProf', (req, res, next)=>{
 
         // console.log(editedUser);
 
-        Customer.updateUserProf(userId, editedUser, (error, user)=>{
-            if(error) {
+        Customer.updateUserProf(userId, editedUser, (error, user) => {
+            if (error) {
                 return res.json({success: false, msg: 'Failed to update user. Error: ' + error});
             } else {
                 return res.json({success: true, msg: 'User updated'});
@@ -119,20 +125,20 @@ router.post('/editAcc', (req, res, next) => {
     const userId = req.body.user_id;
     const userType = req.body.userType;
 
-    if(userType === 'seller') {
+    if (userType === 'seller') {
         let editedUser = new Seller({
             email: req.body.email,
             password: req.body.password
         });
 
-        Seller.updateUserAcc(userId, editedUser, (error, user)=>{
-            if(error) {
+        Seller.updateUserAcc(userId, editedUser, (error, user) => {
+            if (error) {
                 return res.json({success: false, msg: 'Failed to update user. Error: ' + error});
             } else {
                 return res.json({success: true, msg: 'User updated'});
             }
         });
-    } else if(userType === 'customer') {
+    } else if (userType === 'customer') {
         let editedUser = new Customer({
             email: req.body.email,
             password: req.body.password
@@ -140,8 +146,8 @@ router.post('/editAcc', (req, res, next) => {
 
         // console.log(editedUser);
 
-        Customer.updateUserAcc(userId, editedUser, (error, user)=>{
-            if(error) {
+        Customer.updateUserAcc(userId, editedUser, (error, user) => {
+            if (error) {
                 return res.json({success: false, msg: 'Failed to update user. Error: ' + error});
             } else {
                 return res.json({success: true, msg: 'User updated'});
@@ -153,30 +159,31 @@ router.post('/editAcc', (req, res, next) => {
 });
 
 //authenticate
-router.post('/authenticate', (req, res, next)=>{
+router.post('/authenticate', (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
     const userType = req.body.userType;
 
-    if(userType === 'admin') {
+    if (userType === 'admin') {
         Admin.getAdmin((error, admin) => {
-            if(error) {
+            if (error) {
                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
             }
 
-            if(!admin) {
+            if (!admin) {
                 return res.json({success: false, msg: 'Admin not found'});
             } else {
                 Admin.comparePassword(password, admin.password, (error, isMatch) => {
-                    if(error) {
+                    if (error) {
                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                     }
 
-                    if(isMatch) {
+                    if (isMatch) {
                         const token = jwt.sign(admin.toJSON(), config.secret, {
                             expiresIn: 604800, //week
                         });
-                        return res.json({success: true,
+                        return res.json({
+                            success: true,
                             token: 'JWT ' + token,
                             user: {
                                 id: admin._id,
@@ -190,26 +197,27 @@ router.post('/authenticate', (req, res, next)=>{
                 });
             }
         })
-    } else if(userType === 'seller') {
-        Seller.getUserByUsername(username, (error, user)=>{
-            if(error) {
+    } else if (userType === 'seller') {
+        Seller.getUserByUsername(username, (error, user) => {
+            if (error) {
                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
             }
 
-            if(!user) {
+            if (!user) {
                 return res.json({success: false, msg: 'User not found'});
             }
 
-            Seller.comparePassword(password, user.password, (error, isMatch)=>{
-                if(error) {
+            Seller.comparePassword(password, user.password, (error, isMatch) => {
+                if (error) {
                     return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                 }
 
-                if(isMatch) {
+                if (isMatch) {
                     const token = jwt.sign(user.toJSON(), config.secret, {
                         expiresIn: 604800, //week
                     });
-                    return res.json({success: true,
+                    return res.json({
+                        success: true,
                         token: 'JWT ' + token,
                         user: {
                             id: user._id,
@@ -222,26 +230,27 @@ router.post('/authenticate', (req, res, next)=>{
                 }
             })
         });
-    } else if(userType === 'customer') {
-        Customer.getUserByUsername(username, (error, user)=>{
-            if(error) {
+    } else if (userType === 'customer') {
+        Customer.getUserByUsername(username, (error, user) => {
+            if (error) {
                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
             }
 
-            if(!user) {
+            if (!user) {
                 return res.json({success: false, msg: 'User not found'});
             }
 
-            Customer.comparePassword(password, user.password, (error, isMatch)=>{
-                if(error) {
+            Customer.comparePassword(password, user.password, (error, isMatch) => {
+                if (error) {
                     return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                 }
 
-                if(isMatch) {
+                if (isMatch) {
                     const token = jwt.sign(user.toJSON(), config.secret, {
                         expiresIn: 604800, //week
                     });
-                    return res.json({success: true,
+                    return res.json({
+                        success: true,
                         token: 'JWT ' + token,
                         user: {
                             id: user._id,
@@ -265,66 +274,66 @@ router.post('/comparePass', (req, res, next) => {
     const password = req.body.password;
     const userType = req.body.userType;
 
-    if(userType === 'admin') {
+    if (userType === 'admin') {
         Admin.getAdmin((error, admin) => {
-            if(error) {
+            if (error) {
                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
             }
 
-            if(!admin) {
+            if (!admin) {
                 return res.json({success: false, msg: 'Admin not found'});
             }
 
             Admin.comparePassword(password, admin.password, (error, isMatch) => {
-                if(error) {
+                if (error) {
                     return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                 }
 
-                if(!isMatch) {
+                if (!isMatch) {
                     return res.json({success: false, msg: 'Invalid password'});
                 } else {
                     return res.json({success: true, msg: 'Password accepted'});
                 }
             })
         })
-    } else if(userType === 'seller') {
+    } else if (userType === 'seller') {
         Seller.getUserById(userId, (error, user) => {
-            if(error) {
+            if (error) {
                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
             }
 
-            if(!user) {
+            if (!user) {
                 return res.json({success: false, msg: 'User not found'});
             }
 
             Seller.comparePassword(password, user.password, (error, isMatch) => {
-                if(error) {
+                if (error) {
                     return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                 }
 
-                if(!isMatch) {
+                if (!isMatch) {
                     return res.json({success: false, msg: 'Invalid password'});
                 } else {
                     return res.json({success: true, msg: 'Password accepted'});
                 }
             });
         });
-    } else if(userType === 'customer') {
+    } else if (userType === 'customer') {
         Customer.getUserById(userId, (error, user) => {
-            if(error) {
+            if (error) {
                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
             }
 
-            if(!user) {
+            if (!user) {
                 return res.json({success: false, msg: 'User not found'});
             }
 
             Customer.comparePassword(password, user.password, (error, isMatch) => {
-                if(error) {
+                if (error) {
                     return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                 }
 
-                if(!isMatch) {
+                if (!isMatch) {
                     return res.json({success: false, msg: 'Invalid password'});
                 } else {
                     return res.json({success: true, msg: 'Password accepted'});
@@ -337,7 +346,7 @@ router.post('/comparePass', (req, res, next) => {
 });
 
 //user profile
-router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res, next)=>{
+router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res, next) => {
     return res.json({user: req.user});
 });
 
@@ -346,25 +355,25 @@ router.post('/:type/:id', (req, res, next) => {
     const userId = req.params.id;
     const userType = req.params.type;
 
-    if(userType === 'seller') {
+    if (userType === 'seller') {
         Seller.getUserById(userId, (error, user) => {
-            if(error) {
+            if (error) {
                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
             }
 
-            if(!user) {
+            if (!user) {
                 return res.json({success: false, msg: 'User not found'});
             } else {
                 return res.json({success: true, msg: 'User found', user: user});
             }
         })
-    } else if(userType === 'customer') {
+    } else if (userType === 'customer') {
         Customer.getUserById(userId, (error, user) => {
-            if(error) {
+            if (error) {
                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
             }
 
-            if(!user) {
+            if (!user) {
                 return res.json({success: false, msg: 'User not found'});
             } else {
                 return res.json({success: true, msg: 'User found', user: user});
@@ -380,40 +389,58 @@ router.delete('/:type/:id', (req, res, next) => {
     const userId = req.params.id;
     const userType = req.params.type;
 
-    if(userType === 'seller') {
+    if (userType === 'seller') {
         Seller.deleteUser(userId, (error, seller) => {
-            if(error) {
+            if (error) {
                 return res.json({success: false, msg: 'An error occurred (deleting seller). Error: ' + error});
             }
 
-            if(!seller) {
+            if (!seller) {
                 return res.json({success: false, msg: 'User not found'});
             } else {
                 Item.deleteItemsByUser(userId, (error, items) => {
-                    if(error) {
+                    if (error) {
                         return res.json({success: false, msg: 'An error occurred (deleting items). Error: ' + error});
                     } else {
                         Service.deleteItemsByUser(userId, (error, services) => {
-                            if(error) {
-                                return res.json({success: false, msg: 'An error occurred (deleting services). Error: ' + error});
+                            if (error) {
+                                return res.json({
+                                    success: false,
+                                    msg: 'An error occurred (deleting services). Error: ' + error
+                                });
                             } else {
                                 Review.deleteReviewBySeller(userId, (error, reviews) => {
-                                    if(error) {
-                                        return res.json({success: false, msg: 'An error occurred (deleting reviews). Error: ' + error});
+                                    if (error) {
+                                        return res.json({
+                                            success: false,
+                                            msg: 'An error occurred (deleting reviews). Error: ' + error
+                                        });
                                     } else {
                                         Request.deleteRequestsBySeller(userId, (error, requests) => {
-                                            if(error) {
-                                                return res.json({success: false, msg: 'An error occurred (deleting requests). Error: ' + error});
+                                            if (error) {
+                                                return res.json({
+                                                    success: false,
+                                                    msg: 'An error occurred (deleting requests). Error: ' + error
+                                                });
                                             } else {
                                                 Notification.deleteNotificationsBySender(userId, (error, nots) => {
-                                                    if(error) {
-                                                        return res.json({success: false, msg: 'An error occurred (deleting sent notifications). Error: ' + error});
+                                                    if (error) {
+                                                        return res.json({
+                                                            success: false,
+                                                            msg: 'An error occurred (deleting sent notifications). Error: ' + error
+                                                        });
                                                     } else {
                                                         Notification.deleteNotificationsByReceiver(userId, (error, nots2) => {
-                                                            if(error) {
-                                                                return res.json({success: false, msg: 'An error occurred (deleting received notifications). Error: ' + error});
+                                                            if (error) {
+                                                                return res.json({
+                                                                    success: false,
+                                                                    msg: 'An error occurred (deleting received notifications). Error: ' + error
+                                                                });
                                                             } else {
-                                                                return res.json({success: true, msg: 'The user was deleted successfully'});
+                                                                return res.json({
+                                                                    success: true,
+                                                                    msg: 'The user was deleted successfully'
+                                                                });
                                                             }
                                                         })
                                                     }
@@ -428,32 +455,44 @@ router.delete('/:type/:id', (req, res, next) => {
                 })
             }
         })
-    } else if(userType === 'customer') {
+    } else if (userType === 'customer') {
         Customer.deleteUser(userId, (error, customer) => {
-            if(error) {
+            if (error) {
                 return res.json({success: false, msg: 'An error occurred (deleting cutomer). Error: ' + error});
             }
 
-            if(!customer) {
+            if (!customer) {
                 return res.json({success: false, msg: 'User not found'});
             } else {
                 Review.deleteReviewByCustomer(userId, (error, reviews) => {
-                    if(error) {
+                    if (error) {
                         return res.json({success: false, msg: 'An error occurred (deleting reviews). Error: ' + error});
                     } else {
                         Request.deleteRequestsByCustomer(userId, (error, requests) => {
-                            if(error) {
-                                return res.json({success: false, msg: 'An error occurred (deleting requests). Error: ' + error});
+                            if (error) {
+                                return res.json({
+                                    success: false,
+                                    msg: 'An error occurred (deleting requests). Error: ' + error
+                                });
                             } else {
                                 Notification.deleteNotificationsBySender(userId, (error, nots) => {
-                                    if(error) {
-                                        return res.json({success: false, msg: 'An error occurred (deleting sent notifications). Error: ' + error});
+                                    if (error) {
+                                        return res.json({
+                                            success: false,
+                                            msg: 'An error occurred (deleting sent notifications). Error: ' + error
+                                        });
                                     } else {
                                         Notification.deleteNotificationsByReceiver(userId, (error, nots2) => {
-                                            if(error) {
-                                                return res.json({success: false, msg: 'An error occurred (deleting received notifications). Error: ' + error});
+                                            if (error) {
+                                                return res.json({
+                                                    success: false,
+                                                    msg: 'An error occurred (deleting received notifications). Error: ' + error
+                                                });
                                             } else {
-                                                return res.json({success: true, msg: 'The user was deleted successfully'});
+                                                return res.json({
+                                                    success: true,
+                                                    msg: 'The user was deleted successfully'
+                                                });
                                             }
                                         })
                                     }

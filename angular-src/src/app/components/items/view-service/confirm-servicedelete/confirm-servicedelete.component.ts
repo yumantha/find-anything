@@ -13,7 +13,8 @@ export class ConfirmServicedeleteDialog implements OnInit {
     private dialogRef: MatDialogRef<ConfirmServicedeleteDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private itemService: ItemService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
   }

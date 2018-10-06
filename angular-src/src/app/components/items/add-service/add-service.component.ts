@@ -58,7 +58,8 @@ export class AddServiceComponent implements OnInit {
     private router: Router,
     private itemService: ItemService,
     private flashMessagesService: FlashMessagesService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
   }
@@ -79,46 +80,52 @@ export class AddServiceComponent implements OnInit {
       sellerID: localStorage.getItem('user_id')
     };
 
-    if(!this.validateService.validateService(service)) {
+    if (!this.validateService.validateService(service)) {
       this.flashMessagesService.show("Please fill in all necessary fields", {cssClass: 'alert-danger', timeout: 5000});
       return false;
     }
 
-    if(!this.validateService.validateItemSeller(service.sellerID)) {
+    if (!this.validateService.validateItemSeller(service.sellerID)) {
       this.flashMessagesService.show("User not found", {cssClass: 'alert-danger', timeout: 5000});
       return false;
     }
 
-    if(!this.validateService.validatePrice(service.price)) {
+    if (!this.validateService.validatePrice(service.price)) {
       this.flashMessagesService.show("Please enter a valid price", {cssClass: 'alert-danger', timeout: 5000});
       return false;
     }
 
-    if(service.startTime){
-      if(!this.validateService.validateTime(service.startTime)) {
+    if (service.startTime) {
+      if (!this.validateService.validateTime(service.startTime)) {
         this.flashMessagesService.show("Please enter a valid start time", {cssClass: 'alert-danger', timeout: 5000});
         return false;
       }
     }
 
-    if(service.endTime) {
-      if(!this.validateService.validateTime(service.endTime)) {
+    if (service.endTime) {
+      if (!this.validateService.validateTime(service.endTime)) {
         this.flashMessagesService.show("Please enter a valid end time", {cssClass: 'alert-danger', timeout: 5000});
         return false;
       }
     }
 
-    if(service.startTime && service.endTime) {
-      if(!this.validateService.validateTimeGap(service.startTime, service.endTime)) {
-        this.flashMessagesService.show("Please enter valid start and end times", {cssClass: 'alert-danger', timeout: 5000});
+    if (service.startTime && service.endTime) {
+      if (!this.validateService.validateTimeGap(service.startTime, service.endTime)) {
+        this.flashMessagesService.show("Please enter valid start and end times", {
+          cssClass: 'alert-danger',
+          timeout: 5000
+        });
         return false;
       }
     }
 
     this.itemService.addService(service)
       .subscribe(data => {
-        if(data.success) {
-          this.flashMessagesService.show("The service was successfully added", {cssClass: 'alert-success', timeout: 5000});
+        if (data.success) {
+          this.flashMessagesService.show("The service was successfully added", {
+            cssClass: 'alert-success',
+            timeout: 5000
+          });
           this.router.navigate(['/profile']);
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});

@@ -8,11 +8,11 @@ router.get('/:id', (req, res, next) => {
     const userId = req.params.id;
 
     Notification.getNotByUser(userId, (error, notifications) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: "An error occurred. Error: " + error})
         }
 
-        if(!notifications) {
+        if (!notifications) {
             return res.json({success: false, msg: "Notifications not found"})
         } else {
             return res.json({success: true, nots: notifications});
@@ -25,7 +25,7 @@ router.get('/unread/:id', (req, res, next) => {
     const userId = req.params.id;
 
     Notification.getUnreadNots(userId, (error, notNum) => {
-        if(error) {
+        if (error) {
             console.log(error);
             return res.json({success: false, msg: "An error occurred. Error: " + error})
         } else {
@@ -39,11 +39,11 @@ router.post('/:id/check', (req, res, next) => {
     const notId = req.params.id;
 
     Notification.checkNot(notId, (error, notification) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: "An error occurred. Error: " + error})
         }
 
-        if(!notification) {
+        if (!notification) {
             return res.json({success: false, msg: "Notification not found"})
         } else {
             return res.json({success: true});
@@ -56,11 +56,11 @@ router.delete('/:id', (req, res, next) => {
     const notId = req.params.id;
 
     Notification.deleteNotification(notId, (error, notification) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: "An error occurred. Error: " + error})
         }
 
-        if(!notification) {
+        if (!notification) {
             return res.json({success: false, msg: "Notification not found"})
         } else {
             return res.json({success: true, msg: "Notification deleted"});

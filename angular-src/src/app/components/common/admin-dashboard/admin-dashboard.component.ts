@@ -51,18 +51,22 @@ export class AdminDashboardComponent implements OnInit {
     private adminService: AdminService,
     private flashMessagesService: FlashMessagesService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
-    if(localStorage.getItem('user_type') !== 'admin') {
-      this.flashMessagesService.show("You must be an admin to access this page", {cssClass: 'alert-danger', timeout: 5000});
+    if (localStorage.getItem('user_type') !== 'admin') {
+      this.flashMessagesService.show("You must be an admin to access this page", {
+        cssClass: 'alert-danger',
+        timeout: 5000
+      });
       this.router.navigate(['/profile']);
       return false;
     }
 
     this.adminService.getNumbers()
       .subscribe(data => {
-        if(data.success) {
+        if (data.success) {
           this.numbers = data.stats;
           // console.log(this.numbers);
           this.dataLoaded();
@@ -73,7 +77,7 @@ export class AdminDashboardComponent implements OnInit {
 
     this.adminService.getTimes()
       .subscribe(data => {
-        if(data.success) {
+        if (data.success) {
           this.times = data.stats;
           this.createDates(this.sellerDateCount);
           this.createDates(this.customerDateCount);
@@ -90,7 +94,7 @@ export class AdminDashboardComponent implements OnInit {
 
     this.adminService.getTopRated()
       .subscribe(data => {
-        if(data.success) {
+        if (data.success) {
           this.topRated = data.stats;
           // console.log(this.topRated);
           this.dataLoaded();
@@ -101,7 +105,7 @@ export class AdminDashboardComponent implements OnInit {
 
     this.adminService.getCustomerStats()
       .subscribe(data => {
-        if(data.success) {
+        if (data.success) {
           this.customerStats = data.stats;
           // console.log(this.customerStats);
           this.dataLoaded();
@@ -112,7 +116,7 @@ export class AdminDashboardComponent implements OnInit {
 
     this.adminService.getItemStats()
       .subscribe(data => {
-        if(data.success) {
+        if (data.success) {
           this.itemStats = data.stats;
           // console.log(this.itemStats);
           this.dataLoaded();
@@ -123,7 +127,7 @@ export class AdminDashboardComponent implements OnInit {
 
     this.adminService.getServiceStats()
       .subscribe(data => {
-        if(data.success) {
+        if (data.success) {
           this.serviceStats = data.stats;
           // console.log(this.serviceStats);
           this.dataLoaded();
@@ -134,13 +138,13 @@ export class AdminDashboardComponent implements OnInit {
 
     this.adminService.getSellerStats()
       .subscribe(data => {
-        if(data.success) {
+        if (data.success) {
           this.sellerStats = data.stats;
-          for(const statType in this.sellerStats) {
-            if(this.sellerStats.hasOwnProperty(statType)) {
-              if(statType !== 'selling') {
-                for(const itemType in this.sellerStats[statType]) {
-                  if(this.sellerStats[statType].hasOwnProperty(itemType)) {
+          for (const statType in this.sellerStats) {
+            if (this.sellerStats.hasOwnProperty(statType)) {
+              if (statType !== 'selling') {
+                for (const itemType in this.sellerStats[statType]) {
+                  if (this.sellerStats[statType].hasOwnProperty(itemType)) {
                     this.sellerStats[statType][itemType].forEach((seller) => {
                       this.adminService.getSellerUsername(seller._id)
                         .subscribe(data => {
@@ -161,7 +165,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   dataLoaded() {
-    if(this.numbers && this.times && this.topRated && this.sellerStats && this.customerStats && this.itemStats && this.serviceStats) {
+    if (this.numbers && this.times && this.topRated && this.sellerStats && this.customerStats && this.itemStats && this.serviceStats) {
       this.loaded = true;
 
       this.sellerChart = this.drawChart('sellerCanvas', this.times.sellers, 'Seller');
@@ -184,48 +188,48 @@ export class AdminDashboardComponent implements OnInit {
     let items = this.itemDateCount;
     let services = this.serviceDateCount;
 
-    if(this.times.users.sellers.length > 0) {
-      for(let i=0; i<this.times.users.sellers.length; i++) {
+    if (this.times.users.sellers.length > 0) {
+      for (let i = 0; i < this.times.users.sellers.length; i++) {
         let dateToCompare = this.times.users.sellers[i].year + " " + this.times.users.sellers[i].month;
 
-        for(let j=0; j<sellers.length; j++) {
-          if(dateToCompare === sellers[j].date) {
+        for (let j = 0; j < sellers.length; j++) {
+          if (dateToCompare === sellers[j].date) {
             sellers[j].count++;
           }
         }
       }
     }
 
-    if(this.times.users.customers.length > 0) {
-      for(let i=0; i<this.times.users.customers.length; i++) {
+    if (this.times.users.customers.length > 0) {
+      for (let i = 0; i < this.times.users.customers.length; i++) {
         let dateToCompare = this.times.users.customers[i].year + " " + this.times.users.customers[i].month;
 
-        for(let j=0; j<customers.length; j++) {
-          if(dateToCompare === customers[j].date) {
+        for (let j = 0; j < customers.length; j++) {
+          if (dateToCompare === customers[j].date) {
             customers[j].count++;
           }
         }
       }
     }
 
-    if(this.times.sales.items.length > 0) {
-      for(let i=0; i<this.times.sales.items.length; i++) {
+    if (this.times.sales.items.length > 0) {
+      for (let i = 0; i < this.times.sales.items.length; i++) {
         let dateToCompare = this.times.sales.items[i].year + " " + this.times.sales.items[i].month;
 
-        for(let j=0; j<items.length; j++) {
-          if(dateToCompare === items[j].date) {
+        for (let j = 0; j < items.length; j++) {
+          if (dateToCompare === items[j].date) {
             items[j].count++;
           }
         }
       }
     }
 
-    if(this.times.sales.services.length > 0) {
-      for(let i=0; i<this.times.sales.services.length; i++) {
+    if (this.times.sales.services.length > 0) {
+      for (let i = 0; i < this.times.sales.services.length; i++) {
         let dateToCompare = this.times.sales.services[i].year + " " + this.times.sales.services[i].month;
 
-        for(let j=0; j<services.length; j++) {
-          if(dateToCompare === services[j].date) {
+        for (let j = 0; j < services.length; j++) {
+          if (dateToCompare === services[j].date) {
             services[j].count++;
           }
         }
@@ -244,19 +248,19 @@ export class AdminDashboardComponent implements OnInit {
     let i = 0;
     let year = this.startYear;
 
-    while(true) {
+    while (true) {
       array.push({
         date: year + " " + this.monthList[i],
         count: 0
       });
 
-      if((this.currentYear === year) && (this.currentMonth) === this.monthList[i]) {
+      if ((this.currentYear === year) && (this.currentMonth) === this.monthList[i]) {
         break;
       }
 
       i++;
 
-      if(i === 12) {
+      if (i === 12) {
         i = 0;
         year = (parseInt(year.toString()) + 1).toString();
       }
@@ -287,7 +291,7 @@ export class AdminDashboardComponent implements OnInit {
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero:true
+              beginAtZero: true
             }
           }]
         }

@@ -14,7 +14,8 @@ export class EditReviewDialog implements OnInit {
     private dialogRef: MatDialogRef<EditReviewDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private reviewService: ReviewService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
   }
@@ -27,14 +28,14 @@ export class EditReviewDialog implements OnInit {
       itemType: this.review.item.type
     };
 
-    if(localStorage.getItem('user_type') !== 'customer') {
+    if (localStorage.getItem('user_type') !== 'customer') {
       return this.dialogRef.close({
         success: false,
         msg: "You must be logged as a customer to add a review"
       });
     }
 
-    if(!(editedReview.review && editedReview.rating)) {
+    if (!(editedReview.review && editedReview.rating)) {
       return this.dialogRef.close({
         success: false,
         msg: "Please enter a review and a rating"

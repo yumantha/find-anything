@@ -1,24 +1,48 @@
 <mat-toolbar color="primary">
-  <button mat-button [routerLink]="['/']"><mat-icon>home</mat-icon></button>
+  <button mat-button [routerLink]="['/']">
+    <mat-icon>home</mat-icon>
+  </button>
 
   <div fxLayout="row" fxShow="false" fxShow.gt-sm style="width: 100%">
 
     <form id="search-form">
       <div>
-        <button type="submit" mat-button style="float: right" (click)="quickSearch(searchKeyword)"><mat-icon>search</mat-icon></button>
+        <button type="submit" mat-button style="float: right" (click)="quickSearch(searchKeyword)">
+          <mat-icon>search</mat-icon>
+        </button>
         <div class="form-group" style="overflow: hidden; padding-right: .5em;">
-          <input class="form-control" type="text" placeholder="Quick Search..." style="width: 100%;"  [(ngModel)]="searchKeyword" name="searchKeyword"/>
-        </div>​
+          <input class="form-control" type="text" placeholder="Quick Search..." style="width: 100%;"
+                 [(ngModel)]="searchKeyword" name="searchKeyword"/>
+        </div>
+        ​
       </div>
     </form>
 
     <div class="menu-buttons">
-      <button mat-button *ngIf="this.authService.loggedIn() && !this.isAdmin()" [routerLink]="['/notifications']"><mat-icon>notifications</mat-icon> Notifications</button>
-      <button mat-button *ngIf="this.authService.loggedIn() && !this.isAdmin()" [routerLink]="['/profile']"><mat-icon>account_circle</mat-icon> Profile</button>
-      <button mat-button *ngIf="this.authService.loggedIn() && this.isAdmin()" [routerLink]="['/dashboard']"><mat-icon>dashboard</mat-icon> Dashboard</button>
-      <button mat-button *ngIf="this.authService.loggedIn()" (click)="onLogoutClick()"><mat-icon>person_outline</mat-icon> LogOut</button>
-      <button mat-button *ngIf="!this.authService.loggedIn()" [routerLink]="['/register']"><mat-icon>person_add</mat-icon> Register</button>
-      <button mat-button *ngIf="!this.authService.loggedIn()" [routerLink]="['/login']"><mat-icon>person</mat-icon> LogIn</button>
+      <button mat-button *ngIf="this.authService.loggedIn() && !this.isAdmin()" [routerLink]="['/notifications']">
+        <mat-icon>notifications</mat-icon>
+        Notifications
+      </button>
+      <button mat-button *ngIf="this.authService.loggedIn() && !this.isAdmin()" [routerLink]="['/profile']">
+        <mat-icon>account_circle</mat-icon>
+        Profile
+      </button>
+      <button mat-button *ngIf="this.authService.loggedIn() && this.isAdmin()" [routerLink]="['/dashboard']">
+        <mat-icon>dashboard</mat-icon>
+        Dashboard
+      </button>
+      <button mat-button *ngIf="this.authService.loggedIn()" (click)="onLogoutClick()">
+        <mat-icon>person_outline</mat-icon>
+        LogOut
+      </button>
+      <button mat-button *ngIf="!this.authService.loggedIn()" [routerLink]="['/register']">
+        <mat-icon>person_add</mat-icon>
+        Register
+      </button>
+      <button mat-button *ngIf="!this.authService.loggedIn()" [routerLink]="['/login']">
+        <mat-icon>person</mat-icon>
+        LogIn
+      </button>
     </div>
 
   </div>
@@ -31,10 +55,28 @@
 
 <!--<mat-menu x-position="below" #menu="matMenu">-->
 <mat-menu #menu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item *ngIf="this.authService.loggedIn() && !this.isAdmin()" [routerLink]="['/notifications']"><mat-icon>notifications</mat-icon> Notifications</button>
-  <button mat-menu-item *ngIf="this.authService.loggedIn() && !this.isAdmin()" [routerLink]="['/profile']"><mat-icon>account_circle</mat-icon> Profile</button>
-  <button mat-menu-item *ngIf="this.authService.loggedIn() && this.isAdmin()" [routerLink]="['/dashboard']"><mat-icon>dashboard</mat-icon> Dashboard</button>
-  <button mat-menu-item *ngIf="this.authService.loggedIn()" (click)="onLogoutClick()"><mat-icon>person_outline</mat-icon> LogOut</button>
-  <button mat-menu-item *ngIf="!this.authService.loggedIn()" [routerLink]="['/register']"><mat-icon>person_add</mat-icon> Register</button>
-  <button mat-menu-item *ngIf="!this.authService.loggedIn()" [routerLink]="['/login']"><mat-icon>person</mat-icon> LogIn</button>
+  <button mat-menu-item *ngIf="this.authService.loggedIn() && !this.isAdmin()" [routerLink]="['/notifications']">
+    <mat-icon>notifications</mat-icon>
+    Notifications
+  </button>
+  <button mat-menu-item *ngIf="this.authService.loggedIn() && !this.isAdmin()" [routerLink]="['/profile']">
+    <mat-icon>account_circle</mat-icon>
+    Profile
+  </button>
+  <button mat-menu-item *ngIf="this.authService.loggedIn() && this.isAdmin()" [routerLink]="['/dashboard']">
+    <mat-icon>dashboard</mat-icon>
+    Dashboard
+  </button>
+  <button mat-menu-item *ngIf="this.authService.loggedIn()" (click)="onLogoutClick()">
+    <mat-icon>person_outline</mat-icon>
+    LogOut
+  </button>
+  <button mat-menu-item *ngIf="!this.authService.loggedIn()" [routerLink]="['/register']">
+    <mat-icon>person_add</mat-icon>
+    Register
+  </button>
+  <button mat-menu-item *ngIf="!this.authService.loggedIn()" [routerLink]="['/login']">
+    <mat-icon>person</mat-icon>
+    LogIn
+  </button>
 </mat-menu>

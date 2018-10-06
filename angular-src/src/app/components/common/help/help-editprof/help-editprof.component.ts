@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-help-editprof',
@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HelpEditprofComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

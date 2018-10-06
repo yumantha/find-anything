@@ -44,7 +44,8 @@
 
           <div>
             <mat-form-field class="add-service-field">
-              <textarea matInput placeholder="Description" [(ngModel)]="service.description" name="description"></textarea>
+              <textarea matInput placeholder="Description" [(ngModel)]="service.description"
+                        name="description"></textarea>
             </mat-form-field>
           </div>
 
@@ -77,7 +78,7 @@
               </mat-grid-tile>
 
               <mat-grid-tile colspan="1">
-                <mat-form-field  class="grid-option">
+                <mat-form-field class="grid-option">
                   <div matTooltip="Enter in 24hr format (HH:MM)" matTooltipPosition="below">
                     <input placeholder="To" matInput type="text" [(ngModel)]="service.endTime" name="endTime">
                   </div>
@@ -88,7 +89,8 @@
 
           <div>
             <mat-form-field class="add-service-field">
-              <textarea matInput placeholder="Extra notes on avalability" [(ngModel)]="service.extraNotes" name="extraNotes"></textarea>
+              <textarea matInput placeholder="Extra notes on avalability" [(ngModel)]="service.extraNotes"
+                        name="extraNotes"></textarea>
             </mat-form-field>
           </div>
 

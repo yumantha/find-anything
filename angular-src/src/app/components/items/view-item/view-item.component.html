@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-card  style="margin: 15px 0">
+  <mat-card style="margin: 15px 0">
     <div *ngIf="!dataAvailable" style="margin: 20px auto">
       <mat-progress-spinner color="primary" mode="indeterminate" style="margin:0 auto;"></mat-progress-spinner>
     </div>
@@ -10,7 +10,8 @@
         <mat-grid-tile colspan="1" rowspan="5" (mouseenter)="mouseenter()" (mouseleave)="mouseleave()">
           <div style="width: 100%; height: 100%">
             <div class="grid-item" *ngIf="!item.image">
-              <img src="https://www.jainsusa.com/images/store/landscape/not-available.jpg" style="height: 75%; width: auto">
+              <img src="https://www.jainsusa.com/images/store/landscape/not-available.jpg"
+                   style="height: 75%; width: auto">
             </div>
 
             <div class="grid-item" *ngIf="item.image">
@@ -141,15 +142,15 @@
         </div>
       </div>
 
-        <mat-grid-list cols="2" rowHwight="300">
-          <mat-grid-tile colspan="2">
-            <div class="grid-item" *ngIf="item.description">
-              <br/>
-              <p><strong>Description</strong></p>
-              {{item.description}}
-            </div>
-          </mat-grid-tile>
-        </mat-grid-list>
+      <mat-grid-list cols="2" rowHwight="300">
+        <mat-grid-tile colspan="2">
+          <div class="grid-item" *ngIf="item.description">
+            <br/>
+            <p><strong>Description</strong></p>
+            {{item.description}}
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
     </div>
   </mat-card>
 
@@ -163,7 +164,8 @@
     <div *ngIf="reviewsAvailable">
       <div *ngFor="let review of this.reviews">
         <mat-card style="margin-bottom: 5px">
-          <h3><strong><a [routerLink]="['/users/customer/' + review.customer.id]">{{review.customer.username}}</a></strong></h3>
+          <h3><strong><a
+            [routerLink]="['/users/customer/' + review.customer.id]">{{review.customer.username}}</a></strong></h3>
 
           <p>Rating: <strong>{{review.rating}}</strong>/5</p>
           <p>{{review.review}}</p>

@@ -15,7 +15,8 @@ export class EnterPassDialog implements OnInit {
     private dialogRef: MatDialogRef<EnterPassDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private authService: AuthService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
   }
@@ -27,7 +28,7 @@ export class EnterPassDialog implements OnInit {
       userType: localStorage.getItem('user_type')
     };
 
-    if(user.password) {
+    if (user.password) {
       this.authService.comparePasswords(user)
         .subscribe(data => {
           this.dialogRef.close(data);

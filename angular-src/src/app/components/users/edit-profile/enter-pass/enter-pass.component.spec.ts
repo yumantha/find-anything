@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { EnterPassDialog } from './enter-pass.component';
+import {EnterPassDialog} from './enter-pass.component';
 
 describe('EnterPassDialog', () => {
   let component: EnterPassDialog;
@@ -8,9 +8,9 @@ describe('EnterPassDialog', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnterPassDialog ]
+      declarations: [EnterPassDialog]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

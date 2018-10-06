@@ -28,7 +28,7 @@ const storage = new GridFsStorage({
     file: (req, file) => {
         return new Promise((resolve, reject) => {
             crypto.randomBytes(16, (error, buff) => {
-                if(error) {
+                if (error) {
                     return reject(error);
                 }
                 filename = buff.toString('hex') + path.extname(file.originalname);
@@ -52,7 +52,7 @@ const upload = multer({
 //upload an image
 router.post('/upload', (req, res, next) => {
     upload(req, res, (error) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'Failed to upload image. Error: ' + error});
         } else {
             return res.json({success: true, msg: 'Image uploaded successfully', filename: filename});
@@ -65,37 +65,37 @@ router.post('/info', (req, res, next) => {
     const id = req.body.id;
     const type = req.body.type;
 
-    if(type === 'seller') {
+    if (type === 'seller') {
         Seller.changeImage(id, filename, (error, seller) => {
-            if(error) {
+            if (error) {
                 return res.json({success: false, msg: 'Failed to upload image. Error: ' + error});
             }
 
-            if(!seller) {
+            if (!seller) {
                 return res.json({success: false, msg: 'Failed to upload image. Seller not found'});
             } else {
                 return res.json({success: true, msg: 'Image uploaded successfully'});
             }
         });
-    } else if(type === 'customer') {
+    } else if (type === 'customer') {
         Customer.changeImage(id, filename, (error, customer) => {
-            if(error) {
+            if (error) {
                 return res.json({success: false, msg: 'Failed to upload image. Error: ' + error});
             }
 
-            if(!customer) {
+            if (!customer) {
                 return res.json({success: false, msg: 'Failed to upload image. Customer not found'});
             } else {
                 return res.json({success: true, msg: 'Image uploaded successfully'});
             }
         });
-    } else if(type === 'item') {
+    } else if (type === 'item') {
         Item.changeImage(id, filename, (error, item) => {
-            if(error) {
+            if (error) {
                 return res.json({success: false, msg: 'Failed to upload image. Error: ' + error});
             }
 
-            if(!item) {
+            if (!item) {
                 return res.json({success: false, msg: 'Failed to upload image. Item not found'});
             } else {
                 return res.json({success: true, msg: 'Image uploaded successfully'});
@@ -103,11 +103,11 @@ router.post('/info', (req, res, next) => {
         });
     } else if (type === 'service') {
         Service.changeImage(id, filename, (error, service) => {
-            if(error) {
+            if (error) {
                 return res.json({success: false, msg: 'Failed to upload image. Error: ' + error});
             }
 
-            if(!service) {
+            if (!service) {
                 return res.json({success: false, msg: 'Failed to upload image. Service not found'});
             } else {
                 return res.json({success: true, msg: 'Image uploaded successfully'});
@@ -125,11 +125,11 @@ router.get('/:filename', (req, res, next) => {
     gfs.files.findOne({
         filename: filename
     }, (error, file) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
         }
 
-        if(!file) {
+        if (!file) {
             return res.json({success: false, msg: 'No images were found'});
         } else {
             const readstream = gfs.createReadStream(file.filename);
@@ -150,58 +150,58 @@ router.delete('/:query', (req, res, next) => {
         filename: filename,
         root: 'images'
     }, (error, gridStore) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'Failed to get stats. Error: ' + error});
         } else {
-            if(type === 'seller') {
+            if (type === 'seller') {
                 Seller.deleteImage(id, (error, seller) => {
-                    if(error) {
+                    if (error) {
                         return res.json({success: false, msg: 'Failed to delete image. Error: ' + error});
                     }
 
-                    if(!seller) {
+                    if (!seller) {
                         return res.json({success: false, msg: 'Failed to delete image. Seller not found'});
                     } else {
                         return res.json({success: true, msg: 'Image deleted successfully'});
                     }
                 });
-            } else if(type === 'customer') {
+            } else if (type === 'customer') {
                 Customer.deleteImage(id, (error, customer) => {
-                    if(error) {
+                    if (error) {
                         return res.json({success: false, msg: 'Failed to delete image. Error: ' + error});
                     }
 
-                    if(!customer) {
+                    if (!customer) {
                         return res.json({success: false, msg: 'Failed to delete image. Customer not found'});
                     } else {
                         return res.json({success: true, msg: 'Image deleted successfully'});
                     }
                 });
-            } else if(type === 'item') {
+            } else if (type === 'item') {
                 Item.deleteImage(id, (error, item) => {
-                    if(error) {
+                    if (error) {
                         return res.json({success: false, msg: 'Failed to delete image. Error: ' + error});
                     }
 
-                    if(!item) {
+                    if (!item) {
                         return res.json({success: false, msg: 'Failed to delete image. Item not found'});
                     } else {
                         return res.json({success: true, msg: 'Image deleted successfully'});
                     }
                 });
-            } else if(type === 'service') {
+            } else if (type === 'service') {
                 Service.deleteImage(id, (error, service) => {
-                    if(error) {
+                    if (error) {
                         return res.json({success: false, msg: 'Failed to delete image. Error: ' + error});
                     }
 
-                    if(!service) {
+                    if (!service) {
                         return res.json({success: false, msg: 'Failed to delete image. Service not found'});
                     } else {
                         return res.json({success: true, msg: 'Image deleted successfully'});
                     }
                 });
-            } else  {
+            } else {
                 return res.json({success: false, msg: 'Failed to delete image'});
             }
         }

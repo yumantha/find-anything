@@ -13,7 +13,8 @@ export class ConfirmDeleteAccountDialog implements OnInit {
     private dialogRef: MatDialogRef<ConfirmDeleteAccountDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private authService: AuthService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
   }

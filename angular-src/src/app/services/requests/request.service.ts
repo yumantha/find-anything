@@ -9,13 +9,14 @@ export class RequestService {
 
   constructor(
     private http: Http
-  ) { }
+  ) {
+  }
 
   //new request
   newRequest(newReq) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.post(this.server + "requests/" , newReq, {headers: headers})
+    return this.http.post(this.server + "requests/", newReq, {headers: headers})
       .map(res => res.json());
   }
 

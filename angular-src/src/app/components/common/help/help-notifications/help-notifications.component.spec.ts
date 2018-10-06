@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HelpNotificationsComponent } from './help-notifications.component';
+import {HelpNotificationsComponent} from './help-notifications.component';
 
 describe('HelpNotificationsComponent', () => {
   let component: HelpNotificationsComponent;
@@ -8,9 +8,9 @@ describe('HelpNotificationsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HelpNotificationsComponent ]
+      declarations: [HelpNotificationsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

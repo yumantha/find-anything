@@ -116,7 +116,8 @@
                 <mat-grid-tile *ngFor="let item of this.sellingItemsList">
                   <mat-card style="margin: 10px; text-align: center">
                     <div *ngIf="!item.image">
-                      <img mat-card-image src="https://www.jainsusa.com/images/store/landscape/not-available.jpg" style="padding: 5px">
+                      <img mat-card-image src="https://www.jainsusa.com/images/store/landscape/not-available.jpg"
+                           style="padding: 5px">
                     </div>
 
                     <div *ngIf="item.image">
@@ -134,7 +135,8 @@
                       <p>Rs. {{item.price}}.00</p>
                     </mat-card-content>
                     <mat-card-actions>
-                      <button mat-button color="primary" style="width: 100%;" (click)="goToItem(item._id)">Details</button>
+                      <button mat-button color="primary" style="width: 100%;" (click)="goToItem(item._id)">Details
+                      </button>
                     </mat-card-actions>
                   </mat-card>
                 </mat-grid-tile>
@@ -152,7 +154,8 @@
                 <mat-grid-tile *ngFor="let service of this.sellingServicesList">
                   <mat-card style="margin: 10px; text-align: center">
                     <div *ngIf="!service.image">
-                      <img mat-card-image src="https://www.jainsusa.com/images/store/landscape/not-available.jpg" style="padding: 5px">
+                      <img mat-card-image src="https://www.jainsusa.com/images/store/landscape/not-available.jpg"
+                           style="padding: 5px">
                     </div>
 
                     <div *ngIf="service.image">
@@ -170,7 +173,9 @@
                       <p>Rs. {{service.price}}.00</p>
                     </mat-card-content>
                     <mat-card-actions>
-                      <button mat-button color="primary" style="width: 100%;" (click)="goToService(service._id)">Details</button>
+                      <button mat-button color="primary" style="width: 100%;" (click)="goToService(service._id)">
+                        Details
+                      </button>
                     </mat-card-actions>
                   </mat-card>
                 </mat-grid-tile>

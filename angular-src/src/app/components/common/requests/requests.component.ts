@@ -20,39 +20,49 @@ export class RequestsComponent implements OnInit {
     private requestService: RequestService,
     private itemService: ItemService,
     private flashMessagesService: FlashMessagesService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
-    if(localStorage.getItem('user_type') !== 'seller') {
-      this.flashMessagesService.show('You much be logged in as a seller to access that page', {cssClass: 'alert-danger', timeout: 5000});
+    if (localStorage.getItem('user_type') !== 'seller') {
+      this.flashMessagesService.show('You much be logged in as a seller to access that page', {
+        cssClass: 'alert-danger',
+        timeout: 5000
+      });
       return this.router.navigate(['/profile']);
     }
 
-    if(!this.authService.loggedIn()) {
-      this.flashMessagesService.show('You much be logged in to access that page', {cssClass: 'alert-danger', timeout: 5000});
+    if (!this.authService.loggedIn()) {
+      this.flashMessagesService.show('You much be logged in to access that page', {
+        cssClass: 'alert-danger',
+        timeout: 5000
+      });
       return this.router.navigate(['/login']);
     }
 
-    if(localStorage.getItem('user_type') !== 'seller') {
-      this.flashMessagesService.show('You much be signed in as a seller to receive purchase requests', {cssClass: 'alert-danger', timeout: 5000});
+    if (localStorage.getItem('user_type') !== 'seller') {
+      this.flashMessagesService.show('You much be signed in as a seller to receive purchase requests', {
+        cssClass: 'alert-danger',
+        timeout: 5000
+      });
       return this.router.navigate(['/profile']);
     }
 
     this.requestService.getRequstsBySeller(localStorage.getItem('user_id'))
       .subscribe(data => {
-        if(!data.success) {
+        if (!data.success) {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         } else {
           data.reqs.forEach((req) => {
             this.authService.getUser(req.from, 'customer')
               .subscribe(users => {
-                if(!users.success) {
+                if (!users.success) {
                   this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
                 } else {
-                  if(req.itemType==='item') {
+                  if (req.itemType === 'item') {
                     this.itemService.getItem(req.item)
                       .subscribe(items => {
-                        if(!items.success) {
+                        if (!items.success) {
                           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
                         } else {
                           const request = {
@@ -66,15 +76,15 @@ export class RequestsComponent implements OnInit {
 
                           this.requests.push(request);
 
-                          if(this.requests.length > 0) {
+                          if (this.requests.length > 0) {
                             this.reqsAvailable = true;
                           }
                         }
                       })
-                  } else if(req.itemType==='service') {
+                  } else if (req.itemType === 'service') {
                     this.itemService.getService(req.item)
                       .subscribe(services => {
-                        if(!services.success) {
+                        if (!services.success) {
                           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
                         } else {
                           const request = {
@@ -88,7 +98,7 @@ export class RequestsComponent implements OnInit {
 
                           this.requests.push(request);
 
-                          if(this.requests.length > 0) {
+                          if (this.requests.length > 0) {
                             this.reqsAvailable = true;
                           }
                         }
@@ -104,8 +114,11 @@ export class RequestsComponent implements OnInit {
   acceptReq(reqId) {
     this.requestService.acceptRequest(reqId)
       .subscribe(data => {
-        if(data.success) {
-          this.flashMessagesService.show("The request for purchase has been accepted", {cssClass: 'alert-success', timeout: 5000});
+        if (data.success) {
+          this.flashMessagesService.show("The request for purchase has been accepted", {
+            cssClass: 'alert-success',
+            timeout: 5000
+          });
           window.location.reload();
         } else {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
@@ -116,7 +129,7 @@ export class RequestsComponent implements OnInit {
   declineReq(reqId) {
     this.requestService.declineRequest(reqId)
       .subscribe(data => {
-        if(data.success) {
+        if (data.success) {
           this.flashMessagesService.show("The was successfully declined", {cssClass: 'alert-success', timeout: 5000});
           window.location.reload();
         } else {

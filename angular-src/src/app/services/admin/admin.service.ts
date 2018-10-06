@@ -9,7 +9,8 @@ export class AdminService {
 
   constructor(
     private http: Http
-  ) { }
+  ) {
+  }
 
   //get item stats
   getItemStats() {

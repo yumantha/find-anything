@@ -75,7 +75,7 @@
             </mat-grid-tile>
 
             <mat-grid-tile colspan="1">
-              <mat-form-field  class="grid-option">
+              <mat-form-field class="grid-option">
                 <div matTooltip="Enter in 24hr format (HH:MM)" matTooltipPosition="below">
                   <input placeholder="To" matInput type="text" [(ngModel)]="endTime" name="endTime">
                 </div>
@@ -92,7 +92,9 @@
 
         <div>
           <button mat-raised-button color="primary" type="submit" style="margin: 10px">Submit</button>
-          <button mat-raised-button color="basic" type="button" [routerLink]="['/profile']" style="margin: 10px">Cancel</button>
+          <button mat-raised-button color="basic" type="button" [routerLink]="['/profile']" style="margin: 10px">
+            Cancel
+          </button>
         </div>
       </form>
     </mat-card-content>

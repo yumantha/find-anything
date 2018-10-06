@@ -9,10 +9,11 @@ export class AuthGuard implements CanActivate {
     private router: Router,
     private authService: AuthService,
     private flashMessagesService: FlashMessagesService
-  ) { }
+  ) {
+  }
 
   canActivate() {
-    if(this.authService.loggedIn()) {
+    if (this.authService.loggedIn()) {
       return true;
     } else {
       this.flashMessagesService.show("You must be logged in", {cssClass: 'alert-danger', timeout: 5000});

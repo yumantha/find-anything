@@ -20,12 +20,13 @@ export class EditItemComponent implements OnInit {
     private itemService: ItemService,
     private flashMessagesService: FlashMessagesService,
     private validateService: ValidateService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.itemService.getItem(this.itemId)
       .subscribe(data => {
-        if(data.success) {
+        if (data.success) {
           this.item = data.item;
           this.dataAvailable = true;
         } else {
@@ -36,24 +37,24 @@ export class EditItemComponent implements OnInit {
   }
 
   onEditItem() {
-    if(!this.validateService.validateItem(this.item)) {
+    if (!this.validateService.validateItem(this.item)) {
       this.flashMessagesService.show("Please fill in all necessary fields", {cssClass: 'alert-danger', timeout: 5000});
       return false;
     }
 
-    if(!this.validateService.validateItemSeller(this.item.seller)) {
+    if (!this.validateService.validateItemSeller(this.item.seller)) {
       this.flashMessagesService.show("User not found", {cssClass: 'alert-danger', timeout: 5000});
       return false;
     }
 
-    if(!this.validateService.validatePrice(this.item.price)) {
+    if (!this.validateService.validatePrice(this.item.price)) {
       this.flashMessagesService.show("Please enter a valid price", {cssClass: 'alert-danger', timeout: 5000});
       return false;
     }
 
     this.itemService.editItem(this.itemId, this.item)
       .subscribe(data => {
-        if(data.success) {
+        if (data.success) {
           this.flashMessagesService.show("Item successfully edited", {cssClass: 'alert-success', timeout: 5000});
           this.router.navigate(['/items/' + this.itemId]);
         } else {

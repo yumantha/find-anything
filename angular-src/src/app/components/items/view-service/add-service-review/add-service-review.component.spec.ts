@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AddServiceReviewDialog } from './add-service-review.component';
+import {AddServiceReviewDialog} from './add-service-review.component';
 
 describe('AddServiceReviewDialog', () => {
   let component: AddServiceReviewDialog;
@@ -8,9 +8,9 @@ describe('AddServiceReviewDialog', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddServiceReviewDialog ]
+      declarations: [AddServiceReviewDialog]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

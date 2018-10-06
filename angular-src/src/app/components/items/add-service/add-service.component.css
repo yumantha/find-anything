@@ -14,11 +14,12 @@ form {
 #price {
   text-align: right;
 }
- mat-grid-list {
-   width: 90%;
-   margin: auto;
- }
 
- .grid-option {
-   width: 95%;
- }
+mat-grid-list {
+  width: 90%;
+  margin: auto;
+}
+
+.grid-option {
+  width: 95%;
+}

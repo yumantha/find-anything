@@ -68,12 +68,12 @@ const ItemSchema = mongoose.Schema({
 
 const Item = module.exports = mongoose.model('Item', ItemSchema);
 
-module.exports.getItemById = function(id, callback) {
+module.exports.getItemById = function (id, callback) {
     Item.findById(id, callback);
 };
 
 //search for items
-module.exports.searchItems = function(searchObject, callback) {
+module.exports.searchItems = function (searchObject, callback) {
     const query = {
         name: new RegExp('\\b' + searchObject.name.trim() + '\\b', 'i'),
         category: new RegExp('\\b' + searchObject.category.trim() + '\\b', 'i'),
@@ -83,15 +83,15 @@ module.exports.searchItems = function(searchObject, callback) {
     Item.find(query, callback);
 };
 
-module.exports.addItem = function(newItem, callback) {
+module.exports.addItem = function (newItem, callback) {
     newItem.save(callback);
 };
 
-module.exports.deleteItemById = function(id, callback) {
+module.exports.deleteItemById = function (id, callback) {
     Item.findByIdAndRemove(id, callback);
 };
 
-module.exports.updateItem = function(itemId, editedItem, callback) {
+module.exports.updateItem = function (itemId, editedItem, callback) {
     Item.findByIdAndUpdate(itemId,
         {
             $set: {
@@ -106,7 +106,7 @@ module.exports.updateItem = function(itemId, editedItem, callback) {
         callback);
 };
 
-module.exports.deleteItemsByUser = function(userId, callback) {
+module.exports.deleteItemsByUser = function (userId, callback) {
     const query = {
         seller: userId
     };
@@ -114,7 +114,7 @@ module.exports.deleteItemsByUser = function(userId, callback) {
     Item.remove(query, callback);
 };
 
-module.exports.mostFavs = function(callback) {
+module.exports.mostFavs = function (callback) {
     Item.aggregate(
         [
             {
@@ -126,10 +126,10 @@ module.exports.mostFavs = function(callback) {
                 }
             }
         ]
-    , callback)
+        , callback)
 };
 
-module.exports.mostFavsWithSeller = function(callback) {
+module.exports.mostFavsWithSeller = function (callback) {
     Item.aggregate(
         [
             {
@@ -145,7 +145,7 @@ module.exports.mostFavsWithSeller = function(callback) {
         , callback)
 };
 
-module.exports.mostReqs = function(callback) {
+module.exports.mostReqs = function (callback) {
     Item.aggregate(
         [
             {
@@ -160,7 +160,7 @@ module.exports.mostReqs = function(callback) {
         , callback)
 };
 
-module.exports.mostReqsWithSeller = function(callback) {
+module.exports.mostReqsWithSeller = function (callback) {
     Item.aggregate(
         [
             {
@@ -176,7 +176,7 @@ module.exports.mostReqsWithSeller = function(callback) {
         , callback)
 };
 
-module.exports.mostBuys = function(callback) {
+module.exports.mostBuys = function (callback) {
     Item.aggregate(
         [
             {
@@ -191,7 +191,7 @@ module.exports.mostBuys = function(callback) {
         , callback)
 };
 
-module.exports.mostBuysWithSeller = function(callback) {
+module.exports.mostBuysWithSeller = function (callback) {
     Item.aggregate(
         [
             {
@@ -207,25 +207,25 @@ module.exports.mostBuysWithSeller = function(callback) {
         , callback)
 };
 
-module.exports.getTopRated = function(callback) {
+module.exports.getTopRated = function (callback) {
     Item.find(callback).select({
         'name': 1,
         'avgRating': 1
     });
 };
 
-module.exports.getTimes = function(callback) {
+module.exports.getTimes = function (callback) {
     Item.find(callback).select({
         '_id': 0,
         'timestamp': 1
     })
 };
 
-module.exports.getNumber = function(callback) {
+module.exports.getNumber = function (callback) {
     Item.count(callback);
 };
 
-module.exports.changeImage = function(id, image, callback) {
+module.exports.changeImage = function (id, image, callback) {
     Item.findByIdAndUpdate(id,
         {
             $set: {
@@ -235,7 +235,7 @@ module.exports.changeImage = function(id, image, callback) {
         callback);
 };
 
-module.exports.deleteImage = function(id, callback) {
+module.exports.deleteImage = function (id, callback) {
     Item.findByIdAndUpdate(id,
         {
             $unset: {

@@ -1,4 +1,4 @@
-const mongoose  = require('mongoose');
+const mongoose = require('mongoose');
 
 //notification schema
 const NotificationSchema = mongoose.Schema({
@@ -40,15 +40,15 @@ const NotificationSchema = mongoose.Schema({
 
 const Notification = module.exports = mongoose.model('Notification', NotificationSchema);
 
-module.exports.newNotification = function(newNotification, callback) {
+module.exports.newNotification = function (newNotification, callback) {
     newNotification.save(callback);
 };
 
-module.exports.deleteNotification = function(notId, callback) {
+module.exports.deleteNotification = function (notId, callback) {
     Notification.findByIdAndRemove(notId, callback);
 };
 
-module.exports.deleteFavNot = function(itemId, userId, callback) {
+module.exports.deleteFavNot = function (itemId, userId, callback) {
     const query = {
         itemId: itemId,
         fromId: userId,
@@ -58,7 +58,7 @@ module.exports.deleteFavNot = function(itemId, userId, callback) {
     Notification.remove(query, callback);
 };
 
-module.exports.deleteRevNot = function(itemId, userId, callback) {
+module.exports.deleteRevNot = function (itemId, userId, callback) {
     const query = {
         itemId: itemId,
         fromId: userId,
@@ -68,7 +68,7 @@ module.exports.deleteRevNot = function(itemId, userId, callback) {
     Notification.remove(query, callback);
 };
 
-module.exports.deleteReqNot = function(itemId, userId, callback) {
+module.exports.deleteReqNot = function (itemId, userId, callback) {
     const query = {
         itemId: itemId,
         fromId: userId,
@@ -78,7 +78,7 @@ module.exports.deleteReqNot = function(itemId, userId, callback) {
     Notification.remove(query, callback);
 };
 
-module.exports.getNotByUser = function(userId, callback) {
+module.exports.getNotByUser = function (userId, callback) {
     const query = {
         to: userId
     };
@@ -86,7 +86,7 @@ module.exports.getNotByUser = function(userId, callback) {
     Notification.find(query, callback);
 };
 
-module.exports.getUnreadNots = function(userId, callback) {
+module.exports.getUnreadNots = function (userId, callback) {
     const query = {
         to: userId,
         checked: false
@@ -95,7 +95,7 @@ module.exports.getUnreadNots = function(userId, callback) {
     Notification.count(query, callback);
 };
 
-module.exports.checkNot = function(notId, callback) {
+module.exports.checkNot = function (notId, callback) {
     Notification.findByIdAndUpdate(notId, {
         $set: {
             checked: true
@@ -103,7 +103,7 @@ module.exports.checkNot = function(notId, callback) {
     }, callback);
 };
 
-module.exports.deleteNotificationsBySender = function(userId, callback) {
+module.exports.deleteNotificationsBySender = function (userId, callback) {
     const query = {
         fromId: userId
     };
@@ -111,7 +111,7 @@ module.exports.deleteNotificationsBySender = function(userId, callback) {
     Notification.remove(query, callback);
 };
 
-module.exports.deleteNotificationsByReceiver = function(userId, callback) {
+module.exports.deleteNotificationsByReceiver = function (userId, callback) {
     const query = {
         to: userId
     };

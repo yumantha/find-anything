@@ -1,4 +1,4 @@
-const mongoose  = require('mongoose');
+const mongoose = require('mongoose');
 
 //request schema
 const RequestSchema = mongoose.Schema(
@@ -34,15 +34,15 @@ const RequestSchema = mongoose.Schema(
 
 const Request = module.exports = mongoose.model("Request", RequestSchema);
 
-module.exports.newRequest = function(newRequest, callback) {
+module.exports.newRequest = function (newRequest, callback) {
     newRequest.save(callback);
 };
 
-module.exports.deleteRequest = function(reqId, callback) {
+module.exports.deleteRequest = function (reqId, callback) {
     Request.findByIdAndRemove(reqId, callback);
 };
 
-module.exports.acceptRequest = function(reqId, callback) {
+module.exports.acceptRequest = function (reqId, callback) {
     Request.findByIdAndUpdate(reqId, {
         $set: {
             accepted: true
@@ -50,7 +50,7 @@ module.exports.acceptRequest = function(reqId, callback) {
     }, callback);
 };
 
-module.exports.getReqByCustomer = function(customerId, callback) {
+module.exports.getReqByCustomer = function (customerId, callback) {
     const query = {
         from: customerId
     };
@@ -58,7 +58,7 @@ module.exports.getReqByCustomer = function(customerId, callback) {
     Request.find(query, callback);
 };
 
-module.exports.getReqBySeller = function(sellerId, callback) {
+module.exports.getReqBySeller = function (sellerId, callback) {
     const query = {
         to: sellerId
     };
@@ -66,7 +66,7 @@ module.exports.getReqBySeller = function(sellerId, callback) {
     Request.find(query, callback);
 };
 
-module.exports.findRequestandDelete = function(userId, itemId, callback) {
+module.exports.findRequestandDelete = function (userId, itemId, callback) {
     const query = {
         from: userId,
         item: itemId,
@@ -76,7 +76,7 @@ module.exports.findRequestandDelete = function(userId, itemId, callback) {
     Request.findOneAndRemove(query, callback);
 };
 
-module.exports.deleteRequestsByCustomer = function(userId, callback) {
+module.exports.deleteRequestsByCustomer = function (userId, callback) {
     const query = {
         from: userId
     };
@@ -84,7 +84,7 @@ module.exports.deleteRequestsByCustomer = function(userId, callback) {
     Request.remove(query, callback);
 };
 
-module.exports.deleteRequestsBySeller = function(userId, callback) {
+module.exports.deleteRequestsBySeller = function (userId, callback) {
     const query = {
         to: userId
     };

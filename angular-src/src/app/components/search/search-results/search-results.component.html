@@ -4,7 +4,8 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon>youtube_searched_for</mat-icon> Refine Search
+            <mat-icon>youtube_searched_for</mat-icon>
+            Refine Search
           </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -24,7 +25,8 @@
 
             <div>
               <mat-form-field style="width: 75%">
-                <mat-select placeholder="District (only for services)" [(ngModel)]="district" name="district" [disabled]="!serviceCheck">
+                <mat-select placeholder="District (only for services)" [(ngModel)]="district" name="district"
+                            [disabled]="!serviceCheck">
                   <mat-option>None</mat-option>
                   <mat-option *ngFor="let dis of districts" [value]="dis.value">
                     {{dis.viewValue}}
@@ -35,7 +37,8 @@
 
             <div>
               <mat-form-field style="width: 35%; margin: 0 2.5%;">
-                <input matInput placeholder="Price Range: From" [(ngModel)]="priceLower" name="priceUpper" type="number">
+                <input matInput placeholder="Price Range: From" [(ngModel)]="priceLower" name="priceUpper"
+                       type="number">
                 <span matPrefix>Rs.&nbsp;</span>
                 <span matSuffix>.00</span>
               </mat-form-field>
@@ -99,7 +102,9 @@
   </div>
 
   <div *ngIf="!resultsAvailable" style="margin-top: 100px; text-align: center; width: 100%">
-    <p><mat-icon>report_problem</mat-icon></p>
+    <p>
+      <mat-icon>report_problem</mat-icon>
+    </p>
     <h3>Sorry! No results were found for your search</h3>
   </div>
 
@@ -135,8 +140,12 @@
           <div style="width: 100%; height: 100%; padding-left: 25px">
             <mat-card-subtitle>{{result.category}}</mat-card-subtitle>
             <p><strong>Rs. {{result.price}}.00</strong></p>
-            <button mat-raised-button color="primary" (click)="goToItem(result.id)" *ngIf="result.type==='item'">Details</button>
-            <button mat-raised-button color="primary" (click)="goToService(result.id)" *ngIf="result.type==='service'">Details</button>
+            <button mat-raised-button color="primary" (click)="goToItem(result.id)" *ngIf="result.type==='item'">
+              Details
+            </button>
+            <button mat-raised-button color="primary" (click)="goToService(result.id)" *ngIf="result.type==='service'">
+              Details
+            </button>
           </div>
         </mat-grid-tile>
 

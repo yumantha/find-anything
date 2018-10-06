@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-card  style="margin: 15px 0">
+  <mat-card style="margin: 15px 0">
     <div *ngIf="!dataAvailable" style="margin: 20px auto">
       <mat-progress-spinner color="primary" mode="indeterminate" style="margin:0 auto;"></mat-progress-spinner>
     </div>
@@ -10,7 +10,8 @@
         <mat-grid-tile colspan="1" rowspan="5" (mouseenter)="mouseenter()" (mouseleave)="mouseleave()">
           <div style="width: 100%; height: 100%">
             <div class="grid-item" *ngIf="!service.image">
-              <img src="https://www.jainsusa.com/images/store/landscape/not-available.jpg" style="height: 75%; width: auto">
+              <img src="https://www.jainsusa.com/images/store/landscape/not-available.jpg"
+                   style="height: 75%; width: auto">
             </div>
 
             <div class="grid-item" *ngIf="service.image">
@@ -70,8 +71,12 @@
                 <button mat-mini-fab color="warn" (click)="unfavService()"><mat-icon>favorite</mat-icon></button>
               </span>
 
-              <button mat-raised-button color="primary" (click)="reqService()" style="float: right" *ngIf="!isReq">Request Service</button>
-              <button mat-raised-button color="warn" (click)="cancelRequest()" style="float: right" *ngIf="isReq">Cancel Request</button>
+              <button mat-raised-button color="primary" (click)="reqService()" style="float: right" *ngIf="!isReq">
+                Request Service
+              </button>
+              <button mat-raised-button color="warn" (click)="cancelRequest()" style="float: right" *ngIf="isReq">Cancel
+                Request
+              </button>
             </div>
           </div>
         </mat-grid-tile>
@@ -172,7 +177,8 @@
     <div *ngIf="reviewsAvailable">
       <div *ngFor="let review of this.reviews">
         <mat-card style="margin-bottom: 5px">
-          <h3><strong><a [routerLink]="['/users/customer/' + review.customer.id]">{{review.customer.username}}</a></strong></h3>
+          <h3><strong><a
+            [routerLink]="['/users/customer/' + review.customer.id]">{{review.customer.username}}</a></strong></h3>
 
           <p>Rating: <strong>{{review.rating}}</strong>/5</p>
           <p>{{review.review}}</p>
@@ -185,7 +191,8 @@
       </div>
     </div>
 
-    <span matTooltip="Add Review" matTooltipPosition="after" *ngIf="!reviewAdded && isCustomer" style="position:absolute; bottom: 10px; right: 10px">
+    <span matTooltip="Add Review" matTooltipPosition="after" *ngIf="!reviewAdded && isCustomer"
+          style="position:absolute; bottom: 10px; right: 10px">
       <button mat-mini-fab color="primary" (click)="addReview()"><mat-icon>add</mat-icon></button>
     </span>
   </mat-card>

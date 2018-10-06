@@ -11,7 +11,7 @@ const Seller = require('../models/users/seller');
 
 //to sort an array of objects from a specific key
 function sortByKey(array, key) {
-    return array.sort(function(a, b) {
+    return array.sort(function (a, b) {
         const x = a[key];
         const y = b[key];
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
@@ -30,27 +30,27 @@ router.post('/', (req, res, next) => {
     });
 
     Customer.getUserById(req.body.from, (error, customer) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'An error occurred: ' + error});
         }
 
-        if(!customer) {
+        if (!customer) {
             return res.json({success: false, msg: 'User not found'});
         } else {
-            if(req.body.itemType === 'item') {
+            if (req.body.itemType === 'item') {
                 Item.getItemById(req.body.item, (error, item) => {
-                    if(error) {
+                    if (error) {
                         return res.json({success: false, msg: 'An error occurred: ' + error});
                     }
 
-                    if(!item) {
+                    if (!item) {
                         return res.json({success: false, msg: 'Item not found'});
                     } else {
                         customer.reqItems.push(item._id);
                         item.requestedBy.push(customer._id);
 
                         Request.newRequest(newReq, (error, request) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred: ' + error});
                             } else {
                                 let newNot = new Notification({
@@ -66,7 +66,7 @@ router.post('/', (req, res, next) => {
                                 });
 
                                 Notification.newNotification(newNot, (error, notification) => {
-                                    if(error) {
+                                    if (error) {
                                         console.log('Error sending notification. Error: ' + error);
                                     }
                                 });
@@ -81,18 +81,18 @@ router.post('/', (req, res, next) => {
                 });
             } else if (req.body.itemType === 'service') {
                 Service.getItemById(req.body.item, (error, service) => {
-                    if(error) {
+                    if (error) {
                         return res.json({success: false, msg: 'An error occurred: ' + error});
                     }
 
-                    if(!service) {
+                    if (!service) {
                         return res.json({success: false, msg: 'Service not found'});
                     } else {
                         customer.reqServices.push(service._id);
                         service.requestedBy.push(customer._id);
 
                         Request.newRequest(newReq, (error, request) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred: ' + error});
                             } else {
                                 let newNot = new Notification({
@@ -108,7 +108,7 @@ router.post('/', (req, res, next) => {
                                 });
 
                                 Notification.newNotification(newNot, (error, notification) => {
-                                    if(error) {
+                                    if (error) {
                                         console.log('Error sending notification. Error: ' + error);
                                     }
                                 });
@@ -131,31 +131,31 @@ router.post('/', (req, res, next) => {
 //delete request
 router.delete('/:query', (req, res, next) => {
     const userId = req.params.query.split('+')[0];
-    const itemId= req.params.query.split('+')[1];
+    const itemId = req.params.query.split('+')[1];
 
     Request.findRequestandDelete(userId, itemId, (error, request) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'An error occurred: ' + error});
         }
 
-        if(!request) {
+        if (!request) {
             return res.json({success: false, msg: 'Request not found'});
         } else {
             Customer.getUserById(request.from, (error, customer) => {
-                if(error) {
+                if (error) {
                     return res.json({success: false, msg: 'An error occurred: ' + error});
                 }
 
-                if(!customer) {
+                if (!customer) {
                     return res.json({success: false, msg: 'Customer not found'});
                 } else {
-                    if(request.itemType === 'item') {
+                    if (request.itemType === 'item') {
                         Item.getItemById(request.item, (error, item) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred: ' + error});
                             }
 
-                            if(!item) {
+                            if (!item) {
                                 return res.json({success: false, msg: 'Item not found'});
                             } else {
                                 customer.reqItems.remove(item);
@@ -165,7 +165,7 @@ router.delete('/:query', (req, res, next) => {
                                 item.save();
 
                                 Notification.deleteReqNot(item._id, customer._id, (error, notification) => {
-                                    if(error) {
+                                    if (error) {
                                         console.log('Error sending notification. Error: ' + error);
                                     }
                                 });
@@ -173,13 +173,13 @@ router.delete('/:query', (req, res, next) => {
                                 return res.json({success: true, msg: 'Request deleted'});
                             }
                         });
-                    } else if(request.itemType === 'service') {
+                    } else if (request.itemType === 'service') {
                         Service.getItemById(request.item, (error, service) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred: ' + error});
                             }
 
-                            if(!service) {
+                            if (!service) {
                                 return res.json({success: false, msg: 'Service not found'});
                             } else {
                                 customer.reqServices.remove(service);
@@ -189,7 +189,7 @@ router.delete('/:query', (req, res, next) => {
                                 service.save();
 
                                 Notification.deleteReqNot(service._id, customer._id, (error, notification) => {
-                                    if(error) {
+                                    if (error) {
                                         console.log('Error sending notification. Error: ' + error);
                                     }
                                 });
@@ -211,11 +211,11 @@ router.get('/seller/:id', (req, res, next) => {
     const sellerId = req.params.id;
 
     Request.getReqBySeller(sellerId, (error, reqs) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'An error occurred: ' + error});
         }
 
-        if(!reqs) {
+        if (!reqs) {
             return res.json({success: false, msg: 'Requests not found'});
         } else {
             reqs = sortByKey(reqs, 'timestamp');
@@ -230,28 +230,28 @@ router.post('/:id/accept', (req, res, next) => {
     const reqId = req.params.id;
 
     Request.acceptRequest(reqId, (error, request) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'An error occurred: ' + error});
         }
 
-        if(!request) {
+        if (!request) {
             return res.json({success: false, msg: 'Requests not found'});
         } else {
             Customer.getUserById(request.from, (error, customer) => {
-                if(error) {
+                if (error) {
                     return res.json({success: false, msg: 'An error occurred: ' + error});
                 }
 
-                if(!customer) {
+                if (!customer) {
                     return res.json({success: false, msg: 'Customer not found'});
                 } else {
-                    if(request.itemType === 'item') {
+                    if (request.itemType === 'item') {
                         Item.getItemById(request.item, (error, item) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred: ' + error});
                             }
 
-                            if(!item) {
+                            if (!item) {
                                 return res.json({success: false, msg: 'Item not found'});
                             } else {
                                 customer.reqItems.remove(item);
@@ -261,11 +261,11 @@ router.post('/:id/accept', (req, res, next) => {
                                 item.boughtBy.push(customer._id);
 
                                 Seller.getUserById(item.seller, (error, seller) => {
-                                    if(error) {
+                                    if (error) {
                                         return res.json({success: false, msg: 'An error occurred: ' + error});
                                     }
 
-                                    if(!seller) {
+                                    if (!seller) {
                                         return res.json({success: false, msg: 'Seller not found'});
                                     } else {
                                         let newNot = new Notification({
@@ -281,7 +281,7 @@ router.post('/:id/accept', (req, res, next) => {
                                         });
 
                                         Notification.newNotification(newNot, (error, notification) => {
-                                            if(error) {
+                                            if (error) {
                                                 console.log('Error sending notification. Error: ' + error);
                                             }
                                         });
@@ -294,13 +294,13 @@ router.post('/:id/accept', (req, res, next) => {
                                 });
                             }
                         });
-                    } else if(request.itemType === 'service') {
+                    } else if (request.itemType === 'service') {
                         Service.getItemById(request.item, (error, service) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred: ' + error});
                             }
 
-                            if(!service) {
+                            if (!service) {
                                 return res.json({success: false, msg: 'Service not found'});
                             } else {
                                 customer.reqServices.remove(service);
@@ -311,11 +311,11 @@ router.post('/:id/accept', (req, res, next) => {
 
 
                                 Seller.getUserById(service.seller, (error, seller) => {
-                                    if(error) {
+                                    if (error) {
                                         return res.json({success: false, msg: 'An error occurred: ' + error});
                                     }
 
-                                    if(!seller) {
+                                    if (!seller) {
                                         return res.json({success: false, msg: 'Seller not found'});
                                     } else {
                                         let newNot = new Notification({
@@ -331,7 +331,7 @@ router.post('/:id/accept', (req, res, next) => {
                                         });
 
                                         Notification.newNotification(newNot, (error, notification) => {
-                                            if(error) {
+                                            if (error) {
                                                 console.log('Error sending notification. Error: ' + error);
                                             }
                                         });
@@ -358,39 +358,39 @@ router.post('/:id/decline', (req, res, next) => {
     const reqId = req.params.id;
 
     Request.deleteRequest(reqId, (error, request) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'An error occurred: ' + error});
         }
 
-        if(!request) {
+        if (!request) {
             return res.json({success: false, msg: 'Request not found'});
         } else {
             Customer.getUserById(request.from, (error, customer) => {
-                if(error) {
+                if (error) {
                     return res.json({success: false, msg: 'An error occurred: ' + error});
                 }
 
-                if(!customer) {
+                if (!customer) {
                     return res.json({success: false, msg: 'Customer not found'});
                 } else {
-                    if(request.itemType === 'item') {
+                    if (request.itemType === 'item') {
                         Item.getItemById(request.item, (error, item) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred: ' + error});
                             }
 
-                            if(!item) {
+                            if (!item) {
                                 return res.json({success: false, msg: 'Item not found'});
                             } else {
                                 customer.reqItems.remove(item);
                                 item.requestedBy.remove(customer);
 
                                 Seller.getUserById(item.seller, (error, seller) => {
-                                    if(error) {
+                                    if (error) {
                                         return res.json({success: false, msg: 'An error occurred: ' + error});
                                     }
 
-                                    if(!seller) {
+                                    if (!seller) {
                                         return res.json({success: false, msg: 'Seller not found'});
                                     } else {
                                         let newNot = new Notification({
@@ -406,7 +406,7 @@ router.post('/:id/decline', (req, res, next) => {
                                         });
 
                                         Notification.newNotification(newNot, (error, notification) => {
-                                            if(error) {
+                                            if (error) {
                                                 console.log('Error sending notification. Error: ' + error);
                                             }
                                         });
@@ -419,13 +419,13 @@ router.post('/:id/decline', (req, res, next) => {
                                 });
                             }
                         });
-                    } else if(request.itemType === 'service') {
+                    } else if (request.itemType === 'service') {
                         Service.getItemById(request.item, (error, service) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred: ' + error});
                             }
 
-                            if(!service) {
+                            if (!service) {
                                 return res.json({success: false, msg: 'Service not found'});
                             } else {
                                 customer.reqServices.remove(service);
@@ -433,11 +433,11 @@ router.post('/:id/decline', (req, res, next) => {
 
 
                                 Seller.getUserById(service.seller, (error, seller) => {
-                                    if(error) {
+                                    if (error) {
                                         return res.json({success: false, msg: 'An error occurred: ' + error});
                                     }
 
-                                    if(!seller) {
+                                    if (!seller) {
                                         return res.json({success: false, msg: 'Seller not found'});
                                     } else {
                                         let newNot = new Notification({
@@ -453,7 +453,7 @@ router.post('/:id/decline', (req, res, next) => {
                                         });
 
                                         Notification.newNotification(newNot, (error, notification) => {
-                                            if(error) {
+                                            if (error) {
                                                 console.log('Error sending notification. Error: ' + error);
                                             }
                                         });

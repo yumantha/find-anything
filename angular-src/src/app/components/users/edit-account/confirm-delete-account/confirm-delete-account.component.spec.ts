@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ConfirmDeleteAccountDialog } from './confirm-delete-account.component';
+import {ConfirmDeleteAccountDialog} from './confirm-delete-account.component';
 
 describe('ConfirmDeleteAccountDialog', () => {
   let component: ConfirmDeleteAccountDialog;
@@ -8,9 +8,9 @@ describe('ConfirmDeleteAccountDialog', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfirmDeleteAccountDialog ]
+      declarations: [ConfirmDeleteAccountDialog]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

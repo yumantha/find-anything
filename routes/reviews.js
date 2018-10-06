@@ -15,23 +15,23 @@ router.post('/', (req, res, next) => {
     const itemId = req.body.itemId;
 
     Customer.getUserById(customerId, (error, customer) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'An error occurred. Error: ' + error});
         }
 
-        if(!customer) {
+        if (!customer) {
             return res.json({success: false, msg: 'User not found'});
         } else {
-            if(itemType === 'item') {
+            if (itemType === 'item') {
                 Item.getItemById(itemId, (error, item) => {
-                    if(error) {
+                    if (error) {
                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                     }
 
-                    if(!item) {
+                    if (!item) {
                         return res.json({success: false, msg: 'Item not found'});
                     } else {
-                        let newReview  = new Review({
+                        let newReview = new Review({
                             item: item,
                             itemType: 'item',
                             customer: customer,
@@ -41,7 +41,7 @@ router.post('/', (req, res, next) => {
                             timestamp: Date.now().toString()
                         });
                         Review.addReview(newReview, (error, review) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                             } else {
                                 customer.reviews.push(review._id);
@@ -50,12 +50,12 @@ router.post('/', (req, res, next) => {
                                 customer.save();
 
                                 Review.getAvgByItem(review.item, (error, results) => {
-                                    if(error) {
+                                    if (error) {
                                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                                     }
 
                                     results.forEach((result) => {
-                                        if(result._id.toString() === itemId) {
+                                        if (result._id.toString() === itemId) {
                                             item.avgRating = result.avgRating.toString();
                                         }
                                     });
@@ -64,21 +64,24 @@ router.post('/', (req, res, next) => {
                                 });
 
                                 Seller.getUserById(review.seller, (error, seller) => {
-                                    if(error) {
+                                    if (error) {
                                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                                     }
 
-                                    if(!seller) {
+                                    if (!seller) {
                                         return res.json({success: false, msg: 'Item seller not found'});
                                     } else {
                                         Review.getAvgBySeller(seller._id, (error, results) => {
-                                            if(error) {
-                                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                            if (error) {
+                                                return res.json({
+                                                    success: false,
+                                                    msg: 'An error occurred. Error: ' + error
+                                                });
                                             }
 
                                             results.forEach((result) => {
-                                                if(result._id) {
-                                                    if(result._id.toString() === seller._id.toString()) {
+                                                if (result._id) {
+                                                    if (result._id.toString() === seller._id.toString()) {
                                                         seller.avgRating = result.avgRating.toString();
                                                     }
                                                 }
@@ -102,7 +105,7 @@ router.post('/', (req, res, next) => {
                                 });
 
                                 Notification.newNotification(newNot, (error, notification) => {
-                                    if(error) {
+                                    if (error) {
                                         console.log('Error sending notification. Error: ' + error);
                                     }
                                 });
@@ -114,14 +117,14 @@ router.post('/', (req, res, next) => {
                 });
             } else if (itemType === 'service') {
                 Service.getItemById(itemId, (error, service) => {
-                    if(error) {
+                    if (error) {
                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                     }
 
-                    if(!service) {
+                    if (!service) {
                         return res.json({success: false, msg: 'Service not found'});
                     } else {
-                        let newReview  = new Review({
+                        let newReview = new Review({
                             item: service,
                             itemType: 'service',
                             customer: customer,
@@ -132,7 +135,7 @@ router.post('/', (req, res, next) => {
                         });
 
                         Review.addReview(newReview, (error, review) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                             } else {
                                 customer.reviews.push(review._id);
@@ -141,12 +144,12 @@ router.post('/', (req, res, next) => {
                                 customer.save();
 
                                 Review.getAvgByItem(review.item, (error, results) => {
-                                    if(error) {
+                                    if (error) {
                                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                                     }
 
                                     results.forEach((result) => {
-                                        if(result._id.toString() === itemId) {
+                                        if (result._id.toString() === itemId) {
                                             service.avgRating = result.avgRating.toString();
                                         }
                                     });
@@ -155,21 +158,24 @@ router.post('/', (req, res, next) => {
                                 });
 
                                 Seller.getUserById(review.seller, (error, seller) => {
-                                    if(error) {
+                                    if (error) {
                                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                                     }
 
-                                    if(!seller) {
+                                    if (!seller) {
                                         return res.json({success: false, msg: 'Item seller not found'});
                                     } else {
                                         Review.getAvgBySeller(seller._id, (error, results) => {
-                                            if(error) {
-                                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                            if (error) {
+                                                return res.json({
+                                                    success: false,
+                                                    msg: 'An error occurred. Error: ' + error
+                                                });
                                             }
 
                                             results.forEach((result) => {
-                                                if(result._id) {
-                                                    if(result._id.toString() === seller._id.toString()) {
+                                                if (result._id) {
+                                                    if (result._id.toString() === seller._id.toString()) {
                                                         seller.avgRating = result.avgRating.toString();
                                                     }
                                                 }
@@ -193,7 +199,7 @@ router.post('/', (req, res, next) => {
                                 });
 
                                 Notification.newNotification(newNot, (error, notification) => {
-                                    if(error) {
+                                    if (error) {
                                         console.log('Error sending notification. Error: ' + error);
                                     }
                                 });
@@ -220,31 +226,31 @@ router.get('/:id', (req, res, next) => {
     const reviewToSend = {};
 
     Review.getReviewById(reviewId, (error, review) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'An error occurred. Error: ' + error});
         }
 
-        if(!review) {
+        if (!review) {
             return res.json({success: false, msg: 'Review not found'});
         } else {
             Customer.getUserById(review.customer, (error, customer) => {
-                if(error) {
+                if (error) {
                     return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                 }
 
-                if(!customer) {
+                if (!customer) {
                     return res.json({success: false, msg: 'Review owner not found'});
                 } else {
                     revCustomer.id = customer._id;
                     revCustomer.username = customer.username;
 
-                    if(review.itemType === 'item') {
+                    if (review.itemType === 'item') {
                         Item.getItemById(review.item, (error, item) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                             }
 
-                            if(!item) {
+                            if (!item) {
                                 return res.json({success: false, msg: 'Reviewed item not found'});
                             } else {
                                 revItem.id = item._id;
@@ -260,13 +266,13 @@ router.get('/:id', (req, res, next) => {
                                 return res.json({success: true, review: reviewToSend});
                             }
                         });
-                    } else if(review.itemType === 'service') {
+                    } else if (review.itemType === 'service') {
                         Service.getItemById(review.item, (error, item) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                             }
 
-                            if(!item) {
+                            if (!item) {
                                 return res.json({success: false, msg: 'Reviewed item not found'});
                             } else {
                                 revItem.id = item._id;
@@ -296,52 +302,55 @@ router.delete('/:id', (req, res, next) => {
     const reviewId = req.params.id;
 
     Review.getReviewById(reviewId, (error, review) => {
-        if(error) {
+        if (error) {
             // console.log(error);
             return res.json({success: false, msg: 'An error occurred. Error: ' + error});
         }
 
-        if(!review) {
+        if (!review) {
             return res.json({success: false, msg: 'Review not found'});
         } else {
             Customer.getUserById(review.customer, (error, customer) => {
-                if(error) {
+                if (error) {
                     return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                 }
 
-                if(!customer) {
+                if (!customer) {
                     return res.json({success: false, msg: 'Customer not found'});
                 } else {
                     customer.reviews.remove(review);
 
-                    if(review.itemType === 'item') {
+                    if (review.itemType === 'item') {
                         Item.getItemById(review.item, (error, item) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                             }
 
-                            if(!item) {
+                            if (!item) {
                                 return res.json({success: false, msg: 'Item not found'});
                             } else {
                                 item.reviews.remove(review);
 
                                 Review.deleteReview(reviewId, (error, review) => {
-                                    if(error) {
+                                    if (error) {
                                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                                     }
 
-                                    if(!review) {
+                                    if (!review) {
                                         return res.json({success: false, msg: 'Review not found'});
                                     } else {
                                         customer.save();
 
                                         Review.getAvgByItem(review.item, (error, results) => {
-                                            if(error) {
-                                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                            if (error) {
+                                                return res.json({
+                                                    success: false,
+                                                    msg: 'An error occurred. Error: ' + error
+                                                });
                                             }
 
                                             results.forEach((result) => {
-                                                if(result._id.toString() === item._id.toString()) {
+                                                if (result._id.toString() === item._id.toString()) {
                                                     item.avgRating = result.avgRating.toString();
                                                 }
                                             });
@@ -350,21 +359,27 @@ router.delete('/:id', (req, res, next) => {
                                         });
 
                                         Seller.getUserById(review.seller, (error, seller) => {
-                                            if(error) {
-                                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                            if (error) {
+                                                return res.json({
+                                                    success: false,
+                                                    msg: 'An error occurred. Error: ' + error
+                                                });
                                             }
 
-                                            if(!seller) {
+                                            if (!seller) {
                                                 return res.json({success: false, msg: 'Item seller not found'});
                                             } else {
                                                 Review.getAvgBySeller(seller._id, (error, results) => {
-                                                    if(error) {
-                                                        return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                                    if (error) {
+                                                        return res.json({
+                                                            success: false,
+                                                            msg: 'An error occurred. Error: ' + error
+                                                        });
                                                     }
 
                                                     results.forEach((result) => {
-                                                        if(result._id) {
-                                                            if(result._id.toString() === seller._id.toString()) {
+                                                        if (result._id) {
+                                                            if (result._id.toString() === seller._id.toString()) {
                                                                 seller.avgRating = result.avgRating.toString();
                                                             }
                                                         }
@@ -376,7 +391,7 @@ router.delete('/:id', (req, res, next) => {
                                         });
 
                                         Notification.deleteRevNot(item._id, customer._id, (error, notification) => {
-                                            if(error) {
+                                            if (error) {
                                                 console.log('Error sending notification. Error: ' + error);
                                             }
                                         });
@@ -386,34 +401,37 @@ router.delete('/:id', (req, res, next) => {
                                 });
                             }
                         });
-                    } else if(review.itemType === 'service') {
+                    } else if (review.itemType === 'service') {
                         Service.getItemById(review.item, (error, service) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                             }
 
-                            if(!service) {
+                            if (!service) {
                                 return res.json({success: false, msg: 'Service not found'});
                             } else {
                                 service.reviews.remove(review);
 
                                 Review.deleteReview(reviewId, (error, review) => {
-                                    if(error) {
+                                    if (error) {
                                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                                     }
 
-                                    if(!review) {
+                                    if (!review) {
                                         return res.json({success: false, msg: 'Review not found'});
                                     } else {
                                         customer.save();
 
                                         Review.getAvgByItem(review.item, (error, results) => {
-                                            if(error) {
-                                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                            if (error) {
+                                                return res.json({
+                                                    success: false,
+                                                    msg: 'An error occurred. Error: ' + error
+                                                });
                                             }
 
                                             results.forEach((result) => {
-                                                if(result._id.toString() === service._id.toString()) {
+                                                if (result._id.toString() === service._id.toString()) {
                                                     service.avgRating = result.avgRating.toString();
                                                 }
                                             });
@@ -422,21 +440,27 @@ router.delete('/:id', (req, res, next) => {
                                         });
 
                                         Seller.getUserById(review.seller, (error, seller) => {
-                                            if(error) {
-                                                return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                            if (error) {
+                                                return res.json({
+                                                    success: false,
+                                                    msg: 'An error occurred. Error: ' + error
+                                                });
                                             }
 
-                                            if(!seller) {
+                                            if (!seller) {
                                                 return res.json({success: false, msg: 'Item seller not found'});
                                             } else {
                                                 Review.getAvgBySeller(seller._id, (error, results) => {
-                                                    if(error) {
-                                                        return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                                    if (error) {
+                                                        return res.json({
+                                                            success: false,
+                                                            msg: 'An error occurred. Error: ' + error
+                                                        });
                                                     }
 
                                                     results.forEach((result) => {
-                                                        if(result._id) {
-                                                            if(result._id.toString() === seller._id.toString()) {
+                                                        if (result._id) {
+                                                            if (result._id.toString() === seller._id.toString()) {
                                                                 seller.avgRating = result.avgRating.toString();
                                                             }
                                                         }
@@ -448,7 +472,7 @@ router.delete('/:id', (req, res, next) => {
                                         });
 
                                         Notification.deleteRevNot(service._id, customer._id, (error, notification) => {
-                                            if(error) {
+                                            if (error) {
                                                 console.log('Error sending notification. Error: ' + error);
                                             }
                                         });
@@ -478,29 +502,29 @@ router.put('/:id', (req, res, next) => {
     };
 
     Review.updateReview(reviewId, editedReview, (error, review) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'An error occurred. Error: ' + error});
         }
 
-        if(!review) {
+        if (!review) {
             return res.json({success: false, msg: 'Review not found'});
         } else {
-            if(itemType === 'item') {
+            if (itemType === 'item') {
                 Item.getItemById(itemId, (error, item) => {
-                    if(error) {
+                    if (error) {
                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                     }
 
-                    if(!item) {
+                    if (!item) {
                         return res.json({success: false, msg: 'Item not found'});
                     } else {
                         Review.getAvgByItem(review.item, (error, results) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                             }
 
                             results.forEach((result) => {
-                                if(result._id.toString() === item._id.toString()) {
+                                if (result._id.toString() === item._id.toString()) {
                                     item.avgRating = result.avgRating.toString();
                                 }
                             });
@@ -509,21 +533,21 @@ router.put('/:id', (req, res, next) => {
                         });
 
                         Seller.getUserById(review.seller, (error, seller) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                             }
 
-                            if(!seller) {
+                            if (!seller) {
                                 return res.json({success: false, msg: 'Item seller not found'});
                             } else {
                                 Review.getAvgBySeller(seller._id, (error, results) => {
-                                    if(error) {
+                                    if (error) {
                                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                                     }
 
                                     results.forEach((result) => {
-                                        if(result._id) {
-                                            if(result._id.toString() === seller._id.toString()) {
+                                        if (result._id) {
+                                            if (result._id.toString() === seller._id.toString()) {
                                                 seller.avgRating = result.avgRating.toString();
                                             }
                                         }
@@ -532,11 +556,14 @@ router.put('/:id', (req, res, next) => {
                                     seller.save();
 
                                     Customer.getUserById(review.customer, (error, customer) => {
-                                        if(error) {
-                                            return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                        if (error) {
+                                            return res.json({
+                                                success: false,
+                                                msg: 'An error occurred. Error: ' + error
+                                            });
                                         }
 
-                                        if(!customer) {
+                                        if (!customer) {
                                             return res.json({success: false, msg: 'Customer not found'});
                                         } else {
                                             let newNot = new Notification({
@@ -552,7 +579,7 @@ router.put('/:id', (req, res, next) => {
                                             });
 
                                             Notification.newNotification(newNot, (error, notification) => {
-                                                if(error) {
+                                                if (error) {
                                                     console.log('Error sending notification. Error: ' + error);
                                                 }
                                             });
@@ -565,20 +592,20 @@ router.put('/:id', (req, res, next) => {
                 });
             } else if (itemType === 'service') {
                 Service.getItemById(itemId, (error, service) => {
-                    if(error) {
+                    if (error) {
                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                     }
 
-                    if(!service) {
+                    if (!service) {
                         return res.json({success: false, msg: 'Service not found'});
                     } else {
                         Review.getAvgByItem(review.item, (error, results) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                             }
 
                             results.forEach((result) => {
-                                if(result._id.toString() === service._id.toString()) {
+                                if (result._id.toString() === service._id.toString()) {
                                     service.avgRating = result.avgRating.toString();
                                 }
                             });
@@ -587,21 +614,21 @@ router.put('/:id', (req, res, next) => {
                         });
 
                         Seller.getUserById(review.seller, (error, seller) => {
-                            if(error) {
+                            if (error) {
                                 return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                             }
 
-                            if(!seller) {
+                            if (!seller) {
                                 return res.json({success: false, msg: 'Item seller not found'});
                             } else {
                                 Review.getAvgBySeller(seller._id, (error, results) => {
-                                    if(error) {
+                                    if (error) {
                                         return res.json({success: false, msg: 'An error occurred. Error: ' + error});
                                     }
 
                                     results.forEach((result) => {
-                                        if(result._id) {
-                                            if(result._id.toString() === seller._id.toString()) {
+                                        if (result._id) {
+                                            if (result._id.toString() === seller._id.toString()) {
                                                 seller.avgRating = result.avgRating.toString();
                                             }
                                         }
@@ -609,11 +636,14 @@ router.put('/:id', (req, res, next) => {
                                     seller.save();
 
                                     Customer.getUserById(review.customer, (error, customer) => {
-                                        if(error) {
-                                            return res.json({success: false, msg: 'An error occurred. Error: ' + error});
+                                        if (error) {
+                                            return res.json({
+                                                success: false,
+                                                msg: 'An error occurred. Error: ' + error
+                                            });
                                         }
 
-                                        if(!customer) {
+                                        if (!customer) {
                                             return res.json({success: false, msg: 'Customer not found'});
                                         } else {
                                             let newNot = new Notification({
@@ -629,7 +659,7 @@ router.put('/:id', (req, res, next) => {
                                             });
 
                                             Notification.newNotification(newNot, (error, notification) => {
-                                                if(error) {
+                                                if (error) {
                                                     console.log('Error sending notification. Error: ' + error);
                                                 }
                                             });

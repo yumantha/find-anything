@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class ValidateService {
 
-  constructor() { }
+  constructor() {
+  }
 
   validateRegister(user) {
-    if(user.name == undefined || user.username == undefined || user.email == undefined || user.password == undefined || user.confPass == undefined || user.userType == undefined) {
+    if (user.name == undefined || user.username == undefined || user.email == undefined || user.password == undefined || user.confPass == undefined || user.userType == undefined) {
       return false;
     } else {
       return true;
@@ -24,7 +25,7 @@ export class ValidateService {
   }
 
   validatePassword(password, confPass) {
-    if(password !== confPass) {
+    if (password !== confPass) {
       return false;
     } else {
       return true;
@@ -37,7 +38,7 @@ export class ValidateService {
   }
 
   validateLogin(user) {
-    if(user.username == undefined || user.password == undefined || user.userType == undefined) {
+    if (user.username == undefined || user.password == undefined || user.userType == undefined) {
       return false;
     } else {
       return true;
@@ -45,7 +46,7 @@ export class ValidateService {
   }
 
   validateItem(item) {
-    if(item.name == undefined || item.price == undefined || item.isAvailable == undefined) {
+    if (item.name == undefined || item.price == undefined || item.isAvailable == undefined) {
       return false;
     } else {
       return true;
@@ -53,7 +54,7 @@ export class ValidateService {
   }
 
   validateService(service) {
-    if(service.name == undefined) {
+    if (service.name == undefined) {
       return false;
     } else {
       return true;
@@ -61,7 +62,7 @@ export class ValidateService {
   }
 
   validateItemSeller(sellerID) {
-    if(!sellerID) {
+    if (!sellerID) {
       return false;
     } else {
       return true;
@@ -82,7 +83,7 @@ export class ValidateService {
     const startNum = Number(start.split(":").join(""));
     const endNum = Number(end.split(":").join(""));
 
-    if(endNum < startNum) {
+    if (endNum < startNum) {
       return false;
     } else {
       return true;
@@ -90,7 +91,7 @@ export class ValidateService {
   }
 
   validatePriceRange(lowerPrice, upperPrice) {
-    if(lowerPrice > upperPrice) {
+    if (lowerPrice > upperPrice) {
       return false;
     } else {
       return true;

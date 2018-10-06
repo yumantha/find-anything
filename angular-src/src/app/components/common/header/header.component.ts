@@ -18,7 +18,8 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService,
     private flashMessagesService: FlashMessagesService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
   }
@@ -31,8 +32,11 @@ export class HeaderComponent implements OnInit {
   }
 
   quickSearch(searchKeyword) {
-    if(!searchKeyword) {
-      return this.flashMessagesService.show("Please enter a keyword to search", {cssClass: 'alert-danger', timeout: 5000});
+    if (!searchKeyword) {
+      return this.flashMessagesService.show("Please enter a keyword to search", {
+        cssClass: 'alert-danger',
+        timeout: 5000
+      });
     }
 
     this.types.items = true;

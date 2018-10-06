@@ -13,11 +13,11 @@ router.post('/', (req, res, next) => {
     // console.log(req.body);
 
     Seller.getUserById(sellerID, (error, seller) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'Failed to add item. Error: ' + error});
         }
 
-        if(!seller) {
+        if (!seller) {
             return res.json({success: false, msg: 'User not found'});
         } else {
             let newItem = new Service({
@@ -36,7 +36,7 @@ router.post('/', (req, res, next) => {
             });
 
             Service.addItem(newItem, (error, service) => {
-                if(error) {
+                if (error) {
                     return res.json({success: false, msg: 'Failed to add service. Error: ' + error});
                 } else {
                     seller.sellingServices.push(service._id);
@@ -53,30 +53,35 @@ router.post('/:id', (req, res, next) => {
     const id = req.params.id;
 
     Service.getItemById(id, (error, service) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: "An error occurred: " + error});
         }
 
-        if(!service) {
+        if (!service) {
             return res.json({success: false, msg: "Service not found"});
         } else {
             Seller.getUserById(service.seller, (error, seller) => {
-                if(error) {
+                if (error) {
                     return res.json({success: false, msg: "An error occurred: " + error});
                 }
 
-                if(!seller) {
+                if (!seller) {
                     return res.json({success: false, msg: "Seller not found"});
                 } else {
                     Review.getReviewsByItem(service._id, (error, reviews) => {
-                        if(error) {
+                        if (error) {
                             return res.json({success: false, msg: "An error occurred: " + error});
                         }
 
-                        if(!reviews) {
+                        if (!reviews) {
                             return res.json({success: true, service: service, seller: seller.username});
                         } else {
-                            return res.json({success: true, service: service, seller: seller.username, reviews: reviews});
+                            return res.json({
+                                success: true,
+                                service: service,
+                                seller: seller.username,
+                                reviews: reviews
+                            });
                         }
                     });
                 }
@@ -90,43 +95,43 @@ router.delete('/:id', (req, res, next) => {
     const id = req.params.id;
 
     Service.getItemById(id, (error, service) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'An error occurred: ' + error});
         }
 
-        if(!service) {
+        if (!service) {
             return res.json({success: false, msg: "Service not found"});
         }
         else {
             Seller.getUserById(service.seller, (error, seller) => {
-                if(error) {
+                if (error) {
                     return res.json({success: false, msg: 'An error occurred: ' + error});
                 }
 
-                if(!seller) {
+                if (!seller) {
                     return res.json({success: false, msg: "Seller not found"});
                 }
                 else {
                     seller.sellingServices.remove(service);
 
                     Service.deleteItemById(id, (error, service) => {
-                        if(error) {
+                        if (error) {
                             return res.json({success: false, msg: 'An error occurred: ' + error});
                         }
 
-                        if(!service) {
+                        if (!service) {
                             return res.json({success: false, msg: "Service not found"});
                         } else {
                             seller.save();
 
                             Review.getReviewsByItem(service._id, (error, reviews) => {
-                                if(error) {
+                                if (error) {
                                     return res.json({success: false, msg: 'An error occurred: ' + error});
                                 }
 
                                 reviews.forEach((review) => {
                                     Review.deleteReview(review._id, (error, deletedReview) => {
-                                        if(error) {
+                                        if (error) {
                                             return res.json({success: false, msg: 'An error occurred: ' + error});
                                         }
                                     })
@@ -145,7 +150,7 @@ router.delete('/:id', (req, res, next) => {
                                 });
 
                                 Notification.newNotification(newNot, (error, notification) => {
-                                    if(error) {
+                                    if (error) {
                                         console.log('Error sending notification. Error: ' + error);
                                     }
                                 })
@@ -179,20 +184,20 @@ router.put('/:id', (req, res, next) => {
     };
 
     Service.updateItem(serviceId, editedService, (error, service) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'Failed to update item. Error: ' + error});
         }
 
-        if(!service) {
+        if (!service) {
             return res.json({success: false, msg: 'Service not found'});
         } else {
             service.favBy.forEach((user) => {
                 Seller.getUserById(service.seller, (error, seller) => {
-                    if(error) {
+                    if (error) {
                         console.log('Error sending notification. Error: ' + error);
                     }
 
-                    if(!seller) {
+                    if (!seller) {
                         console.log('Error sending notification. Error: ' + error);
                     } else {
                         let newNot = new Notification({
@@ -208,7 +213,7 @@ router.put('/:id', (req, res, next) => {
                         });
 
                         Notification.newNotification(newNot, (error, notification) => {
-                            if(error) {
+                            if (error) {
                                 console.log('Error sending notification. Error: ' + error);
                             }
                         })
@@ -227,19 +232,19 @@ router.post('/:id/favorite', (req, res, next) => {
     const serviceId = req.body.serviceId;
 
     Customer.getUserById(userId, (error, customer) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'Failed to add service to favorites. Error: ' + error});
         }
 
-        if(!customer) {
+        if (!customer) {
             return res.json({success: false, msg: 'User not found'});
         } else {
             Service.getItemById(serviceId, (error, service) => {
-                if(error) {
+                if (error) {
                     return res.json({success: false, msg: 'Failed to add service to favorites' + error});
                 }
 
-                if(!service) {
+                if (!service) {
                     return res.json({success: false, msg: 'Service not found'});
                 } else {
                     customer.favServices.push(service._id);
@@ -261,7 +266,7 @@ router.post('/:id/favorite', (req, res, next) => {
                     });
 
                     Notification.newNotification(newNot, (error, notification) => {
-                        if(error) {
+                        if (error) {
                             console.log('Error sending notification. Error: ' + error);
                         }
                     });
@@ -279,19 +284,19 @@ router.post('/:id/unfavorite', (req, res, next) => {
     const serviceId = req.body.serviceId;
 
     Customer.getUserById(userId, (error, customer) => {
-        if(error) {
+        if (error) {
             return res.json({success: false, msg: 'Failed to add service to favorites' + error});
         }
 
-        if(!customer) {
+        if (!customer) {
             return res.json({success: false, msg: 'User not found'});
         } else {
             Service.getItemById(serviceId, (error, service) => {
-                if(error) {
+                if (error) {
                     return res.json({success: false, msg: 'Failed to add service to favorites' + error});
                 }
 
-                if(!service) {
+                if (!service) {
                     return res.json({success: false, msg: 'Service not found'});
                 } else {
                     customer.favServices.remove(service);
@@ -301,7 +306,7 @@ router.post('/:id/unfavorite', (req, res, next) => {
                     service.save();
 
                     Notification.deleteFavNot(service._id, customer._id, (error, notification) => {
-                        if(error) {
+                        if (error) {
                             console.log('Error sending notification. Error: ' + error);
                         }
                     });

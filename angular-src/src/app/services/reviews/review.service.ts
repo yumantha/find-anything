@@ -9,13 +9,14 @@ export class ReviewService {
 
   constructor(
     private http: Http
-  ) { }
+  ) {
+  }
 
   //add a review
   addReview(itemId, itemType, review) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.post(this.server + itemType + 's/' + itemId + '/reviews/' , review, {headers: headers})
+    return this.http.post(this.server + itemType + 's/' + itemId + '/reviews/', review, {headers: headers})
       .map(res => res.json());
   }
 

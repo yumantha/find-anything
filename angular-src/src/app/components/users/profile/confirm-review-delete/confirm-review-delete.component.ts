@@ -14,7 +14,8 @@ export class ConfirmReviewDeleteDialog implements OnInit {
     private dialogRef: MatDialogRef<ConfirmReviewDeleteDialog>,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private reviewService: ReviewService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
   }

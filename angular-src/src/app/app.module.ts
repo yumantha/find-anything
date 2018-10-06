@@ -45,7 +45,7 @@ import {HelpRequestsComponent} from './components/common/help/help-requests/help
 
 import {EnterPassDialog} from './components/users/edit-profile/enter-pass/enter-pass.component';
 import {ConfirmDeleteDialog} from "./components/items/view-item/confirm-delete/confirm-delete.component";
-import {ConfirmServicedeleteDialog } from './components/items/view-service/confirm-servicedelete/confirm-servicedelete.component';
+import {ConfirmServicedeleteDialog} from './components/items/view-service/confirm-servicedelete/confirm-servicedelete.component';
 import {AddReviewDialog} from './components/items/view-item/add-review/add-review.component';
 import {AddServiceReviewDialog} from './components/items/view-service/add-service-review/add-service-review.component';
 import {ConfirmReviewDeleteDialog} from './components/users/profile/confirm-review-delete/confirm-review-delete.component';
@@ -177,4 +177,5 @@ const appRoutes = [
     AppComponent
   ]
 })
-export class AppModule { }
+export class AppModule {
+}

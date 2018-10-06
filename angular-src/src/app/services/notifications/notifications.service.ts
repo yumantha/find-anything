@@ -9,7 +9,8 @@ export class NotificationsService {
 
   constructor(
     private http: Http
-  ) { }
+  ) {
+  }
 
   //get notifications
   getNotifications(userId) {
@@ -30,7 +31,7 @@ export class NotificationsService {
   checkNotification(notId) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.post(this.server + 'notifications/' + notId + '/check', {},{headers: headers})
+    return this.http.post(this.server + 'notifications/' + notId + '/check', {}, {headers: headers})
       .map(res => res.json());
   }
 
@@ -38,7 +39,7 @@ export class NotificationsService {
   deleteNotification(notId) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.delete(this.server + 'notifications/' + notId,{headers: headers})
+    return this.http.delete(this.server + 'notifications/' + notId, {headers: headers})
       .map(res => res.json());
   }
 }

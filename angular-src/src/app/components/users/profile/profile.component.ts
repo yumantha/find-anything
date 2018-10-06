@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
 
   imageUrl: String;
   showImageButtons: Boolean = false;
-  files : FileList;
+  files: FileList;
   showUploadForm: Boolean = false;
   showEditForm: Boolean = false;
 
@@ -45,102 +45,106 @@ export class ProfileComponent implements OnInit {
     private flashMessagesService: FlashMessagesService,
     private router: Router,
     private dialog: MatDialog
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.authService.getProfile()
       .subscribe(profile => {
-        this.user = profile.user;
+          this.user = profile.user;
 
-        if(this.user.avgRating) {
-          this.user.avgRating = (Math.round(this.user.avgRating * 100))/100;
-        }
+          if (this.user.avgRating) {
+            this.user.avgRating = (Math.round(this.user.avgRating * 100)) / 100;
+          }
 
 
-        this.notificationsService.getUnreadNum(localStorage.getItem('user_id'))
-          .subscribe(data => {
-            if(data.success) {
-              if(data.num > 0) {
-                this.newNotifications = true;
-                this.newNotNum = data.num;
+          this.notificationsService.getUnreadNum(localStorage.getItem('user_id'))
+            .subscribe(data => {
+              if (data.success) {
+                if (data.num > 0) {
+                  this.newNotifications = true;
+                  this.newNotNum = data.num;
+                }
+              } else {
+                this.flashMessagesService.show('Unable to retrieve notifications. ' + data.msg, {
+                  cssClass: 'alert-danger',
+                  timeout: 5000
+                });
               }
-            } else {
-              this.flashMessagesService.show('Unable to retrieve notifications. ' + data.msg, {cssClass: 'alert-danger', timeout: 5000});
-            }
-          });
+            });
 
-        if(this.user.image) {
-          // this.imageUrl = 'http://localhost:3000/images/' + this.user.image;
-          this.imageUrl = 'images/' + this.user.image;
-        }
+          if (this.user.image) {
+            // this.imageUrl = 'http://localhost:3000/images/' + this.user.image;
+            this.imageUrl = 'images/' + this.user.image;
+          }
 
-        if(this.user.userType === 'seller') {
-          this.user.sellingItems.forEach((item) => {
-            this.itemService.getItem(item)
-              .subscribe(data => {
-                this.sellingItemsList.push(data.item);
-              })
-          });
-          this.user.sellingServices.forEach((service) => {
-            this.itemService.getService(service)
-              .subscribe(data => {
-                this.sellingServicesList.push(data.service);
-              })
-          });
-        } else if(this.user.userType === 'customer') {
-          this.user.favItems.forEach((item) => {
-            this.itemService.getItem(item)
-              .subscribe(data => {
-                this.favItemsList.push(data.item);
-              })
-          });
+          if (this.user.userType === 'seller') {
+            this.user.sellingItems.forEach((item) => {
+              this.itemService.getItem(item)
+                .subscribe(data => {
+                  this.sellingItemsList.push(data.item);
+                })
+            });
+            this.user.sellingServices.forEach((service) => {
+              this.itemService.getService(service)
+                .subscribe(data => {
+                  this.sellingServicesList.push(data.service);
+                })
+            });
+          } else if (this.user.userType === 'customer') {
+            this.user.favItems.forEach((item) => {
+              this.itemService.getItem(item)
+                .subscribe(data => {
+                  this.favItemsList.push(data.item);
+                })
+            });
 
-          this.user.favServices.forEach((service) => {
-            this.itemService.getService(service)
-              .subscribe(data => {
-                this.favServicesList.push(data.service);
-              })
-          });
+            this.user.favServices.forEach((service) => {
+              this.itemService.getService(service)
+                .subscribe(data => {
+                  this.favServicesList.push(data.service);
+                })
+            });
 
-          this.user.boughtItems.forEach((item) => {
-            this.itemService.getItem(item)
-              .subscribe(data => {
-                this.boughtItemsList.push(data.item);
-              })
-          });
+            this.user.boughtItems.forEach((item) => {
+              this.itemService.getItem(item)
+                .subscribe(data => {
+                  this.boughtItemsList.push(data.item);
+                })
+            });
 
-          this.user.boughtServices.forEach((service) => {
-            this.itemService.getService(service)
-              .subscribe(data => {
-                this.boughtServicesList.push(data.service);
-              })
-          });
+            this.user.boughtServices.forEach((service) => {
+              this.itemService.getService(service)
+                .subscribe(data => {
+                  this.boughtServicesList.push(data.service);
+                })
+            });
 
-          this.user.reqItems.forEach((item) => {
-            this.itemService.getItem(item)
-              .subscribe(data => {
-                this.reqItemsList.push(data.item);
-              })
-          });
+            this.user.reqItems.forEach((item) => {
+              this.itemService.getItem(item)
+                .subscribe(data => {
+                  this.reqItemsList.push(data.item);
+                })
+            });
 
-          this.user.reqServices.forEach((service) => {
-            this.itemService.getService(service)
-              .subscribe(data => {
-                this.reqServicesList.push(data.service);
-              })
-          });
+            this.user.reqServices.forEach((service) => {
+              this.itemService.getService(service)
+                .subscribe(data => {
+                  this.reqServicesList.push(data.service);
+                })
+            });
 
-          this.user.reviews.forEach((review) => {
-            this.reviewService.getReview(review, 'any', 'any')
-              .subscribe(data => {
-                this.reviews.push(data.review);
-              })
-          });
-        }
-      },
+            this.user.reviews.forEach((review) => {
+              this.reviewService.getReview(review, 'any', 'any')
+                .subscribe(data => {
+                  this.reviews.push(data.review);
+                })
+            });
+          }
+        },
         error => {
-        console.log(error);
-        return false;
+          console.log(error);
+          return false;
         }
       );
   }
@@ -163,11 +167,14 @@ export class ProfileComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(data => {
-        if(data.success) {
-          this.flashMessagesService.show('The review and rating were successfully edited', {cssClass: 'alert-success', timeout: 5000});
+        if (data.success) {
+          this.flashMessagesService.show('The review and rating were successfully edited', {
+            cssClass: 'alert-success',
+            timeout: 5000
+          });
           window.location.reload();
         } else {
-          if(data.msg) {
+          if (data.msg) {
             this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
           }
         }
@@ -184,11 +191,14 @@ export class ProfileComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(data => {
-        if(data.success) {
-          this.flashMessagesService.show('The review was successfully deleted', {cssClass: 'alert-success', timeout: 5000});
+        if (data.success) {
+          this.flashMessagesService.show('The review was successfully deleted', {
+            cssClass: 'alert-success',
+            timeout: 5000
+          });
           window.location.reload();
         } else {
-          if(data.msg) {
+          if (data.msg) {
             this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
           }
         }
@@ -203,25 +213,28 @@ export class ProfileComponent implements OnInit {
     this.showImageButtons = false;
   }
 
-  getFiles(event){
+  getFiles(event) {
     this.files = event.target.files;
   }
 
   addImage() {
-    if(!this.files) {
+    if (!this.files) {
       this.flashMessagesService.show("Please select an image to upload", {cssClass: 'alert-danger', timeout: 5000});
       return false;
     } else {
-      if(this.files.length !== 1) {
-        this.flashMessagesService.show("Please select a single image to upload", {cssClass: 'alert-danger', timeout: 5000});
+      if (this.files.length !== 1) {
+        this.flashMessagesService.show("Please select a single image to upload", {
+          cssClass: 'alert-danger',
+          timeout: 5000
+        });
         return false;
       } else {
         this.imageService.uploadImage(this.files[0])
           .subscribe(data => {
-            if(data.success) {
+            if (data.success) {
               this.imageService.updateInfo(this.user.userType, this.user._id)
                 .subscribe(data2 => {
-                  if(data2.success) {
+                  if (data2.success) {
                     this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
                     window.location.reload();
                     return true;
@@ -240,24 +253,30 @@ export class ProfileComponent implements OnInit {
   }
 
   editImage() {
-    if(!this.files) {
+    if (!this.files) {
       this.flashMessagesService.show("Please select an image to upload", {cssClass: 'alert-danger', timeout: 5000});
       return false;
     } else {
-      if(this.files.length !== 1) {
-        this.flashMessagesService.show("Please select a single image to upload", {cssClass: 'alert-danger', timeout: 5000});
+      if (this.files.length !== 1) {
+        this.flashMessagesService.show("Please select a single image to upload", {
+          cssClass: 'alert-danger',
+          timeout: 5000
+        });
         return false;
       } else {
         this.imageService.deleteImage(this.user.image, this.user.userType, this.user._id)
           .subscribe(data => {
-            if(data.success) {
+            if (data.success) {
               this.imageService.uploadImage(this.files[0])
                 .subscribe(data => {
-                  if(data.success) {
+                  if (data.success) {
                     this.imageService.updateInfo(this.user.userType, this.user._id)
                       .subscribe(data2 => {
-                        if(data2.success) {
-                          this.flashMessagesService.show("Image successfully updated", {cssClass: 'alert-success', timeout: 5000});
+                        if (data2.success) {
+                          this.flashMessagesService.show("Image successfully updated", {
+                            cssClass: 'alert-success',
+                            timeout: 5000
+                          });
                           window.location.reload();
                           return true;
                         } else {
@@ -275,13 +294,14 @@ export class ProfileComponent implements OnInit {
               return false;
             }
           });
-      }}
+      }
+    }
   }
 
   deleteImage() {
     this.imageService.deleteImage(this.user.image, this.user.userType, this.user._id)
       .subscribe(data => {
-        if(data.success) {
+        if (data.success) {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-success', timeout: 5000});
           window.location.reload();
           return true;

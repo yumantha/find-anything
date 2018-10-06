@@ -9,7 +9,8 @@ export class ImageService {
 
   constructor(
     private http: Http
-  ) { }
+  ) {
+  }
 
   //uploading the image to the database
   uploadImage(image) {

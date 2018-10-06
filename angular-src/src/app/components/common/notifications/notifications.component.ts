@@ -19,19 +19,20 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private flashMessagesService: FlashMessagesService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
-    if(!this.authService.loggedIn()) {
+    if (!this.authService.loggedIn()) {
       return this.router.navigate(['/login'])
     }
 
     this.notificationsService.getNotifications(this.userId)
       .subscribe(data => {
-        if(!data.success) {
+        if (!data.success) {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         } else {
-          if(data.nots.length !== 0) {
+          if (data.nots.length !== 0) {
             this.notsAvailable = true;
           }
 
@@ -45,7 +46,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   }
 
   sortByKey(array, key) {
-    return array.sort(function(a, b) {
+    return array.sort(function (a, b) {
       const x = a[key];
       const y = b[key];
       return ((x < y) ? -1 : ((x > y) ? 1 : 0));
@@ -54,7 +55,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
   checkNots(nots: Array<any>) {
     nots.forEach((not) => {
-      if(!not.checked) {
+      if (!not.checked) {
         this.notificationsService.checkNotification(not._id)
           .subscribe(data => {
 
@@ -70,7 +71,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   deleteNot(notId) {
     this.notificationsService.deleteNotification(notId)
       .subscribe(data => {
-        if(!data.success) {
+        if (!data.success) {
           this.flashMessagesService.show(data.msg, {cssClass: 'alert-danger', timeout: 5000});
         } else {
           window.location.reload();

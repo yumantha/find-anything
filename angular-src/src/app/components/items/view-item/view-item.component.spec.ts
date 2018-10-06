@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ViewItemComponent } from './view-item.component';
+import {ViewItemComponent} from './view-item.component';
 
 describe('ViewItemComponent', () => {
   let component: ViewItemComponent;
@@ -8,9 +8,9 @@ describe('ViewItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewItemComponent ]
+      declarations: [ViewItemComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -89,28 +89,28 @@ const CustomerSchema = mongoose.Schema({
 
 const Customer = module.exports = mongoose.model('Customer', CustomerSchema);
 
-module.exports.getUserById = function(id, callback) {
+module.exports.getUserById = function (id, callback) {
     Customer.findById(id, callback);
 };
 
-module.exports.getUserByUsername = function(username, callback) {
+module.exports.getUserByUsername = function (username, callback) {
     const query = {
         username: username
     };
     Customer.findOne(query, callback);
 };
 
-module.exports.comparePassword = function(candidatePassword, hash, callback) {
-    bcrypt.compare(candidatePassword, hash, (error, isMatch)=>{
-        if(error) throw error;
+module.exports.comparePassword = function (candidatePassword, hash, callback) {
+    bcrypt.compare(candidatePassword, hash, (error, isMatch) => {
+        if (error) throw error;
         callback(error, isMatch);
     });
 };
 
-module.exports.addUser = function(newUser, callback) {
-    bcrypt.genSalt(10, (error, salt)=>{
-        bcrypt.hash(newUser.password, salt, (error, hash)=>{
-            if(error) {
+module.exports.addUser = function (newUser, callback) {
+    bcrypt.genSalt(10, (error, salt) => {
+        bcrypt.hash(newUser.password, salt, (error, hash) => {
+            if (error) {
                 throw error;
             } else {
                 newUser.password = hash;
@@ -120,7 +120,7 @@ module.exports.addUser = function(newUser, callback) {
     });
 };
 
-module.exports.updateUserProf = function(userId, updatedUser, callback) {
+module.exports.updateUserProf = function (userId, updatedUser, callback) {
     Customer.findByIdAndUpdate(userId,
         {
             $set: {
@@ -134,11 +134,11 @@ module.exports.updateUserProf = function(userId, updatedUser, callback) {
         callback);
 };
 
-module.exports.updateUserAcc = function(userId, updatedUser, callback) {
-    if(updatedUser.password) {
-        bcrypt.genSalt(10, (error, salt)=>{
-            bcrypt.hash(updatedUser.password, salt, (error, hash)=>{
-                if(error) {
+module.exports.updateUserAcc = function (userId, updatedUser, callback) {
+    if (updatedUser.password) {
+        bcrypt.genSalt(10, (error, salt) => {
+            bcrypt.hash(updatedUser.password, salt, (error, hash) => {
+                if (error) {
                     throw error;
                 } else {
                     updatedUser.password = hash;
@@ -164,22 +164,22 @@ module.exports.updateUserAcc = function(userId, updatedUser, callback) {
     }
 };
 
-module.exports.deleteUser = function(userId, callback) {
+module.exports.deleteUser = function (userId, callback) {
     Customer.findByIdAndRemove(userId, callback);
 };
 
-module.exports.getTimes = function(callback) {
+module.exports.getTimes = function (callback) {
     Customer.find(callback).select({
         '_id': 0,
         'timestamp': 1
     })
 };
 
-module.exports.getNumber = function(callback) {
+module.exports.getNumber = function (callback) {
     Customer.count(callback);
 };
 
-module.exports.favItemNum = function(callback) {
+module.exports.favItemNum = function (callback) {
     Customer.aggregate(
         [
             {
@@ -191,10 +191,10 @@ module.exports.favItemNum = function(callback) {
                 }
             }
         ]
-    , callback)
+        , callback)
 };
 
-module.exports.favServiceNum = function(callback) {
+module.exports.favServiceNum = function (callback) {
     Customer.aggregate(
         [
             {
@@ -209,7 +209,7 @@ module.exports.favServiceNum = function(callback) {
         , callback)
 };
 
-module.exports.reqItemNum = function(callback) {
+module.exports.reqItemNum = function (callback) {
     Customer.aggregate(
         [
             {
@@ -224,7 +224,7 @@ module.exports.reqItemNum = function(callback) {
         , callback)
 };
 
-module.exports.reqServiceNum = function(callback) {
+module.exports.reqServiceNum = function (callback) {
     Customer.aggregate(
         [
             {
@@ -239,7 +239,7 @@ module.exports.reqServiceNum = function(callback) {
         , callback)
 };
 
-module.exports.boughtItemNum = function(callback) {
+module.exports.boughtItemNum = function (callback) {
     Customer.aggregate(
         [
             {
@@ -254,7 +254,7 @@ module.exports.boughtItemNum = function(callback) {
         , callback)
 };
 
-module.exports.boughtServiceNum = function(callback) {
+module.exports.boughtServiceNum = function (callback) {
     Customer.aggregate(
         [
             {
@@ -269,7 +269,7 @@ module.exports.boughtServiceNum = function(callback) {
         , callback)
 };
 
-module.exports.changeImage = function(id, image, callback) {
+module.exports.changeImage = function (id, image, callback) {
     Customer.findByIdAndUpdate(id,
         {
             $set: {
@@ -279,7 +279,7 @@ module.exports.changeImage = function(id, image, callback) {
         callback);
 };
 
-module.exports.deleteImage = function(id, callback) {
+module.exports.deleteImage = function (id, callback) {
     Customer.findByIdAndUpdate(id,
         {
             $unset: {

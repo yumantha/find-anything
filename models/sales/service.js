@@ -76,12 +76,12 @@ const ServiceSchema = mongoose.Schema({
 
 const Service = module.exports = mongoose.model('Service', ServiceSchema);
 
-module.exports.getItemById = function(id, callback) {
+module.exports.getItemById = function (id, callback) {
     Service.findById(id, callback);
 };
 
 //search for services
-module.exports.getItemsByName = function(searchObject, callback) {
+module.exports.getItemsByName = function (searchObject, callback) {
     const query = {
         name: new RegExp('\\b' + searchObject.name.trim() + '\\b', 'i'),
         category: new RegExp('\\b' + searchObject.category.trim() + '\\b', 'i'),
@@ -93,15 +93,15 @@ module.exports.getItemsByName = function(searchObject, callback) {
 };
 
 
-module.exports.addItem = function(newItem, callback) {
+module.exports.addItem = function (newItem, callback) {
     newItem.save(callback);
 };
 
-module.exports.deleteItemById = function(id, callback) {
+module.exports.deleteItemById = function (id, callback) {
     Service.findByIdAndRemove(id, callback);
 };
 
-module.exports.updateItem = function(itemId, editedItem, callback) {
+module.exports.updateItem = function (itemId, editedItem, callback) {
     Service.findByIdAndUpdate(itemId,
         {
             $set: {
@@ -120,7 +120,7 @@ module.exports.updateItem = function(itemId, editedItem, callback) {
         callback);
 };
 
-module.exports.deleteItemsByUser = function(userId, callback) {
+module.exports.deleteItemsByUser = function (userId, callback) {
     const query = {
         seller: userId
     };
@@ -128,7 +128,7 @@ module.exports.deleteItemsByUser = function(userId, callback) {
     Service.remove(query, callback);
 };
 
-module.exports.mostFavs = function(callback) {
+module.exports.mostFavs = function (callback) {
     Service.aggregate(
         [
             {
@@ -143,7 +143,7 @@ module.exports.mostFavs = function(callback) {
         , callback)
 };
 
-module.exports.mostFavsWithSeller = function(callback) {
+module.exports.mostFavsWithSeller = function (callback) {
     Service.aggregate(
         [
             {
@@ -159,7 +159,7 @@ module.exports.mostFavsWithSeller = function(callback) {
         , callback)
 };
 
-module.exports.mostReqs = function(callback) {
+module.exports.mostReqs = function (callback) {
     Service.aggregate(
         [
             {
@@ -174,7 +174,7 @@ module.exports.mostReqs = function(callback) {
         , callback)
 };
 
-module.exports.mostReqsWithSeller = function(callback) {
+module.exports.mostReqsWithSeller = function (callback) {
     Service.aggregate(
         [
             {
@@ -190,7 +190,7 @@ module.exports.mostReqsWithSeller = function(callback) {
         , callback)
 };
 
-module.exports.mostBuys = function(callback) {
+module.exports.mostBuys = function (callback) {
     Service.aggregate(
         [
             {
@@ -205,7 +205,7 @@ module.exports.mostBuys = function(callback) {
         , callback)
 };
 
-module.exports.mostBuysWithSeller = function(callback) {
+module.exports.mostBuysWithSeller = function (callback) {
     Service.aggregate(
         [
             {
@@ -221,25 +221,25 @@ module.exports.mostBuysWithSeller = function(callback) {
         , callback)
 };
 
-module.exports.getTopRated = function(callback) {
+module.exports.getTopRated = function (callback) {
     Service.find(callback).select({
         'name': 1,
         'avgRating': 1
     });
 };
 
-module.exports.getTimes = function(callback) {
+module.exports.getTimes = function (callback) {
     Service.find(callback).select({
         '_id': 0,
         'timestamp': 1
     })
 };
 
-module.exports.getNumber = function(callback) {
+module.exports.getNumber = function (callback) {
     Service.count(callback);
 };
 
-module.exports.changeImage = function(id, image, callback) {
+module.exports.changeImage = function (id, image, callback) {
     Service.findByIdAndUpdate(id,
         {
             $set: {
@@ -249,7 +249,7 @@ module.exports.changeImage = function(id, image, callback) {
         callback);
 };
 
-module.exports.deleteImage = function(id, callback) {
+module.exports.deleteImage = function (id, callback) {
     Service.findByIdAndUpdate(id,
         {
             $unset: {

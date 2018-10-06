@@ -26,19 +26,20 @@ export class ViewUserComponent implements OnInit {
     private authService: AuthService,
     private itemService: ItemService,
     private flashMessagesService: FlashMessagesService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
-    if(this.userId === this.loggedUserId && this.userType === this.loggedUserType) {
+    if (this.userId === this.loggedUserId && this.userType === this.loggedUserType) {
       this.router.navigate(['/profile']);
     } else {
       this.authService.getUser(this.userId, this.userType)
         .subscribe(data => {
-          if(data.success) {
+          if (data.success) {
             this.user = data.user;
             if (this.userType === 'seller') {
-              if(this.user.avgRating) {
-                this.user.avgRating = (Math.round(this.user.avgRating * 100))/100;
+              if (this.user.avgRating) {
+                this.user.avgRating = (Math.round(this.user.avgRating * 100)) / 100;
               }
 
               this.user.sellingItems.forEach((item) => {

@@ -9,7 +9,8 @@ export class ItemService {
 
   constructor(
     private http: Http
-  ) { }
+  ) {
+  }
 
   //add a new item for sale
   addItem(item) {
@@ -33,7 +34,7 @@ export class ItemService {
   getItem(itemId) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.post(this.server + 'items/' + itemId, {},{headers: headers})
+    return this.http.post(this.server + 'items/' + itemId, {}, {headers: headers})
       .map(res => res.json());
   }
 
@@ -41,7 +42,7 @@ export class ItemService {
   getService(serviceId) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.post(this.server + 'services/' + serviceId, {},{headers: headers})
+    return this.http.post(this.server + 'services/' + serviceId, {}, {headers: headers})
       .map(res => res.json());
   }
 
@@ -81,7 +82,10 @@ export class ItemService {
   favItem(itemId, userId) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.post(this.server + 'items/' + itemId + '/favorite', {itemId: itemId, userId: userId}, {headers: headers})
+    return this.http.post(this.server + 'items/' + itemId + '/favorite', {
+      itemId: itemId,
+      userId: userId
+    }, {headers: headers})
       .map(res => res.json());
   }
 
@@ -89,7 +93,10 @@ export class ItemService {
   unfavItem(itemId, userId) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.post(this.server + 'items/' + itemId + '/unfavorite', {itemId: itemId, userId: userId}, {headers: headers})
+    return this.http.post(this.server + 'items/' + itemId + '/unfavorite', {
+      itemId: itemId,
+      userId: userId
+    }, {headers: headers})
       .map(res => res.json());
   }
 
@@ -97,7 +104,10 @@ export class ItemService {
   favService(serviceId, userId) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.post(this.server + 'services/' + serviceId + '/favorite', {serviceId: serviceId, userId: userId}, {headers: headers})
+    return this.http.post(this.server + 'services/' + serviceId + '/favorite', {
+      serviceId: serviceId,
+      userId: userId
+    }, {headers: headers})
       .map(res => res.json());
   }
 
@@ -105,7 +115,10 @@ export class ItemService {
   unfavService(serviceId, userId) {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.post(this.server + 'services/' + serviceId + '/unfavorite', {serviceId: serviceId, userId: userId}, {headers: headers})
+    return this.http.post(this.server + 'services/' + serviceId + '/unfavorite', {
+      serviceId: serviceId,
+      userId: userId
+    }, {headers: headers})
       .map(res => res.json());
   }
 }

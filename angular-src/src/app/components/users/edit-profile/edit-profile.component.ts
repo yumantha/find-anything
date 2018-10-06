@@ -21,7 +21,8 @@ export class EditProfileComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private dialog: MatDialog
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.authService.getProfile()
@@ -42,24 +43,27 @@ export class EditProfileComponent implements OnInit {
   }
 
   onEditSubmit() {
-    if(this.user.username) {
-      if(!this.validateService.validateUsername(this.user.username)) {
+    if (this.user.username) {
+      if (!this.validateService.validateUsername(this.user.username)) {
         this.flashMessagesService.show("Please enter a valid username", {cssClass: 'alert-danger', timeout: 5000});
         return false;
       }
     }
 
-    if(this.user.telephone) {
-      if(!this.validateService.validatePhone(this.user.telephone)) {
-        this.flashMessagesService.show("Please enter a valid telephone number", {cssClass: 'alert-danger', timeout: 5000});
+    if (this.user.telephone) {
+      if (!this.validateService.validatePhone(this.user.telephone)) {
+        this.flashMessagesService.show("Please enter a valid telephone number", {
+          cssClass: 'alert-danger',
+          timeout: 5000
+        });
         return false;
       }
     } else {
       this.user.telephone = null;
     }
 
-    if(this.user.mobile) {
-      if(!this.validateService.validatePhone(this.user.mobile)) {
+    if (this.user.mobile) {
+      if (!this.validateService.validatePhone(this.user.mobile)) {
         this.flashMessagesService.show("Please enter a valid mobile number", {cssClass: 'alert-danger', timeout: 5000});
         return false;
       }
@@ -67,13 +71,13 @@ export class EditProfileComponent implements OnInit {
       delete this.user.mobile;
     }
 
-    if(!this.user.address) {
+    if (!this.user.address) {
       delete this.user.address;
     }
 
     this.authService.editUser(this.user)
       .subscribe(data => {
-        if(data.success) {
+        if (data.success) {
           this.flashMessagesService.show("User edited.", {cssClass: 'alert-success', timeout: 5000});
           this.router.navigate(['/profile']);
         } else {
@@ -90,10 +94,10 @@ export class EditProfileComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(result => {
-        if(result.success) {
+        if (result.success) {
           this.router.navigate(['/profile/editAcc'])
         } else {
-          if(result.msg) {
+          if (result.msg) {
             this.flashMessagesService.show(result.msg, {cssClass: 'alert-danger', timeout: 5000});
           }
         }

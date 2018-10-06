@@ -26,7 +26,8 @@ export class AddItemComponent implements OnInit {
     private flashMessagesService: FlashMessagesService,
     private itemService: ItemService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
   }
@@ -43,24 +44,24 @@ export class AddItemComponent implements OnInit {
       sellerID: localStorage.getItem('user_id')
     };
 
-    if(!this.validateService.validateItem(item)) {
+    if (!this.validateService.validateItem(item)) {
       this.flashMessagesService.show("Please fill in all necessary fields", {cssClass: 'alert-danger', timeout: 5000});
       return false;
     }
 
-    if(!this.validateService.validateItemSeller(item.sellerID)) {
+    if (!this.validateService.validateItemSeller(item.sellerID)) {
       this.flashMessagesService.show("User not found", {cssClass: 'alert-danger', timeout: 5000});
       return false;
     }
 
-    if(!this.validateService.validatePrice(item.price)) {
+    if (!this.validateService.validatePrice(item.price)) {
       this.flashMessagesService.show("Please enter a valid price", {cssClass: 'alert-danger', timeout: 5000});
       return false;
     }
 
     this.itemService.addItem(item)
       .subscribe(data => {
-        if(data.success) {
+        if (data.success) {
           this.flashMessagesService.show("The item was successfully added", {cssClass: 'alert-success', timeout: 5000});
           this.router.navigate(['/profile']);
         } else {

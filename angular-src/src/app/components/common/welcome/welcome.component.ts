@@ -11,7 +11,8 @@ export class WelcomeComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.loggedIn = this.authService.loggedIn();

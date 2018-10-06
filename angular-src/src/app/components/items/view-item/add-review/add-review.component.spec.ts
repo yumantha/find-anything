@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AddReviewDialog } from './add-review.component';
+import {AddReviewDialog} from './add-review.component';
 
 describe('AddReviewDialog', () => {
   let component: AddReviewDialog;
@@ -8,9 +8,9 @@ describe('AddReviewDialog', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddReviewDialog ]
+      declarations: [AddReviewDialog]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
